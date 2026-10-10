@@ -1702,7 +1702,7 @@
                     android:textStyle="bold" />
             </LinearLayout>
 
-            <!-- Custodia -->
+            <!-- Resuelto -->
             <LinearLayout
                 android:id="@+id/navCustodia"
                 android:layout_width="0dp"
@@ -1718,7 +1718,7 @@
                     android:id="@+id/imgNavCustodia"
                     android:layout_width="24dp"
                     android:layout_height="24dp"
-                    android:src="@drawable/ic_nav_custodia"
+                    android:src="@drawable/ic_check_circle"
                     app:tint="#333A4A" />
 
                 <TextView
@@ -1726,7 +1726,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"
-                    android:text="Custodia"
+                    android:text="Resuelto"
                     android:textColor="#333A4A"
                     android:textSize="11sp"
                     android:textStyle="bold" />

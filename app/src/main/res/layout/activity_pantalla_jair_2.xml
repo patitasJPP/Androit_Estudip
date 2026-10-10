@@ -1,0 +1,1173 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/rootProtocoloEntrega"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F8FAFC"
+    tools:context=".MainActivity"
+    tools:ignore="HardcodedText,ContentDescription">
+
+
+
+    <!-- ===================== SCRIM ===================== -->
+    <View
+        android:id="@+id/viewScrim"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="#80000000"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guidelineSheetTop"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_begin="0dp" />
+
+    <!-- ===================== BOTTOM SHEET ===================== -->
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/cardSheetProtocolo"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="-32dp"
+        app:cardBackgroundColor="#FFFFFF"
+        app:cardCornerRadius="0dp"
+        app:cardElevation="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/guidelineSheetTop"
+        app:strokeWidth="0dp">
+
+        <LinearLayout
+            android:id="@+id/contenedorSheet"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <!-- ============ HEADER ============ -->
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/headerProtocolo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#FFFFFF"
+                android:paddingBottom="16dp">
+
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/cardBadgeOficial"
+                    android:layout_width="wrap_content"
+                    android:layout_height="20dp"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="30dp"
+                    app:cardBackgroundColor="#FDF2F4"
+                    app:cardCornerRadius="10dp"
+                    app:cardElevation="0dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:strokeColor="#F8CED7"
+                    app:strokeWidth="1dp">
+
+                    <LinearLayout
+                        android:id="@+id/llBadgeOficial"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:paddingStart="10dp"
+                        android:paddingEnd="10dp">
+
+                        <com.google.android.material.card.MaterialCardView
+                            android:id="@+id/cardPuntoOficial"
+                            android:layout_width="6dp"
+                            android:layout_height="6dp"
+                            app:cardBackgroundColor="#BC0D2F"
+                            app:cardCornerRadius="3dp"
+                            app:cardElevation="0dp" />
+
+                        <TextView
+                            android:id="@+id/tvBadgeOficial"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="7dp"
+                            android:letterSpacing="0.05"
+                            android:text="OFICIAL UTP • CUSTODIA Y LEGAL"
+                            android:textColor="#BC0D2F"
+                            android:textSize="9sp"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
+
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/btnCerrarX"
+                    android:layout_width="28dp"
+                    android:layout_height="28dp"
+                    android:layout_marginTop="26dp"
+                    android:layout_marginEnd="16dp"
+                    android:clickable="true"
+                    android:focusable="true"
+                    app:cardBackgroundColor="#EEF2F6"
+                    app:cardCornerRadius="14dp"
+                    app:cardElevation="0dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <ImageView
+                        android:id="@+id/imgCerrarX"
+                        android:layout_width="12dp"
+                        android:layout_height="12dp"
+                        android:layout_gravity="center"
+                        android:src="@drawable/ic_close"
+                        app:tint="#64748B" />
+                </com.google.android.material.card.MaterialCardView>
+
+                <TextView
+                    android:id="@+id/tvTitulo"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="20dp"
+                    android:text="Protocolo de Entrega y Devolución"
+                    android:textColor="#0F172A"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/cardBadgeOficial" />
+
+                <TextView
+                    android:id="@+id/tvSubtitulo"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="4dp"
+                    android:layout_marginEnd="20dp"
+                    android:lineSpacingExtra="4.5dp"
+                    android:text="Normativa obligatoria para el personal de servicio y caseta. Cumplir estrictamente para garantizar la trazabilidad legal y transparencia del proceso."
+                    android:textColor="#64748B"
+                    android:textSize="10.5sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tvTitulo" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <View
+                android:id="@+id/dividerHeader"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#F1F5F9" />
+
+            <!-- ============ CONTENIDO SCROLLEABLE ============ -->
+            <ScrollView
+                android:id="@+id/scrollProtocolo"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:background="#F8FAFC"
+                android:overScrollMode="never"
+                android:scrollbars="none">
+
+                <LinearLayout
+                    android:id="@+id/llContenidoProtocolo"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:paddingStart="16dp"
+                    android:paddingTop="12dp"
+                    android:paddingEnd="16dp"
+                    android:paddingBottom="12dp">
+
+                    <!-- ============ PASO 1 ============ -->
+                    <com.google.android.material.card.MaterialCardView
+                        android:id="@+id/cardPaso1"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:cardBackgroundColor="#FFFFFF"
+                        app:cardCornerRadius="16dp"
+                        app:cardElevation="0dp"
+                        app:strokeColor="#E2E8F0"
+                        app:strokeWidth="1dp">
+
+                        <LinearLayout
+                            android:id="@+id/llPaso1"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:padding="11dp">
+
+                            <LinearLayout
+                                android:id="@+id/rowTituloPaso1"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:baselineAligned="false"
+                                android:gravity="center_vertical"
+                                android:orientation="horizontal">
+
+                                <com.google.android.material.card.MaterialCardView
+                                    android:id="@+id/cardNumeroPaso1"
+                                    android:layout_width="24dp"
+                                    android:layout_height="24dp"
+                                    app:cardBackgroundColor="#BC0D2F"
+                                    app:cardCornerRadius="12dp"
+                                    app:cardElevation="0dp">
+
+                                    <TextView
+                                        android:id="@+id/tvNumeroPaso1"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_gravity="center"
+                                        android:text="1"
+                                        android:textColor="#FFFFFF"
+                                        android:textSize="11sp"
+                                        android:textStyle="bold" />
+                                </com.google.android.material.card.MaterialCardView>
+
+                                <TextView
+                                    android:id="@+id/tvTituloPaso1"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="10dp"
+                                    android:layout_marginEnd="8dp"
+                                    android:layout_weight="1"
+                                    android:text="Identificación y Verificación de Matrícula"
+                                    android:textColor="#0F172A"
+                                    android:textSize="11sp"
+                                    android:textStyle="bold" />
+
+                                <com.google.android.material.card.MaterialCardView
+                                    android:id="@+id/cardBadgeExcluyente"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="16dp"
+                                    app:cardBackgroundColor="#F1F5F9"
+                                    app:cardCornerRadius="5dp"
+                                    app:cardElevation="0dp">
+
+                                    <TextView
+                                        android:id="@+id/tvBadgeExcluyente"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="match_parent"
+                                        android:gravity="center"
+                                        android:paddingStart="8dp"
+                                        android:paddingEnd="8dp"
+                                        android:text="Excluyente"
+                                        android:textColor="#475569"
+                                        android:textSize="9sp"
+                                        android:textStyle="bold" />
+                                </com.google.android.material.card.MaterialCardView>
+                            </LinearLayout>
+
+                            <!-- Documento Físico -->
+                            <LinearLayout
+                                android:id="@+id/rowP1DocFisico"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="48dp"
+                                android:layout_marginTop="2dp"
+                                android:baselineAligned="false"
+                                android:orientation="horizontal">
+
+                                <TextView
+                                    android:id="@+id/tvP1DocFisicoLabel"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:lineSpacingExtra="4dp"
+                                    android:text="Documento Físico:"
+                                    android:textColor="#0F172A"
+                                    android:textSize="10sp"
+                                    android:textStyle="bold" />
+
+                                <TextView
+                                    android:id="@+id/tvP1DocFisicoInicio"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="3dp"
+                                    android:layout_weight="1"
+                                    android:lineSpacingExtra="4dp"
+                                    android:text="Exigir DNI físico original vigente o"
+                                    android:textColor="#475569"
+                                    android:textSize="10sp" />
+                            </LinearLayout>
+
+                            <TextView
+                                android:id="@+id/tvP1DocFisicoResto"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="48dp"
+                                android:lineSpacingExtra="4dp"
+                                android:text="Carné Universitario UTP. No se aceptan fotocopias simples."
+                                android:textColor="#475569"
+                                android:textSize="10sp" />
+
+                            <!-- Verificación de Código UTP -->
+                            <LinearLayout
+                                android:id="@+id/rowP1CodigoUtp"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="48dp"
+                                android:layout_marginTop="7dp"
+                                android:baselineAligned="false"
+                                android:orientation="horizontal">
+
+                                <TextView
+                                    android:id="@+id/tvP1CodigoUtpLabel"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:lineSpacingExtra="4dp"
+                                    android:text="Verificación de Código UTP:"
+                                    android:textColor="#0F172A"
+                                    android:textSize="10sp"
+                                    android:textStyle="bold" />
+
+                                <TextView
+                                    android:id="@+id/tvP1CodigoUtpInicio"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="3dp"
+                                    android:layout_weight="1"
+                                    android:lineSpacingExtra="4dp"
+                                    android:text="En estudiantes, verificar"
+                                    android:textColor="#475569"
+                                    android:textSize="10sp" />
+                            </LinearLayout>
+
+                            <TextView
+                                android:id="@+id/tvP1CodigoUtpLinea2"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="48dp"
+                                android:lineSpacingExtra="4dp"
+                                android:text="condición activa con su código institucional (ej."
+                                android:textColor="#475569"
+                                android:textSize="10sp" />
+
+                            <LinearLayout
+                                android:id="@+id/rowP1CodigoUtpLinea3"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="48dp"
+                                android:baselineAligned="false"
+                                android:orientation="horizontal">
+
+                                <TextView
+                                    android:id="@+id/tvP1CodigoEjemplo"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:fontFamily="monospace"
+                                    android:lineSpacingExtra="4dp"
+                                    android:text="U202110..."
+                                    android:textColor="#BC0D2F"
+                                    android:textSize="10sp" />
+
+                                <TextView
+                                    android:id="@+id/tvP1CodigoUtpLinea3Resto"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:lineSpacingExtra="4dp"
+                                    android:text="). Para docentes o administrativos solicitar"
+                                    android:textColor="#475569"
+                                    android:textSize="10sp" />
+                            </LinearLayout>
+
+                            <TextView
+                                android:id="@+id/tvP1CodigoUtpLinea4"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="48dp"
+                                android:lineSpacingExtra="4dp"
+                                android:text="carnet/fotocheck."
+                                android:textColor="#475569"
+                                android:textSize="10sp" />
+
+                            <!-- Casos Especiales -->
+                            <LinearLayout
+                                android:id="@+id/rowP1CasosEspeciales"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="48dp"
+                                android:layout_marginTop="7dp"
+                                android:baselineAligned="false"
+                                android:orientation="horizontal">
+
+                                <TextView
+                                    android:id="@+id/tvP1CasosEspecialesLabel"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:lineSpacingExtra="4dp"
+                                    android:text="Casos Especiales:"
+                                    android:textColor="#0F172A"
+                                    android:textSize="10sp"
+                                    android:textStyle="bold" />
+
+                                <TextView
+                                    android:id="@+id/tvP1CasosEspecialesInicio"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="3dp"
+                                    android:layout_weight="1"
+                                    android:lineSpacingExtra="4dp"
+                                    android:text="Si el bien encontrado ya contenía un"
+                                    android:textColor="#475569"
+                                    android:textSize="10sp" />
+                            </LinearLayout>
+
+                            <TextView
+                                android:id="@+id/tvP1CasosEspecialesResto"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="48dp"
+                                android:lineSpacingExtra="4dp"
+                                android:text="documento dentro (billetera/mochila), cotejar rigurosamente que coincida exactamente con la persona presente. Si no contenía documentos, proceder con máxima exigencia en los pasos 2 y 3."
+                                android:textColor="#475569"
+                                android:textSize="10sp" />
+                        </LinearLayout>
+                    </com.google.android.material.card.MaterialCardView>
+
+                    <!-- ============ PASO 2 ============ -->
+                    <com.google.android.material.card.MaterialCardView
+                        android:id="@+id/cardPaso2"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp"
+                        app:cardBackgroundColor="#FFFFFF"
+                        app:cardCornerRadius="16dp"
+                        app:cardElevation="0dp"
+                        app:strokeColor="#E2E8F0"
+                        app:strokeWidth="1dp">
+
+                        <LinearLayout
+                            android:id="@+id/llPaso2"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:padding="11dp">
+
+                            <LinearLayout
+                                android:id="@+id/rowTituloPaso2"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:baselineAligned="false"
+                                android:gravity="center_vertical"
+                                android:orientation="horizontal">
+
+                                <com.google.android.material.card.MaterialCardView
+                                    android:id="@+id/cardNumeroPaso2"
+                                    android:layout_width="24dp"
+                                    android:layout_height="24dp"
+                                    app:cardBackgroundColor="#BC0D2F"
+                                    app:cardCornerRadius="12dp"
+                                    app:cardElevation="0dp">
+
+                                    <TextView
+                                        android:id="@+id/tvNumeroPaso2"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_gravity="center"
+                                        android:text="2"
+                                        android:textColor="#FFFFFF"
+                                        android:textSize="11sp"
+                                        android:textStyle="bold" />
+                                </com.google.android.material.card.MaterialCardView>
+
+                                <TextView
+                                    android:id="@+id/tvTituloPaso2"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="10dp"
+                                    android:layout_marginEnd="8dp"
+                                    android:layout_weight="1"
+                                    android:text="Validación Ciega de Pertenencia"
+                                    android:textColor="#0F172A"
+                                    android:textSize="11sp"
+                                    android:textStyle="bold" />
+
+                                <com.google.android.material.card.MaterialCardView
+                                    android:id="@+id/cardBadgeCeroExhibicion"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="16dp"
+                                    app:cardBackgroundColor="#FEF3C7"
+                                    app:cardCornerRadius="5dp"
+                                    app:cardElevation="0dp">
+
+                                    <TextView
+                                        android:id="@+id/tvBadgeCeroExhibicion"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="match_parent"
+                                        android:gravity="center"
+                                        android:paddingStart="7dp"
+                                        android:paddingEnd="7dp"
+                                        android:text="Cero Exhibición"
+                                        android:textColor="#92400E"
+                                        android:textSize="9sp"
+                                        android:textStyle="bold" />
+                                </com.google.android.material.card.MaterialCardView>
+                            </LinearLayout>
+
+                            <!-- Caja de advertencia -->
+                            <LinearLayout
+                                android:id="@+id/boxAdvertenciaCeroExhibicion"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="34dp"
+                                android:layout_marginTop="3dp"
+                                android:background="#FEF2F2"
+                                android:orientation="horizontal">
+
+                                <View
+                                    android:id="@+id/viewBordeAdvertencia"
+                                    android:layout_width="2dp"
+                                    android:layout_height="match_parent"
+                                    android:background="#BC0D2F" />
+
+                                <TextView
+                                    android:id="@+id/tvAdvertenciaCeroExhibicion"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:fontFamily="monospace"
+                                    android:lineSpacingExtra="5dp"
+                                    android:paddingStart="8dp"
+                                    android:paddingTop="8dp"
+                                    android:paddingEnd="6dp"
+                                    android:paddingBottom="8dp"
+                                    android:text="⚠⚠ Prohibido terminantemente mostrar o exhibir el bien antes de que el solicitante declare su contenido y señas particulares."
+                                    android:textColor="#991B1B"
+                                    android:textSize="8.5sp" />
+                            </LinearLayout>
+
+                            <!-- Preguntas de Control -->
+                            <LinearLayout
+                                android:id="@+id/rowP2Preguntas"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="48dp"
+                                android:layout_marginTop="7dp"
+                                android:baselineAligned="false"
+                                android:orientation="horizontal">
+
+                                <TextView
+                                    android:id="@+id/tvP2PreguntasLabel"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:lineSpacingExtra="4dp"
+                                    android:text="Preguntas de Control Obligatorias:"
+                                    android:textColor="#0F172A"
+                                    android:textSize="10sp"
+                                    android:textStyle="bold" />
+
+                                <TextView
+                                    android:id="@+id/tvP2PreguntasInicio"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="3dp"
+                                    android:layout_weight="1"
+                                    android:lineSpacingExtra="4dp"
+                                    android:text="Interrogar sobre"
+                                    android:textColor="#475569"
+                                    android:textSize="10sp" />
+                            </LinearLayout>
+
+                            <TextView
+                                android:id="@+id/tvP2PreguntasResto"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="48dp"
+                                android:lineSpacingExtra="4dp"
+                                android:text="color exacto, stickers, marca, abolladuras o llaveros característicos."
+                                android:textColor="#475569"
+                                android:textSize="10sp" />
+
+                            <!-- Equipos Electrónicos -->
+                            <LinearLayout
+                                android:id="@+id/rowP2Equipos"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="48dp"
+                                android:layout_marginTop="7dp"
+                                android:baselineAligned="false"
+                                android:orientation="horizontal">
+
+                                <TextView
+                                    android:id="@+id/tvP2EquiposLabel"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:lineSpacingExtra="4dp"
+                                    android:text="Equipos Electrónicos:"
+                                    android:textColor="#0F172A"
+                                    android:textSize="10sp"
+                                    android:textStyle="bold" />
+
+                                <TextView
+                                    android:id="@+id/tvP2EquiposInicio"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="3dp"
+                                    android:layout_weight="1"
+                                    android:lineSpacingExtra="4dp"
+                                    android:text="En laptops, tablets y"
+                                    android:textColor="#475569"
+                                    android:textSize="10sp" />
+                            </LinearLayout>
+
+                            <TextView
+                                android:id="@+id/tvP2EquiposResto"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="48dp"
+                                android:lineSpacingExtra="4dp"
+                                android:text="smartphones, el usuario debe desbloquear la pantalla mediante su patrón/PIN en presencia del personal o confirmar el fondo de pantalla antes de retirarlo."
+                                android:textColor="#475569"
+                                android:textSize="10sp" />
+                        </LinearLayout>
+                    </com.google.android.material.card.MaterialCardView>
+
+                    <!-- ============ PASO 3 ============ -->
+                    <com.google.android.material.card.MaterialCardView
+                        android:id="@+id/cardPaso3"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp"
+                        app:cardBackgroundColor="#FFFFFF"
+                        app:cardCornerRadius="16dp"
+                        app:cardElevation="0dp"
+                        app:strokeColor="#E2E8F0"
+                        app:strokeWidth="1dp">
+
+                        <LinearLayout
+                            android:id="@+id/llPaso3"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:padding="11dp">
+
+                            <LinearLayout
+                                android:id="@+id/rowTituloPaso3"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:baselineAligned="false"
+                                android:gravity="center_vertical"
+                                android:orientation="horizontal">
+
+                                <com.google.android.material.card.MaterialCardView
+                                    android:id="@+id/cardNumeroPaso3"
+                                    android:layout_width="24dp"
+                                    android:layout_height="24dp"
+                                    app:cardBackgroundColor="#111827"
+                                    app:cardCornerRadius="12dp"
+                                    app:cardElevation="0dp">
+
+                                    <TextView
+                                        android:id="@+id/tvNumeroPaso3"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_gravity="center"
+                                        android:text="3"
+                                        android:textColor="#FFFFFF"
+                                        android:textSize="11sp"
+                                        android:textStyle="bold" />
+                                </com.google.android.material.card.MaterialCardView>
+
+                                <TextView
+                                    android:id="@+id/tvTituloPaso3"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="10dp"
+                                    android:layout_weight="1"
+                                    android:text="Registro de Evidencia Fotográfica Digital"
+                                    android:textColor="#0F172A"
+                                    android:textSize="11sp"
+                                    android:textStyle="bold" />
+                            </LinearLayout>
+
+                            <!-- Fotografía de Identidad -->
+                            <LinearLayout
+                                android:id="@+id/rowP3Fotografia"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="48dp"
+                                android:layout_marginTop="2dp"
+                                android:baselineAligned="false"
+                                android:orientation="horizontal">
+
+                                <TextView
+                                    android:id="@+id/tvP3FotografiaLabel"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:lineSpacingExtra="4dp"
+                                    android:text="Fotografía de Identidad:"
+                                    android:textColor="#0F172A"
+                                    android:textSize="10sp"
+                                    android:textStyle="bold" />
+
+                                <TextView
+                                    android:id="@+id/tvP3FotografiaInicio"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="3dp"
+                                    android:layout_weight="1"
+                                    android:lineSpacingExtra="4dp"
+                                    android:text="Captura nítida y legible del"
+                                    android:textColor="#475569"
+                                    android:textSize="10sp" />
+                            </LinearLayout>
+
+                            <TextView
+                                android:id="@+id/tvP3FotografiaResto"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="48dp"
+                                android:lineSpacingExtra="4dp"
+                                android:text="anverso y reverso del DNI / carné presentado."
+                                android:textColor="#475569"
+                                android:textSize="10sp" />
+
+                            <!-- Ficha Digital -->
+                            <LinearLayout
+                                android:id="@+id/rowP3FichaDigital"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="48dp"
+                                android:layout_marginTop="7dp"
+                                android:baselineAligned="false"
+                                android:orientation="horizontal">
+
+                                <TextView
+                                    android:id="@+id/tvP3FichaDigitalLabel"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:lineSpacingExtra="4dp"
+                                    android:text="Ficha Digital:"
+                                    android:textColor="#0F172A"
+                                    android:textSize="10sp"
+                                    android:textStyle="bold" />
+
+                                <TextView
+                                    android:id="@+id/tvP3FichaDigitalInicio"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="3dp"
+                                    android:layout_weight="1"
+                                    android:lineSpacingExtra="4dp"
+                                    android:text="Cargar el número de documento y código"
+                                    android:textColor="#475569"
+                                    android:textSize="10sp" />
+                            </LinearLayout>
+
+                            <TextView
+                                android:id="@+id/tvP3FichaDigitalResto"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="48dp"
+                                android:lineSpacingExtra="4dp"
+                                android:text="UTP en el portal de custodia de la sede."
+                                android:textColor="#475569"
+                                android:textSize="10sp" />
+
+                            <!-- Reporte de Coincidencia -->
+                            <LinearLayout
+                                android:id="@+id/rowP3Reporte"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="48dp"
+                                android:layout_marginTop="7dp"
+                                android:baselineAligned="false"
+                                android:orientation="horizontal">
+
+                                <TextView
+                                    android:id="@+id/tvP3ReporteLabel"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:lineSpacingExtra="4dp"
+                                    android:text="Reporte de Coincidencia:"
+                                    android:textColor="#0F172A"
+                                    android:textSize="10sp"
+                                    android:textStyle="bold" />
+
+                                <TextView
+                                    android:id="@+id/tvP3ReporteInicio"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="3dp"
+                                    android:layout_weight="1"
+                                    android:lineSpacingExtra="4dp"
+                                    android:text="Marcar los ítems de"
+                                    android:textColor="#475569"
+                                    android:textSize="10sp" />
+                            </LinearLayout>
+
+                            <TextView
+                                android:id="@+id/tvP3ReporteResto"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="48dp"
+                                android:lineSpacingExtra="4dp"
+                                android:text="validación ciega superados favorablemente en el check-list del sistema."
+                                android:textColor="#475569"
+                                android:textSize="10sp" />
+                        </LinearLayout>
+                    </com.google.android.material.card.MaterialCardView>
+
+                    <!-- ============ PASO 4 ============ -->
+                    <com.google.android.material.card.MaterialCardView
+                        android:id="@+id/cardPaso4"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp"
+                        app:cardBackgroundColor="#FFFFFF"
+                        app:cardCornerRadius="16dp"
+                        app:cardElevation="0dp"
+                        app:strokeColor="#E2E8F0"
+                        app:strokeWidth="1dp">
+
+                        <LinearLayout
+                            android:id="@+id/llPaso4"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:padding="11dp">
+
+                            <LinearLayout
+                                android:id="@+id/rowTituloPaso4"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:baselineAligned="false"
+                                android:gravity="center_vertical"
+                                android:orientation="horizontal">
+
+                                <com.google.android.material.card.MaterialCardView
+                                    android:id="@+id/cardNumeroPaso4"
+                                    android:layout_width="24dp"
+                                    android:layout_height="24dp"
+                                    app:cardBackgroundColor="#111827"
+                                    app:cardCornerRadius="12dp"
+                                    app:cardElevation="0dp">
+
+                                    <TextView
+                                        android:id="@+id/tvNumeroPaso4"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_gravity="center"
+                                        android:text="4"
+                                        android:textColor="#FFFFFF"
+                                        android:textSize="11sp"
+                                        android:textStyle="bold" />
+                                </com.google.android.material.card.MaterialCardView>
+
+                                <TextView
+                                    android:id="@+id/tvTituloPaso4"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="10dp"
+                                    android:layout_weight="1"
+                                    android:text="Acta de Conformidad y Entrega Final"
+                                    android:textColor="#0F172A"
+                                    android:textSize="11sp"
+                                    android:textStyle="bold" />
+                            </LinearLayout>
+
+                            <!-- Firma Obligatoria -->
+                            <LinearLayout
+                                android:id="@+id/rowP4Firma"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="48dp"
+                                android:layout_marginTop="2dp"
+                                android:baselineAligned="false"
+                                android:orientation="horizontal">
+
+                                <TextView
+                                    android:id="@+id/tvP4FirmaLabel"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:lineSpacingExtra="4dp"
+                                    android:text="Firma Obligatoria:"
+                                    android:textColor="#0F172A"
+                                    android:textSize="10sp"
+                                    android:textStyle="bold" />
+
+                                <TextView
+                                    android:id="@+id/tvP4FirmaInicio"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="3dp"
+                                    android:layout_weight="1"
+                                    android:lineSpacingExtra="4dp"
+                                    android:text="Suscripción física o digital del Acta de"
+                                    android:textColor="#475569"
+                                    android:textSize="10sp" />
+                            </LinearLayout>
+
+                            <TextView
+                                android:id="@+id/tvP4FirmaResto"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="48dp"
+                                android:lineSpacingExtra="4dp"
+                                android:text="Devolución UTP con fecha y hora exacta."
+                                android:textColor="#475569"
+                                android:textSize="10sp" />
+
+                            <!-- Foto Testimonial -->
+                            <LinearLayout
+                                android:id="@+id/rowP4Foto"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="48dp"
+                                android:layout_marginTop="7dp"
+                                android:baselineAligned="false"
+                                android:orientation="horizontal">
+
+                                <TextView
+                                    android:id="@+id/tvP4FotoLabel"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:lineSpacingExtra="4dp"
+                                    android:text="Foto Testimonial:"
+                                    android:textColor="#0F172A"
+                                    android:textSize="10sp"
+                                    android:textStyle="bold" />
+
+                                <TextView
+                                    android:id="@+id/tvP4FotoInicio"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="3dp"
+                                    android:layout_weight="1"
+                                    android:lineSpacingExtra="4dp"
+                                    android:text="Captura visual de la persona"
+                                    android:textColor="#475569"
+                                    android:textSize="10sp" />
+                            </LinearLayout>
+
+                            <TextView
+                                android:id="@+id/tvP4FotoResto"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="48dp"
+                                android:lineSpacingExtra="4dp"
+                                android:text="recibiendo el bien en la ventanilla de atención / caseta."
+                                android:textColor="#475569"
+                                android:textSize="10sp" />
+
+                            <!-- Cierre de Ticket -->
+                            <LinearLayout
+                                android:id="@+id/rowP4Cierre"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="48dp"
+                                android:layout_marginTop="7dp"
+                                android:baselineAligned="false"
+                                android:orientation="horizontal">
+
+                                <TextView
+                                    android:id="@+id/tvP4CierreLabel"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:lineSpacingExtra="4dp"
+                                    android:text="Cierre de Ticket:"
+                                    android:textColor="#0F172A"
+                                    android:textSize="10sp"
+                                    android:textStyle="bold" />
+
+                                <TextView
+                                    android:id="@+id/tvP4CierreInicio"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="3dp"
+                                    android:layout_weight="1"
+                                    android:lineSpacingExtra="4dp"
+                                    android:text="Conmutar el registro a estado"
+                                    android:textColor="#475569"
+                                    android:textSize="10sp" />
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:id="@+id/rowP4CierreLinea2"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="48dp"
+                                android:baselineAligned="false"
+                                android:gravity="center_vertical"
+                                android:orientation="horizontal">
+
+                                <com.google.android.material.card.MaterialCardView
+                                    android:id="@+id/cardChipDevuelto"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="13dp"
+                                    app:cardBackgroundColor="#DCFCE7"
+                                    app:cardCornerRadius="3dp"
+                                    app:cardElevation="0dp">
+
+                                    <TextView
+                                        android:id="@+id/tvChipDevuelto"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="match_parent"
+                                        android:gravity="center"
+                                        android:paddingStart="5dp"
+                                        android:paddingEnd="5dp"
+                                        android:text="Devuelto / Reclamado"
+                                        android:textColor="#166534"
+                                        android:textSize="9sp"
+                                        android:textStyle="bold" />
+                                </com.google.android.material.card.MaterialCardView>
+
+                                <TextView
+                                    android:id="@+id/tvP4CierreFinal"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="3dp"
+                                    android:layout_weight="1"
+                                    android:lineSpacingExtra="4dp"
+                                    android:text="y archivar expediente."
+                                    android:textColor="#475569"
+                                    android:textSize="10sp" />
+                            </LinearLayout>
+                        </LinearLayout>
+                    </com.google.android.material.card.MaterialCardView>
+
+                    <!-- ============ AVISO DE RESPONSABILIDAD ============ -->
+                    <com.google.android.material.card.MaterialCardView
+                        android:id="@+id/cardAvisoResponsabilidad"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp"
+                        app:cardBackgroundColor="#FEF2F0"
+                        app:cardCornerRadius="16dp"
+                        app:cardElevation="0dp"
+                        app:strokeColor="#FBD5D0"
+                        app:strokeWidth="1dp">
+
+                        <LinearLayout
+                            android:id="@+id/llAvisoResponsabilidad"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:baselineAligned="false"
+                            android:orientation="horizontal"
+                            android:padding="13dp">
+
+                            <ImageView
+                                android:id="@+id/imgAvisoAdvertencia"
+                                android:layout_width="12dp"
+                                android:layout_height="12dp"
+                                android:src="@drawable/ic_warning"
+                                app:tint="#BC0D2F" />
+
+                            <LinearLayout
+                                android:id="@+id/llAvisoTextos"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="10dp"
+                                android:layout_weight="1"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:id="@+id/tvAvisoTitulo"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:letterSpacing="0.05"
+                                    android:text="AVISO DE RESPONSABILIDAD AL PERSONAL"
+                                    android:textColor="#BC0D2F"
+                                    android:textSize="10sp"
+                                    android:textStyle="bold" />
+
+                                <TextView
+                                    android:id="@+id/tvAvisoDescripcion"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="2dp"
+                                    android:lineSpacingExtra="4dp"
+                                    android:text="El incumplimiento de cualquiera de estos pasos acarrea responsabilidad administrativa y laboral. Este protocolo protege tanto la propiedad de los alumnos como su propia labor y transparencia ante la institución."
+                                    android:textColor="#7F1D1D"
+                                    android:textSize="10sp" />
+                            </LinearLayout>
+                        </LinearLayout>
+                    </com.google.android.material.card.MaterialCardView>
+                </LinearLayout>
+            </ScrollView>
+
+            <View
+                android:id="@+id/dividerFooter"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#F1F5F9" />
+
+            <!-- ============ FOOTER ============ -->
+            <LinearLayout
+                android:id="@+id/footerProtocolo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#FFFFFF"
+                android:orientation="vertical"
+                android:paddingStart="16dp"
+                android:paddingTop="16dp"
+                android:paddingEnd="16dp"
+                android:paddingBottom="120px">
+
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/btnAceptarProtocolo"
+                    android:layout_width="match_parent"
+                    android:layout_height="36dp"
+                    android:clickable="true"
+                    android:focusable="true"
+                    app:cardBackgroundColor="#BC0D2F"
+                    app:cardCornerRadius="10dp"
+                    app:cardElevation="0dp">
+
+                    <LinearLayout
+                        android:id="@+id/llBtnAceptar"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:id="@+id/imgBtnAceptarCheck"
+                            android:layout_width="14dp"
+                            android:layout_height="14dp"
+                            android:src="@drawable/ic_check"
+                            app:tint="#FFFFFF" />
+
+                        <TextView
+                            android:id="@+id/tvBtnAceptar"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="9dp"
+                            android:text="Comprendido y Acepto Protocolo"
+                            android:textColor="#FFFFFF"
+                            android:textSize="12sp"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
+
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/btnCerrarVentana"
+                    android:layout_width="match_parent"
+                    android:layout_height="36dp"
+                    android:layout_marginTop="8dp"
+                    android:clickable="true"
+                    android:focusable="true"
+                    app:cardBackgroundColor="#E8ECF3"
+                    app:cardCornerRadius="10dp"
+                    app:cardElevation="0dp">
+
+                    <TextView
+                        android:id="@+id/tvBtnCerrarVentana"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:text="Cerrar Ventana"
+                        android:textColor="#475569"
+                        android:textSize="11sp"
+                        android:textStyle="bold" />
+                </com.google.android.material.card.MaterialCardView>
+            </LinearLayout>
+        </LinearLayout>
+    </com.google.android.material.card.MaterialCardView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
