@@ -25,6 +25,14 @@
         <activity
             android:name=".pantalla_jair_1.PantallaJair1Activity"
             android:exported="false" />
+
+        <activity
+            android:name=".pantalla_jair_2.PantallaJair2Activity"
+            android:exported="false" />
+
+        <activity
+            android:name=".pantalla_jair_3.PantallaJair3Activity"
+            android:exported="false" />
     </application>
 
 </manifest>
