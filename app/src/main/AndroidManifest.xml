@@ -33,6 +33,14 @@
         <activity
             android:name=".pantalla_jair_3.PantallaJair3Activity"
             android:exported="false" />
+        <activity
+            android:name=".pantalla_noe_1.PantallaNoe1Activity"
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize" />
+
+        <activity
+            android:name=".pantalla_noe_2.PantallaNoe2Activity"
+            android:exported="false" />
     </application>
 
 </manifest>
