@@ -2,6 +2,7 @@ package com.Jair.practica.pantalla_jair_1
 
 import android.content.Intent
 import android.widget.Button
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.Jair.practica.R
@@ -31,6 +32,26 @@ class PantallaJair1Controller(private val activity: AppCompatActivity) {
 
         activity.findViewById<android.view.View>(R.id.navCustodia).setOnClickListener {
             activity.startActivity(Intent(activity, PantallaJair3Activity::class.java))
+        }
+
+        resaltarNavItem(R.id.navObjetos)
+    }
+
+    private fun resaltarNavItem(itemActivoId: Int) {
+        val items = listOf(
+            R.id.navObjetos to Pair(R.id.imgNavObjetos, R.id.tvNavObjetos),
+            R.id.navCustodia to Pair(R.id.imgNavCustodia, R.id.tvNavCustodia),
+            R.id.navReportes to Pair(R.id.imgNavReportes, R.id.tvNavReportes),
+            R.id.navPerfil to Pair(R.id.imgNavPerfil, R.id.tvNavPerfil)
+        )
+        items.forEach { (itemId, ids) ->
+            val color = if (itemId == itemActivoId) "#930029" else "#1B1B25"
+            activity.findViewById<ImageView>(ids.first).setColorFilter(
+                android.graphics.Color.parseColor(color)
+            )
+            activity.findViewById<TextView>(ids.second).setTextColor(
+                android.graphics.Color.parseColor(color)
+            )
         }
     }
 }
