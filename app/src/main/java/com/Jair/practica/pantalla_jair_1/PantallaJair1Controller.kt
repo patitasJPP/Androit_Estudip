@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.Jair.practica.R
 import com.Jair.practica.pantalla_jair_2.PantallaJair2Activity
 import com.Jair.practica.pantalla_jair_3.PantallaJair3Activity
+import com.Jair.practica.pantalla_noe_1.PantallaNoe1Activity
 
 class PantallaJair1Controller(private val activity: AppCompatActivity) {
 
@@ -21,8 +22,7 @@ class PantallaJair1Controller(private val activity: AppCompatActivity) {
         activity.findViewById<TextView>(R.id.tvVencenValor).text = vencen.toString()
 
         val botones = listOf(
-            R.id.btnVerFicha1, R.id.btnVerFicha2, R.id.btnVerFicha3,
-            R.id.btnEntregar1, R.id.btnEntregar2, R.id.btnEntregar3
+            R.id.btnVerFicha1, R.id.btnVerFicha2, R.id.btnVerFicha3
         )
         botones.forEach { id ->
             activity.findViewById<Button>(id).setOnClickListener {
@@ -31,6 +31,15 @@ class PantallaJair1Controller(private val activity: AppCompatActivity) {
         }
 
         activity.findViewById<android.view.View>(R.id.navCustodia).setOnClickListener {
+            activity.startActivity(Intent(activity, PantallaJair3Activity::class.java))
+        }
+
+        listOf(R.id.btnEntregar1, R.id.btnEntregar2, R.id.btnEntregar3).forEach { id ->
+            activity.findViewById<Button>(id).setOnClickListener {
+                activity.startActivity(Intent(activity, PantallaNoe1Activity::class.java))
+            }
+        }
+        activity.findViewById<android.view.View>(R.id.navReportes).setOnClickListener {
             activity.startActivity(Intent(activity, PantallaJair3Activity::class.java))
         }
 
