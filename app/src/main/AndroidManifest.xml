@@ -12,7 +12,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Practica">
         <activity
-            android:name=".MainActivity"
+            android:name=".eleccion_categoria.MainActivity"
             android:exported="true"
             android:windowSoftInputMode="adjustResize">
             <intent-filter>
@@ -32,6 +32,10 @@
 
         <activity
             android:name=".pantalla_jair_3.PantallaJair3Activity"
+            android:exported="false" />
+
+        <activity
+            android:name=".login.LoginActivity"
             android:exported="false" />
     </application>
 

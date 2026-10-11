@@ -1,0 +1,395 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/rootSeleccionRol"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F9F9FF">
+
+    <!-- ===================== HEADER ===================== -->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/headerContainer"
+        android:layout_width="0dp"
+        android:layout_height="66dp"
+        android:background="#F9F9FF"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/imgLogoUtp"
+            android:layout_width="36dp"
+            android:layout_height="34dp"
+            android:layout_marginStart="16dp"
+            android:contentDescription="Logo UTP"
+            android:scaleType="fitCenter"
+            android:src="@drawable/logo_utp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <LinearLayout
+            android:id="@+id/llHeaderTextos"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@id/imgLogoUtp"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                android:id="@+id/tvTituloApp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="sans-serif"
+                android:text="Objetos Perdidos"
+                android:textColor="#131B2E"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tvSubtituloApp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="1dp"
+                android:fontFamily="monospace"
+                android:letterSpacing="0.05"
+                android:text="UTP • CAMPUS ATE"
+                android:textColor="#5B6070"
+                android:textSize="10sp" />
+        </LinearLayout>
+
+        <View
+            android:id="@+id/dividerHeader"
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:background="#E4E9F7"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <!-- ===================== CHIP IDENTIFICACIÓN ===================== -->
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/chipIdentificacion"
+        android:layout_width="wrap_content"
+        android:layout_height="20dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="40dp"
+        app:cardBackgroundColor="#FCE8EB"
+        app:cardCornerRadius="10dp"
+        app:cardElevation="0dp"
+        app:strokeWidth="0dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/headerContainer">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingStart="11dp"
+            android:paddingEnd="11dp">
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/dotIdentificacion"
+                android:layout_width="6dp"
+                android:layout_height="6dp"
+                app:cardBackgroundColor="#BA0C2F"
+                app:cardCornerRadius="3dp"
+                app:cardElevation="0dp"
+                app:strokeWidth="0dp" />
+
+            <TextView
+                android:id="@+id/tvChipIdentificacion"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:fontFamily="monospace"
+                android:letterSpacing="0.06"
+                android:text="IDENTIFICACIÓN INSTITUCIONAL"
+                android:textColor="#BA0C2F"
+                android:textSize="10sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+    </com.google.android.material.card.MaterialCardView>
+
+    <!-- ===================== TÍTULO Y DESCRIPCIÓN ===================== -->
+    <TextView
+        android:id="@+id/tvTitulo"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="16dp"
+        android:fontFamily="sans-serif"
+        android:text="¿Quién eres?"
+        android:textColor="#131B2E"
+        android:textSize="28sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/chipIdentificacion" />
+
+    <TextView
+        android:id="@+id/tvDescripcion"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginEnd="16dp"
+        android:fontFamily="sans-serif"
+        android:lineSpacingExtra="3dp"
+        android:text="Selecciona tu perfil o rol institucional para ingresar a tu entorno de trabajo correspondiente."
+        android:textColor="#5B6070"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvTitulo" />
+
+    <!-- ===================== CARD HALLADOR ===================== -->
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/cardRolHallador"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="16dp"
+        android:clickable="true"
+        android:focusable="true"
+        app:cardBackgroundColor="#F0F3FF"
+        app:cardCornerRadius="12dp"
+        app:cardElevation="0dp"
+        app:strokeWidth="0dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvDescripcion">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="108dp"
+            android:paddingStart="28dp"
+            android:paddingTop="18dp"
+            android:paddingEnd="16dp"
+            android:paddingBottom="18dp">
+
+            <ImageView
+                android:id="@+id/imgIconoHallador"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:contentDescription="Ícono hallador"
+                android:src="@drawable/ic_hallador"
+                android:tint="#131B2E"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <LinearLayout
+                android:id="@+id/llTextoHallador"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="26dp"
+                android:layout_marginEnd="8dp"
+                android:orientation="vertical"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/rbHallador"
+                app:layout_constraintHorizontal_bias="0"
+                app:layout_constraintStart_toEndOf="@id/imgIconoHallador"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintWidth_max="140dp">
+
+                <TextView
+                    android:id="@+id/tvTituloHallador"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="sans-serif"
+                    android:text="Hallador"
+                    android:textColor="#131B2E"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tvDescripcionHallador"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:fontFamily="sans-serif"
+                    android:lineSpacingExtra="2dp"
+                    android:text="Persona que encontró y reportó el hallazgo de algún objeto perdido"
+                    android:textColor="#5B6070"
+                    android:textSize="12sp" />
+            </LinearLayout>
+
+            <com.google.android.material.radiobutton.MaterialRadioButton
+                android:id="@+id/rbHallador"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:minWidth="0dp"
+                android:minHeight="0dp"
+                android:padding="0dp"
+                app:buttonTint="#131B2E"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </com.google.android.material.card.MaterialCardView>
+
+    <!-- ===================== CARD SERVICIO ===================== -->
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/cardRolServicio"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="16dp"
+        android:clickable="true"
+        android:focusable="true"
+        app:cardBackgroundColor="#F0F3FF"
+        app:cardCornerRadius="12dp"
+        app:cardElevation="0dp"
+        app:strokeWidth="0dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/cardRolHallador">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="108dp"
+            android:paddingStart="28dp"
+            android:paddingTop="18dp"
+            android:paddingEnd="16dp"
+            android:paddingBottom="18dp">
+
+            <ImageView
+                android:id="@+id/imgIconoServicio"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:contentDescription="Ícono servicio"
+                android:src="@drawable/ic_servicio"
+                android:tint="#131B2E"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <LinearLayout
+                android:id="@+id/llTextoServicio"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="26dp"
+                android:layout_marginEnd="8dp"
+                android:orientation="vertical"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/rbServicio"
+                app:layout_constraintHorizontal_bias="0"
+                app:layout_constraintStart_toEndOf="@id/imgIconoServicio"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintWidth_max="140dp">
+
+                <TextView
+                    android:id="@+id/tvTituloServicio"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="sans-serif"
+                    android:text="Servicio"
+                    android:textColor="#131B2E"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tvDescripcionServicio"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:fontFamily="sans-serif"
+                    android:lineSpacingExtra="2dp"
+                    android:text="Caseta central, custodia de objetos y atención general"
+                    android:textColor="#5B6070"
+                    android:textSize="12sp" />
+            </LinearLayout>
+
+            <com.google.android.material.radiobutton.MaterialRadioButton
+                android:id="@+id/rbServicio"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:minWidth="0dp"
+                android:minHeight="0dp"
+                android:padding="0dp"
+                app:buttonTint="#131B2E"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </com.google.android.material.card.MaterialCardView>
+
+    <!-- ===================== BOTÓN CONTINUAR ===================== -->
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/btnContinuar"
+        android:layout_width="0dp"
+        android:layout_height="52dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="12dp"
+        android:clickable="true"
+        android:focusable="true"
+        android:outlineAmbientShadowColor="#33BA0C2F"
+        android:outlineSpotShadowColor="#66BA0C2F"
+        app:cardBackgroundColor="#BA0C2F"
+        app:cardCornerRadius="12dp"
+        app:cardElevation="4dp"
+        app:strokeWidth="0dp"
+        app:layout_constraintBottom_toTopOf="@id/tvNotaPerfil"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:targetApi="p">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tvBtnContinuar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="sans-serif"
+                android:text="Continuar"
+                android:textColor="#FFFFFF"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <ImageView
+                android:id="@+id/imgFlechaContinuar"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_marginStart="4dp"
+                android:contentDescription="Flecha continuar"
+                android:src="@drawable/ic_arrow_right"
+                android:tint="#FFFFFF" />
+        </LinearLayout>
+    </com.google.android.material.card.MaterialCardView>
+
+    <!-- ===================== NOTA INFERIOR ===================== -->
+    <TextView
+        android:id="@+id/tvNotaPerfil"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginBottom="22dp"
+        android:fontFamily="monospace"
+        android:gravity="center"
+        android:letterSpacing="0.05"
+        android:lineSpacingExtra="2dp"
+        android:text="Podrás cambiar de perfil en cualquier momento desde los ajustes."
+        android:textColor="#5B6070"
+        android:textSize="10sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
