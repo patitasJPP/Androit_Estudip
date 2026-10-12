@@ -77,13 +77,13 @@
         android:layout_width="wrap_content"
         android:layout_height="20dp"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="30dp"
         app:cardBackgroundColor="#FCE8EB"
         app:cardCornerRadius="10dp"
         app:cardElevation="0dp"
-        app:strokeWidth="0dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/headerContainer">
+        app:layout_constraintTop_toBottomOf="@id/headerContainer"
+        app:strokeWidth="0dp">
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -149,229 +149,60 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tvTitulo" />
 
-    <!-- ===================== CARD HALLADOR ===================== -->
-    <com.google.android.material.card.MaterialCardView
-        android:id="@+id/cardRolHallador"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="32dp"
-        android:layout_marginEnd="16dp"
-        android:clickable="true"
-        android:focusable="true"
-        app:cardBackgroundColor="#F0F3FF"
-        app:cardCornerRadius="12dp"
-        app:cardElevation="0dp"
-        app:strokeWidth="0dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tvDescripcion">
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:minHeight="108dp"
-            android:paddingStart="28dp"
-            android:paddingTop="18dp"
-            android:paddingEnd="16dp"
-            android:paddingBottom="18dp">
-
-            <ImageView
-                android:id="@+id/imgIconoHallador"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:contentDescription="Ícono hallador"
-                android:src="@drawable/ic_hallador"
-                android:tint="#131B2E"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <LinearLayout
-                android:id="@+id/llTextoHallador"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="26dp"
-                android:layout_marginEnd="8dp"
-                android:orientation="vertical"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@id/rbHallador"
-                app:layout_constraintHorizontal_bias="0"
-                app:layout_constraintStart_toEndOf="@id/imgIconoHallador"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintWidth_max="140dp">
-
-                <TextView
-                    android:id="@+id/tvTituloHallador"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="sans-serif"
-                    android:text="Hallador"
-                    android:textColor="#131B2E"
-                    android:textSize="16sp"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:id="@+id/tvDescripcionHallador"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="4dp"
-                    android:fontFamily="sans-serif"
-                    android:lineSpacingExtra="2dp"
-                    android:text="Persona que encontró y reportó el hallazgo de algún objeto perdido"
-                    android:textColor="#5B6070"
-                    android:textSize="12sp" />
-            </LinearLayout>
-
-            <com.google.android.material.radiobutton.MaterialRadioButton
-                android:id="@+id/rbHallador"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:minWidth="0dp"
-                android:minHeight="0dp"
-                android:padding="0dp"
-                app:buttonTint="#131B2E"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
-    </com.google.android.material.card.MaterialCardView>
-
-    <!-- ===================== CARD SERVICIO ===================== -->
-    <com.google.android.material.card.MaterialCardView
-        android:id="@+id/cardRolServicio"
+    <!-- ===================== SELECCIÓN DE ROL (única) ===================== -->
+    <RadioGroup
+        android:id="@+id/rgRol"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="20dp"
         android:layout_marginEnd="16dp"
-        android:clickable="true"
-        android:focusable="true"
-        app:cardBackgroundColor="#F0F3FF"
-        app:cardCornerRadius="12dp"
-        app:cardElevation="0dp"
-        app:strokeWidth="0dp"
+        android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/cardRolHallador">
+        app:layout_constraintTop_toBottomOf="@id/tvDescripcion">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <RadioButton
+            android:id="@+id/rbHallador"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:minHeight="108dp"
-            android:paddingStart="28dp"
-            android:paddingTop="18dp"
-            android:paddingEnd="16dp"
-            android:paddingBottom="18dp">
+            android:paddingStart="8dp"
+            android:paddingTop="12dp"
+            android:paddingEnd="8dp"
+            android:paddingBottom="12dp"
+            android:text="Hallador\nPersona que encontró y reportó el hallazgo de algún objeto perdido"
+            android:textColor="#131B2E"
+            android:textSize="14sp" />
 
-            <ImageView
-                android:id="@+id/imgIconoServicio"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:contentDescription="Ícono servicio"
-                android:src="@drawable/ic_servicio"
-                android:tint="#131B2E"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+        <RadioButton
+            android:id="@+id/rbServicio"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingStart="8dp"
+            android:paddingTop="12dp"
+            android:paddingEnd="8dp"
+            android:paddingBottom="12dp"
+            android:text="Servicio\nCaseta central, custodia de objetos y atención general"
+            android:textColor="#131B2E"
+            android:textSize="14sp" />
+    </RadioGroup>
 
-            <LinearLayout
-                android:id="@+id/llTextoServicio"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="26dp"
-                android:layout_marginEnd="8dp"
-                android:orientation="vertical"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@id/rbServicio"
-                app:layout_constraintHorizontal_bias="0"
-                app:layout_constraintStart_toEndOf="@id/imgIconoServicio"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintWidth_max="140dp">
-
-                <TextView
-                    android:id="@+id/tvTituloServicio"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="sans-serif"
-                    android:text="Servicio"
-                    android:textColor="#131B2E"
-                    android:textSize="16sp"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:id="@+id/tvDescripcionServicio"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="4dp"
-                    android:fontFamily="sans-serif"
-                    android:lineSpacingExtra="2dp"
-                    android:text="Caseta central, custodia de objetos y atención general"
-                    android:textColor="#5B6070"
-                    android:textSize="12sp" />
-            </LinearLayout>
-
-            <com.google.android.material.radiobutton.MaterialRadioButton
-                android:id="@+id/rbServicio"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:minWidth="0dp"
-                android:minHeight="0dp"
-                android:padding="0dp"
-                app:buttonTint="#131B2E"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
-    </com.google.android.material.card.MaterialCardView>
-
-    <!-- ===================== BOTÓN CONTINUAR ===================== -->
-    <com.google.android.material.card.MaterialCardView
+    <!-- ===================== BOTÓN CONTINUAR (simple) ===================== -->
+    <Button
         android:id="@+id/btnContinuar"
         android:layout_width="0dp"
         android:layout_height="52dp"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="12dp"
-        android:clickable="true"
-        android:focusable="true"
-        android:outlineAmbientShadowColor="#33BA0C2F"
-        android:outlineSpotShadowColor="#66BA0C2F"
-        app:cardBackgroundColor="#BA0C2F"
-        app:cardCornerRadius="12dp"
-        app:cardElevation="4dp"
-        app:strokeWidth="0dp"
+        android:backgroundTint="#BA0C2F"
+        android:text="Continuar"
+        android:textAllCaps="false"
+        android:textColor="#FFFFFF"
+        android:textSize="16sp"
         app:layout_constraintBottom_toTopOf="@id/tvNotaPerfil"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        tools:targetApi="p">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:orientation="horizontal">
-
-            <TextView
-                android:id="@+id/tvBtnContinuar"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="sans-serif"
-                android:text="Continuar"
-                android:textColor="#FFFFFF"
-                android:textSize="16sp"
-                android:textStyle="bold" />
-
-            <ImageView
-                android:id="@+id/imgFlechaContinuar"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:layout_marginStart="4dp"
-                android:contentDescription="Flecha continuar"
-                android:src="@drawable/ic_arrow_right"
-                android:tint="#FFFFFF" />
-        </LinearLayout>
-    </com.google.android.material.card.MaterialCardView>
+        app:layout_constraintStart_toStartOf="parent" />
 
     <!-- ===================== NOTA INFERIOR ===================== -->
     <TextView

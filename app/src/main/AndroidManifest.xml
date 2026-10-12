@@ -35,6 +35,18 @@
             android:exported="false" />
 
         <activity
+            android:name=".pantalla_noe_1.PantallaNoe1Activity"
+            android:exported="false" />
+
+        <activity
+            android:name=".pantalla_noe_2.PantallaNoe2Activity"
+            android:exported="false" />
+
+        <activity
+            android:name=".pantalla_hallazgo.PantallaHallazgoActivity"
+            android:exported="false" />
+
+        <activity
             android:name=".login.LoginActivity"
             android:exported="false" />
     </application>

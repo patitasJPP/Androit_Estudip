@@ -2,1818 +2,452 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/rootLogin"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F5F6F8"
-    tools:ignore="HardcodedText,ContentDescription,UseCompoundDrawables">
+    android:background="#F8F9FF">
 
-    <!-- BARRA ROJA SUPERIOR -->
-    <View
-        android:id="@+id/viewBarraRoja"
-        android:layout_width="0dp"
-        android:layout_height="3dp"
-        android:background="#B71C1C"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    <!-- GUIDELINES -->
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideStart"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="21dp" />
 
-    <!-- HEADER -->
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/headerContainer"
-        android:layout_width="0dp"
-        android:layout_height="40dp"
-        android:background="#FFFFFF"
-        android:paddingStart="16dp"
-        android:paddingEnd="16dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/viewBarraRoja">
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideEnd"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_end="21dp" />
 
-        <ImageView
-            android:id="@+id/imgVolver"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:src="@drawable/ic_arrow_back"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:tint="#111827" />
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideInfoTop"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.705" />
 
-        <TextView
-            android:id="@+id/tvVolver"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:fontFamily="sans-serif"
-            android:letterSpacing="0.05"
-            android:text="VOLVER"
-            android:textColor="#111827"
-            android:textSize="12sp"
-            android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toEndOf="@id/imgVolver"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:id="@+id/tvModuloHallazgos"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fontFamily="sans-serif"
-            android:letterSpacing="0.08"
-            android:text="MÓDULO HALLAZGOS"
-            android:textColor="#9CA3AF"
-            android:textSize="9sp"
-            android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <View
-        android:id="@+id/viewDivisorHeader"
-        android:layout_width="0dp"
-        android:layout_height="1dp"
-        android:background="#E5E7EB"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/headerContainer" />
-
-    <!-- CONTENIDO CON SCROLL -->
-    <androidx.core.widget.NestedScrollView
-        android:id="@+id/scrollContenido"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:fillViewport="true"
-        android:overScrollMode="never"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/viewDivisorHeader">
+    <!-- BADGE ACCESO INSTITUCIONAL -->
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/cardBadgeAcceso"
+        android:layout_width="wrap_content"
+        android:layout_height="26dp"
+        android:layout_marginTop="12dp"
+        app:cardBackgroundColor="#FFF0F2"
+        app:cardCornerRadius="13dp"
+        app:cardElevation="0dp"
+        app:layout_constraintStart_toStartOf="@id/guideStart"
+        app:layout_constraintTop_toTopOf="parent"
+        app:strokeColor="#FBCDD3"
+        app:strokeWidth="1dp">
 
         <LinearLayout
-            android:id="@+id/contenedorContenido"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:clipChildren="false"
-            android:clipToPadding="false"
-            android:orientation="vertical"
-            android:paddingStart="15dp"
-            android:paddingTop="15dp"
-            android:paddingEnd="15dp"
-            android:paddingBottom="24dp">
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingStart="12dp"
+            android:paddingEnd="12dp">
 
-            <!-- ============ CARD 1: ENCABEZADO ============ -->
             <com.google.android.material.card.MaterialCardView
-                android:id="@+id/cardEncabezado"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="16dp"
-                app:cardBackgroundColor="#FFFFFF"
-                app:cardCornerRadius="14dp"
-                app:cardElevation="1dp"
-                app:strokeColor="#E5E7EB"
-                app:strokeWidth="1dp">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:padding="15dp">
-
-                    <com.google.android.material.card.MaterialCardView
-                        android:id="@+id/cardIconoModulo"
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
-                        app:cardBackgroundColor="#F1F3F5"
-                        app:cardCornerRadius="10dp"
-                        app:cardElevation="0dp"
-                        app:strokeColor="#E5E7EB"
-                        app:strokeWidth="1dp">
-
-                        <ImageView
-                            android:id="@+id/imgIconoModulo"
-                            android:layout_width="20dp"
-                            android:layout_height="20dp"
-                            android:layout_gravity="center"
-                            android:src="@drawable/ic_buscar_documento"
-                            app:tint="#111827" />
-                    </com.google.android.material.card.MaterialCardView>
-
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="12dp"
-                        android:layout_weight="1"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:id="@+id/tvTituloRegistrar"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="sans-serif"
-                            android:text="Registrar Objeto Encontrado"
-                            android:textColor="#111827"
-                            android:textSize="14sp"
-                            android:textStyle="bold" />
-
-                        <TextView
-                            android:id="@+id/tvSubtituloRegistrar"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="4dp"
-                            android:fontFamily="sans-serif"
-                            android:lineSpacingExtra="4dp"
-                            android:text="Completa los datos para ingresar el bien al sistema oficial de custodia y trazabilidad del campus."
-                            android:textColor="#6B7280"
-                            android:textSize="11sp" />
-                    </LinearLayout>
-                </LinearLayout>
-            </com.google.android.material.card.MaterialCardView>
-
-            <!-- ============ CARD 2: IDENTIFICADOR ============ -->
-            <com.google.android.material.card.MaterialCardView
-                android:id="@+id/cardIdentificador"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="16dp"
-                app:cardBackgroundColor="#FFFFFF"
-                app:cardCornerRadius="14dp"
-                app:cardElevation="1dp"
-                app:strokeColor="#E5E7EB"
-                app:strokeWidth="1dp">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:padding="15dp">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="center_vertical"
-                        android:orientation="horizontal">
-
-                        <TextView
-                            android:id="@+id/tvTituloIdentificador"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:fontFamily="sans-serif"
-                            android:text="Identificador &amp; Custodia Temporal *"
-                            android:textColor="#111827"
-                            android:textSize="10sp"
-                            android:textStyle="bold" />
-
-                        <com.google.android.material.card.MaterialCardView
-                            android:id="@+id/badgeObligatorioIdentificador"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            app:cardBackgroundColor="#B71C1C"
-                            app:cardCornerRadius="3dp"
-                            app:cardElevation="0dp"
-                            app:strokeWidth="0dp">
-
-                            <TextView
-                                android:id="@+id/tvBadgeObligatorioIdentificador"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:fontFamily="sans-serif"
-                                android:letterSpacing="0.05"
-                                android:paddingStart="8dp"
-                                android:paddingTop="3dp"
-                                android:paddingEnd="8dp"
-                                android:paddingBottom="3dp"
-                                android:text="OBLIGATORIO"
-                                android:textColor="#FFFFFF"
-                                android:textSize="8sp"
-                                android:textStyle="bold" />
-                        </com.google.android.material.card.MaterialCardView>
-                    </LinearLayout>
-
-                    <TextView
-                        android:id="@+id/tvLabelCodigoUnico"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
-                        android:fontFamily="sans-serif"
-                        android:letterSpacing="0.05"
-                        android:text="CÓDIGO ÚNICO:"
-                        android:textColor="#9CA3AF"
-                        android:textSize="9sp"
-                        android:textStyle="bold" />
-
-                    <!-- DATO DESDE BASE DE DATOS -->
-                    <TextView
-                        android:id="@+id/tvCodigoUnico"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="4dp"
-                        android:fontFamily="monospace"
-                        android:text="#OBJ-2026-08492"
-                        android:textColor="#111827"
-                        android:textSize="13sp"
-                        android:textStyle="bold" />
-                </LinearLayout>
-            </com.google.android.material.card.MaterialCardView>
-
-            <!-- ============ CARD 3: FOTO ============ -->
-            <com.google.android.material.card.MaterialCardView
-                android:id="@+id/cardFoto"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="16dp"
-                app:cardBackgroundColor="#FFFFFF"
-                app:cardCornerRadius="14dp"
-                app:cardElevation="1dp"
-                app:strokeColor="#E5E7EB"
-                app:strokeWidth="1dp">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:padding="15dp">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="center_vertical"
-                        android:orientation="horizontal">
-
-                        <TextView
-                            android:id="@+id/tvTituloFoto"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:fontFamily="sans-serif"
-                            android:text="Foto del objeto encontrado *"
-                            android:textColor="#111827"
-                            android:textSize="10sp"
-                            android:textStyle="bold" />
-
-                        <com.google.android.material.card.MaterialCardView
-                            android:id="@+id/badgeObligatorioFoto"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            app:cardBackgroundColor="#B71C1C"
-                            app:cardCornerRadius="3dp"
-                            app:cardElevation="0dp"
-                            app:strokeWidth="0dp">
-
-                            <TextView
-                                android:id="@+id/tvBadgeObligatorioFoto"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:fontFamily="sans-serif"
-                                android:letterSpacing="0.05"
-                                android:paddingStart="8dp"
-                                android:paddingTop="3dp"
-                                android:paddingEnd="8dp"
-                                android:paddingBottom="3dp"
-                                android:text="OBLIGATORIO"
-                                android:textColor="#FFFFFF"
-                                android:textSize="8sp"
-                                android:textStyle="bold" />
-                        </com.google.android.material.card.MaterialCardView>
-                    </LinearLayout>
-
-                    <!-- BORDE PUNTEADO: Material Components no lo soporta sin drawable; se usa borde sólido -->
-                    <com.google.android.material.card.MaterialCardView
-                        android:id="@+id/cardZonaFoto"
-                        android:layout_width="match_parent"
-                        android:layout_height="169dp"
-                        android:layout_marginTop="10dp"
-                        android:clickable="true"
-                        android:focusable="true"
-                        app:cardBackgroundColor="#FFFFFF"
-                        app:cardCornerRadius="12dp"
-                        app:cardElevation="0dp"
-                        app:strokeColor="#D1D5DB"
-                        app:strokeWidth="1dp">
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:gravity="center_horizontal"
-                            android:orientation="vertical"
-                            android:paddingTop="25dp"
-                            android:paddingBottom="19dp">
-
-                            <com.google.android.material.card.MaterialCardView
-                                android:id="@+id/cardCirculoCamara"
-                                android:layout_width="30dp"
-                                android:layout_height="30dp"
-                                app:cardBackgroundColor="#FFFFFF"
-                                app:cardCornerRadius="15dp"
-                                app:cardElevation="0dp"
-                                app:strokeColor="#E5E7EB"
-                                app:strokeWidth="1dp">
-
-                                <ImageView
-                                    android:id="@+id/imgCamaraCirculo"
-                                    android:layout_width="16dp"
-                                    android:layout_height="16dp"
-                                    android:layout_gravity="center"
-                                    android:src="@drawable/ic_camera"
-                                    app:tint="#374151" />
-                            </com.google.android.material.card.MaterialCardView>
-
-                            <TextView
-                                android:id="@+id/tvTomarFoto"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="14dp"
-                                android:fontFamily="sans-serif"
-                                android:text="Tomar foto o subir imagen"
-                                android:textColor="#111827"
-                                android:textSize="11sp"
-                                android:textStyle="bold" />
-
-                            <TextView
-                                android:id="@+id/tvCapturaNitida"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginStart="30dp"
-                                android:layout_marginTop="6dp"
-                                android:layout_marginEnd="30dp"
-                                android:fontFamily="sans-serif"
-                                android:gravity="center"
-                                android:lineSpacingExtra="3dp"
-                                android:text="Captura nítida donde se aprecien detalles, marca o color"
-                                android:textColor="#6B7280"
-                                android:textSize="9sp" />
-
-                            <com.google.android.material.card.MaterialCardView
-                                android:id="@+id/btnAbrirCamara"
-                                android:layout_width="117dp"
-                                android:layout_height="29dp"
-                                android:layout_marginTop="7dp"
-                                android:clickable="true"
-                                android:focusable="true"
-                                app:cardBackgroundColor="#FEF2F2"
-                                app:cardCornerRadius="8dp"
-                                app:cardElevation="0dp"
-                                app:strokeColor="#B71C1C"
-                                app:strokeWidth="1dp">
-
-                                <LinearLayout
-                                    android:layout_width="match_parent"
-                                    android:layout_height="match_parent"
-                                    android:gravity="center"
-                                    android:orientation="horizontal">
-
-                                    <ImageView
-                                        android:id="@+id/imgIconoAbrirCamara"
-                                        android:layout_width="13dp"
-                                        android:layout_height="13dp"
-                                        android:src="@drawable/ic_camera"
-                                        app:tint="#B71C1C" />
-
-                                    <TextView
-                                        android:id="@+id/tvAbrirCamara"
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:layout_marginStart="10dp"
-                                        android:fontFamily="sans-serif"
-                                        android:gravity="center"
-                                        android:text="Abrir\nCámara"
-                                        android:textColor="#B71C1C"
-                                        android:textSize="10sp"
-                                        android:textStyle="bold" />
-                                </LinearLayout>
-                            </com.google.android.material.card.MaterialCardView>
-                        </LinearLayout>
-                    </com.google.android.material.card.MaterialCardView>
-                </LinearLayout>
-            </com.google.android.material.card.MaterialCardView>
-
-            <!-- ============ CARD 4: DESCRIPCIÓN ============ -->
-            <com.google.android.material.card.MaterialCardView
-                android:id="@+id/cardDescripcion"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="16dp"
-                app:cardBackgroundColor="#FFFFFF"
-                app:cardCornerRadius="14dp"
-                app:cardElevation="1dp"
-                app:strokeColor="#E5E7EB"
-                app:strokeWidth="1dp">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:padding="15dp">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="center_vertical"
-                        android:orientation="horizontal">
-
-                        <TextView
-                            android:id="@+id/tvTituloDescripcion"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:fontFamily="sans-serif"
-                            android:text="Descripción del objeto"
-                            android:textColor="#111827"
-                            android:textSize="10sp"
-                            android:textStyle="bold" />
-
-                        <com.google.android.material.card.MaterialCardView
-                            android:id="@+id/badgeOpcional"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            app:cardBackgroundColor="#F1F3F5"
-                            app:cardCornerRadius="3dp"
-                            app:cardElevation="0dp"
-                            app:strokeWidth="0dp">
-
-                            <TextView
-                                android:id="@+id/tvBadgeOpcional"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:fontFamily="sans-serif"
-                                android:letterSpacing="0.05"
-                                android:paddingStart="8dp"
-                                android:paddingTop="3dp"
-                                android:paddingEnd="8dp"
-                                android:paddingBottom="3dp"
-                                android:text="OPCIONAL"
-                                android:textColor="#6B7280"
-                                android:textSize="8sp"
-                                android:textStyle="bold" />
-                        </com.google.android.material.card.MaterialCardView>
-                    </LinearLayout>
-
-                    <com.google.android.material.card.MaterialCardView
-                        android:id="@+id/cardCampoDescripcion"
-                        android:layout_width="match_parent"
-                        android:layout_height="64dp"
-                        android:layout_marginTop="10dp"
-                        app:cardBackgroundColor="#F5F6FA"
-                        app:cardCornerRadius="8dp"
-                        app:cardElevation="0dp"
-                        app:strokeColor="#E5E7EB"
-                        app:strokeWidth="1dp">
-
-                        <EditText
-                            android:id="@+id/etDescripcionObjeto"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:background="@null"
-                            android:fontFamily="sans-serif"
-                            android:gravity="top|start"
-                            android:hint="Ej. Mochila negra marca Porta con llavero azul, contiene cuaderno espiral y estuche de lápices..."
-                            android:inputType="textMultiLine"
-                            android:lineSpacingExtra="3dp"
-                            android:maxLength="240"
-                            android:paddingStart="12dp"
-                            android:paddingTop="10dp"
-                            android:paddingEnd="12dp"
-                            android:paddingBottom="10dp"
-                            android:textColor="#111827"
-                            android:textColorHint="#6B7280"
-                            android:textSize="10.5sp" />
-                    </com.google.android.material.card.MaterialCardView>
-
-                    <TextView
-                        android:id="@+id/tvContadorDescripcion"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="6dp"
-                        android:fontFamily="monospace"
-                        android:gravity="end"
-                        android:text="0/240"
-                        android:textColor="#9CA3AF"
-                        android:textSize="9sp" />
-                </LinearLayout>
-            </com.google.android.material.card.MaterialCardView>
-
-            <!-- ============ CARD 5: LUGAR DONDE SE ENCONTRÓ ============ -->
-            <com.google.android.material.card.MaterialCardView
-                android:id="@+id/cardLugar"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="16dp"
-                app:cardBackgroundColor="#FFFFFF"
-                app:cardCornerRadius="14dp"
-                app:cardElevation="1dp"
-                app:strokeColor="#E5E7EB"
-                app:strokeWidth="1dp">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:padding="15dp">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="center_vertical"
-                        android:orientation="horizontal">
-
-                        <TextView
-                            android:id="@+id/tvTituloLugar"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:fontFamily="sans-serif"
-                            android:text="Lugar donde se encontró *"
-                            android:textColor="#111827"
-                            android:textSize="10sp"
-                            android:textStyle="bold" />
-
-                        <TextView
-                            android:id="@+id/tvCampusCentral"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="sans-serif"
-                            android:letterSpacing="0.05"
-                            android:text="CAMPUS CENTRAL"
-                            android:textColor="#9CA3AF"
-                            android:textSize="9sp"
-                            android:textStyle="bold" />
-                    </LinearLayout>
-
-                    <!-- PISO DEL CAMPUS -->
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="16dp"
-                        android:gravity="center_vertical"
-                        android:orientation="horizontal">
-
-                        <TextView
-                            android:id="@+id/tvLabelPisoCampus"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:fontFamily="sans-serif"
-                            android:letterSpacing="0.05"
-                            android:text="PISO DEL CAMPUS:"
-                            android:textColor="#6B7280"
-                            android:textSize="9sp"
-                            android:textStyle="bold" />
-
-                        <TextView
-                            android:id="@+id/tvPisoSeleccionado"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="sans-serif"
-                            android:text="Piso 6"
-                            android:textColor="#B71C1C"
-                            android:textSize="11sp"
-                            android:textStyle="bold" />
-                    </LinearLayout>
-
-                    <!-- FILA PISOS 1 -->
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="9dp"
-                        android:orientation="horizontal">
-
-                        <com.google.android.material.card.MaterialCardView
-                            android:id="@+id/chipPiso1"
-                            android:layout_width="0dp"
-                            android:layout_height="28dp"
-                            android:layout_marginEnd="8dp"
-                            android:layout_weight="1"
-                            android:clickable="true"
-                            android:focusable="true"
-                            app:cardBackgroundColor="#F1F4F9"
-                            app:cardCornerRadius="6dp"
-                            app:cardElevation="0dp"
-                            app:strokeWidth="0dp">
-
-                            <TextView
-                                android:id="@+id/tvPiso1"
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:fontFamily="sans-serif-medium"
-                                android:gravity="center"
-                                android:text="Piso 1"
-                                android:textColor="#374151"
-                                android:textSize="10.5sp" />
-                        </com.google.android.material.card.MaterialCardView>
-
-                        <com.google.android.material.card.MaterialCardView
-                            android:id="@+id/chipPiso2"
-                            android:layout_width="0dp"
-                            android:layout_height="28dp"
-                            android:layout_marginEnd="8dp"
-                            android:layout_weight="1"
-                            android:clickable="true"
-                            android:focusable="true"
-                            app:cardBackgroundColor="#F1F4F9"
-                            app:cardCornerRadius="6dp"
-                            app:cardElevation="0dp"
-                            app:strokeWidth="0dp">
-
-                            <TextView
-                                android:id="@+id/tvPiso2"
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:fontFamily="sans-serif-medium"
-                                android:gravity="center"
-                                android:text="Piso 2"
-                                android:textColor="#374151"
-                                android:textSize="10.5sp" />
-                        </com.google.android.material.card.MaterialCardView>
-
-                        <com.google.android.material.card.MaterialCardView
-                            android:id="@+id/chipPiso3"
-                            android:layout_width="0dp"
-                            android:layout_height="28dp"
-                            android:layout_marginEnd="8dp"
-                            android:layout_weight="1"
-                            android:clickable="true"
-                            android:focusable="true"
-                            app:cardBackgroundColor="#F1F4F9"
-                            app:cardCornerRadius="6dp"
-                            app:cardElevation="0dp"
-                            app:strokeWidth="0dp">
-
-                            <TextView
-                                android:id="@+id/tvPiso3"
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:fontFamily="sans-serif-medium"
-                                android:gravity="center"
-                                android:text="Piso 3"
-                                android:textColor="#374151"
-                                android:textSize="10.5sp" />
-                        </com.google.android.material.card.MaterialCardView>
-
-                        <com.google.android.material.card.MaterialCardView
-                            android:id="@+id/chipPiso4"
-                            android:layout_width="0dp"
-                            android:layout_height="28dp"
-                            android:layout_weight="1"
-                            android:clickable="true"
-                            android:focusable="true"
-                            app:cardBackgroundColor="#F1F4F9"
-                            app:cardCornerRadius="6dp"
-                            app:cardElevation="0dp"
-                            app:strokeWidth="0dp">
-
-                            <TextView
-                                android:id="@+id/tvPiso4"
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:fontFamily="sans-serif-medium"
-                                android:gravity="center"
-                                android:text="Piso 4"
-                                android:textColor="#374151"
-                                android:textSize="10.5sp" />
-                        </com.google.android.material.card.MaterialCardView>
-                    </LinearLayout>
-
-                    <!-- FILA PISOS 2 -->
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        android:orientation="horizontal">
-
-                        <com.google.android.material.card.MaterialCardView
-                            android:id="@+id/chipPiso5"
-                            android:layout_width="0dp"
-                            android:layout_height="28dp"
-                            android:layout_marginEnd="8dp"
-                            android:layout_weight="1"
-                            android:clickable="true"
-                            android:focusable="true"
-                            app:cardBackgroundColor="#F1F4F9"
-                            app:cardCornerRadius="6dp"
-                            app:cardElevation="0dp"
-                            app:strokeWidth="0dp">
-
-                            <TextView
-                                android:id="@+id/tvPiso5"
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:fontFamily="sans-serif-medium"
-                                android:gravity="center"
-                                android:text="Piso 5"
-                                android:textColor="#374151"
-                                android:textSize="10.5sp" />
-                        </com.google.android.material.card.MaterialCardView>
-
-                        <!-- SELECCIONADO -->
-                        <com.google.android.material.card.MaterialCardView
-                            android:id="@+id/chipPiso6"
-                            android:layout_width="0dp"
-                            android:layout_height="28dp"
-                            android:layout_marginEnd="8dp"
-                            android:layout_weight="1"
-                            android:clickable="true"
-                            android:focusable="true"
-                            app:cardBackgroundColor="#B71C1C"
-                            app:cardCornerRadius="6dp"
-                            app:cardElevation="0dp"
-                            app:strokeWidth="0dp">
-
-                            <TextView
-                                android:id="@+id/tvPiso6"
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:fontFamily="sans-serif"
-                                android:gravity="center"
-                                android:text="Piso 6"
-                                android:textColor="#FFFFFF"
-                                android:textSize="10.5sp"
-                                android:textStyle="bold" />
-                        </com.google.android.material.card.MaterialCardView>
-
-                        <com.google.android.material.card.MaterialCardView
-                            android:id="@+id/chipPiso7"
-                            android:layout_width="0dp"
-                            android:layout_height="28dp"
-                            android:layout_marginEnd="8dp"
-                            android:layout_weight="1"
-                            android:clickable="true"
-                            android:focusable="true"
-                            app:cardBackgroundColor="#F1F4F9"
-                            app:cardCornerRadius="6dp"
-                            app:cardElevation="0dp"
-                            app:strokeWidth="0dp">
-
-                            <TextView
-                                android:id="@+id/tvPiso7"
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:fontFamily="sans-serif-medium"
-                                android:gravity="center"
-                                android:text="Piso 7"
-                                android:textColor="#374151"
-                                android:textSize="10.5sp" />
-                        </com.google.android.material.card.MaterialCardView>
-
-                        <com.google.android.material.card.MaterialCardView
-                            android:id="@+id/chipPiso8"
-                            android:layout_width="0dp"
-                            android:layout_height="28dp"
-                            android:layout_weight="1"
-                            android:clickable="true"
-                            android:focusable="true"
-                            app:cardBackgroundColor="#F1F4F9"
-                            app:cardCornerRadius="6dp"
-                            app:cardElevation="0dp"
-                            app:strokeWidth="0dp">
-
-                            <TextView
-                                android:id="@+id/tvPiso8"
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:fontFamily="sans-serif-medium"
-                                android:gravity="center"
-                                android:text="Piso 8"
-                                android:textColor="#374151"
-                                android:textSize="10.5sp" />
-                        </com.google.android.material.card.MaterialCardView>
-                    </LinearLayout>
-
-                    <!-- ÁREA ESPECÍFICA -->
-                    <TextView
-                        android:id="@+id/tvLabelAreaEspecifica"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="16dp"
-                        android:fontFamily="sans-serif"
-                        android:letterSpacing="0.05"
-                        android:text="ÁREA ESPECÍFICA:"
-                        android:textColor="#6B7280"
-                        android:textSize="9sp"
-                        android:textStyle="bold" />
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        android:orientation="horizontal">
-
-                        <!-- SELECCIONADO -->
-                        <com.google.android.material.card.MaterialCardView
-                            android:id="@+id/chipAreaSalon"
-                            android:layout_width="0dp"
-                            android:layout_height="50dp"
-                            android:layout_marginEnd="8dp"
-                            android:layout_weight="1"
-                            android:clickable="true"
-                            android:focusable="true"
-                            app:cardBackgroundColor="#B71C1C"
-                            app:cardCornerRadius="8dp"
-                            app:cardElevation="0dp"
-                            app:strokeWidth="0dp">
-
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:gravity="center"
-                                android:orientation="vertical">
-
-                                <ImageView
-                                    android:id="@+id/imgAreaSalon"
-                                    android:layout_width="16dp"
-                                    android:layout_height="16dp"
-                                    android:src="@drawable/ic_salon"
-                                    app:tint="#FFFFFF" />
-
-                                <TextView
-                                    android:id="@+id/tvAreaSalon"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginTop="4dp"
-                                    android:fontFamily="sans-serif"
-                                    android:text="Salón"
-                                    android:textColor="#FFFFFF"
-                                    android:textSize="10sp"
-                                    android:textStyle="bold" />
-                            </LinearLayout>
-                        </com.google.android.material.card.MaterialCardView>
-
-                        <com.google.android.material.card.MaterialCardView
-                            android:id="@+id/chipAreaPasillo"
-                            android:layout_width="0dp"
-                            android:layout_height="50dp"
-                            android:layout_marginEnd="8dp"
-                            android:layout_weight="1"
-                            android:clickable="true"
-                            android:focusable="true"
-                            app:cardBackgroundColor="#F1F4F9"
-                            app:cardCornerRadius="8dp"
-                            app:cardElevation="0dp"
-                            app:strokeWidth="0dp">
-
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:gravity="center"
-                                android:orientation="vertical">
-
-                                <ImageView
-                                    android:id="@+id/imgAreaPasillo"
-                                    android:layout_width="16dp"
-                                    android:layout_height="16dp"
-                                    android:src="@drawable/ic_pasillo"
-                                    app:tint="#6B7280" />
-
-                                <TextView
-                                    android:id="@+id/tvAreaPasillo"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginTop="4dp"
-                                    android:fontFamily="sans-serif-medium"
-                                    android:text="Pasillo"
-                                    android:textColor="#4B5563"
-                                    android:textSize="10sp" />
-                            </LinearLayout>
-                        </com.google.android.material.card.MaterialCardView>
-
-                        <com.google.android.material.card.MaterialCardView
-                            android:id="@+id/chipAreaBanos"
-                            android:layout_width="0dp"
-                            android:layout_height="50dp"
-                            android:layout_marginEnd="8dp"
-                            android:layout_weight="1"
-                            android:clickable="true"
-                            android:focusable="true"
-                            app:cardBackgroundColor="#F1F4F9"
-                            app:cardCornerRadius="8dp"
-                            app:cardElevation="0dp"
-                            app:strokeWidth="0dp">
-
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:gravity="center"
-                                android:orientation="vertical">
-
-                                <ImageView
-                                    android:id="@+id/imgAreaBanos"
-                                    android:layout_width="16dp"
-                                    android:layout_height="16dp"
-                                    android:src="@drawable/ic_banos"
-                                    app:tint="#6B7280" />
-
-                                <TextView
-                                    android:id="@+id/tvAreaBanos"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginTop="4dp"
-                                    android:fontFamily="sans-serif-medium"
-                                    android:text="Baños"
-                                    android:textColor="#4B5563"
-                                    android:textSize="10sp" />
-                            </LinearLayout>
-                        </com.google.android.material.card.MaterialCardView>
-
-                        <com.google.android.material.card.MaterialCardView
-                            android:id="@+id/chipAreaEscaleras"
-                            android:layout_width="0dp"
-                            android:layout_height="50dp"
-                            android:layout_weight="1"
-                            android:clickable="true"
-                            android:focusable="true"
-                            app:cardBackgroundColor="#F1F4F9"
-                            app:cardCornerRadius="8dp"
-                            app:cardElevation="0dp"
-                            app:strokeWidth="0dp">
-
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:gravity="center"
-                                android:orientation="vertical">
-
-                                <ImageView
-                                    android:id="@+id/imgAreaEscaleras"
-                                    android:layout_width="16dp"
-                                    android:layout_height="16dp"
-                                    android:src="@drawable/ic_escaleras"
-                                    app:tint="#6B7280" />
-
-                                <TextView
-                                    android:id="@+id/tvAreaEscaleras"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginTop="4dp"
-                                    android:fontFamily="sans-serif-medium"
-                                    android:text="Escaleras"
-                                    android:textColor="#4B5563"
-                                    android:textSize="10sp" />
-                            </LinearLayout>
-                        </com.google.android.material.card.MaterialCardView>
-                    </LinearLayout>
-
-                    <!-- NOMENCLATURA OFICIAL UTP -->
-                    <com.google.android.material.card.MaterialCardView
-                        android:id="@+id/cardNomenclatura"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="16dp"
-                        app:cardBackgroundColor="#F5F7FC"
-                        app:cardCornerRadius="10dp"
-                        app:cardElevation="0dp"
-                        app:strokeColor="#DDE3F0"
-                        app:strokeWidth="1dp">
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:orientation="vertical"
-                            android:padding="12dp">
-
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:gravity="center_vertical"
-                                android:orientation="horizontal">
-
-                                <ImageView
-                                    android:id="@+id/imgIconoNomenclatura"
-                                    android:layout_width="14dp"
-                                    android:layout_height="14dp"
-                                    android:src="@drawable/ic_building"
-                                    app:tint="#374151" />
-
-                                <TextView
-                                    android:id="@+id/tvTituloNomenclatura"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginStart="6dp"
-                                    android:fontFamily="sans-serif"
-                                    android:letterSpacing="0.03"
-                                    android:text="NOMENCLATURA OFICIAL UTP"
-                                    android:textColor="#1F2937"
-                                    android:textSize="10sp"
-                                    android:textStyle="bold" />
-                            </LinearLayout>
-
-                            <!-- BUSCADOR -->
-                            <com.google.android.material.card.MaterialCardView
-                                android:id="@+id/cardBuscadorSalon"
-                                android:layout_width="match_parent"
-                                android:layout_height="30dp"
-                                android:layout_marginTop="10dp"
-                                app:cardBackgroundColor="#FFFFFF"
-                                app:cardCornerRadius="8dp"
-                                app:cardElevation="0dp"
-                                app:strokeColor="#E5E7EB"
-                                app:strokeWidth="1dp">
-
-                                <LinearLayout
-                                    android:layout_width="match_parent"
-                                    android:layout_height="match_parent"
-                                    android:gravity="center_vertical"
-                                    android:orientation="horizontal"
-                                    android:paddingStart="10dp"
-                                    android:paddingEnd="10dp">
-
-                                    <ImageView
-                                        android:id="@+id/imgIconoBuscar"
-                                        android:layout_width="12dp"
-                                        android:layout_height="12dp"
-                                        android:src="@drawable/ic_search"
-                                        app:tint="#9CA3AF" />
-
-                                    <EditText
-                                        android:id="@+id/etBuscarSalon"
-                                        android:layout_width="0dp"
-                                        android:layout_height="match_parent"
-                                        android:layout_marginStart="8dp"
-                                        android:layout_weight="1"
-                                        android:background="@null"
-                                        android:fontFamily="sans-serif"
-                                        android:hint="Buscar código de salón (ej: A0204)..."
-                                        android:imeOptions="actionSearch"
-                                        android:inputType="text"
-                                        android:maxLines="1"
-                                        android:padding="0dp"
-                                        android:textColor="#111827"
-                                        android:textColorHint="#6B7280"
-                                        android:textSize="10sp" />
-                                </LinearLayout>
-                            </com.google.android.material.card.MaterialCardView>
-
-                            <!-- TORRES -->
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="12dp"
-                                android:orientation="horizontal">
-
-                                <!-- SELECCIONADO -->
-                                <com.google.android.material.card.MaterialCardView
-                                    android:id="@+id/chipTorreA"
-                                    android:layout_width="0dp"
-                                    android:layout_height="25dp"
-                                    android:layout_marginEnd="8dp"
-                                    android:layout_weight="1"
-                                    android:clickable="true"
-                                    android:focusable="true"
-                                    app:cardBackgroundColor="#B71C1C"
-                                    app:cardCornerRadius="6dp"
-                                    app:cardElevation="0dp"
-                                    app:strokeWidth="0dp">
-
-                                    <TextView
-                                        android:id="@+id/tvTorreA"
-                                        android:layout_width="match_parent"
-                                        android:layout_height="match_parent"
-                                        android:fontFamily="sans-serif"
-                                        android:gravity="center"
-                                        android:text="Torre A"
-                                        android:textColor="#FFFFFF"
-                                        android:textSize="10sp"
-                                        android:textStyle="bold" />
-                                </com.google.android.material.card.MaterialCardView>
-
-                                <com.google.android.material.card.MaterialCardView
-                                    android:id="@+id/chipTorreB"
-                                    android:layout_width="0dp"
-                                    android:layout_height="25dp"
-                                    android:layout_marginEnd="8dp"
-                                    android:layout_weight="1"
-                                    android:clickable="true"
-                                    android:focusable="true"
-                                    app:cardBackgroundColor="#FFFFFF"
-                                    app:cardCornerRadius="6dp"
-                                    app:cardElevation="0dp"
-                                    app:strokeColor="#E5E7EB"
-                                    app:strokeWidth="1dp">
-
-                                    <TextView
-                                        android:id="@+id/tvTorreB"
-                                        android:layout_width="match_parent"
-                                        android:layout_height="match_parent"
-                                        android:fontFamily="sans-serif-medium"
-                                        android:gravity="center"
-                                        android:text="Torre B"
-                                        android:textColor="#374151"
-                                        android:textSize="10sp" />
-                                </com.google.android.material.card.MaterialCardView>
-
-                                <com.google.android.material.card.MaterialCardView
-                                    android:id="@+id/chipTorreC"
-                                    android:layout_width="0dp"
-                                    android:layout_height="25dp"
-                                    android:layout_marginEnd="8dp"
-                                    android:layout_weight="1"
-                                    android:clickable="true"
-                                    android:focusable="true"
-                                    app:cardBackgroundColor="#FFFFFF"
-                                    app:cardCornerRadius="6dp"
-                                    app:cardElevation="0dp"
-                                    app:strokeColor="#E5E7EB"
-                                    app:strokeWidth="1dp">
-
-                                    <TextView
-                                        android:id="@+id/tvTorreC"
-                                        android:layout_width="match_parent"
-                                        android:layout_height="match_parent"
-                                        android:fontFamily="sans-serif-medium"
-                                        android:gravity="center"
-                                        android:text="Torre C"
-                                        android:textColor="#374151"
-                                        android:textSize="10sp" />
-                                </com.google.android.material.card.MaterialCardView>
-
-                                <com.google.android.material.card.MaterialCardView
-                                    android:id="@+id/chipTorreD"
-                                    android:layout_width="0dp"
-                                    android:layout_height="25dp"
-                                    android:layout_weight="1"
-                                    android:clickable="true"
-                                    android:focusable="true"
-                                    app:cardBackgroundColor="#FFFFFF"
-                                    app:cardCornerRadius="6dp"
-                                    app:cardElevation="0dp"
-                                    app:strokeColor="#E5E7EB"
-                                    app:strokeWidth="1dp">
-
-                                    <TextView
-                                        android:id="@+id/tvTorreD"
-                                        android:layout_width="match_parent"
-                                        android:layout_height="match_parent"
-                                        android:fontFamily="sans-serif-medium"
-                                        android:gravity="center"
-                                        android:text="Torre D"
-                                        android:textColor="#374151"
-                                        android:textSize="10sp" />
-                                </com.google.android.material.card.MaterialCardView>
-                            </LinearLayout>
-
-                            <TextView
-                                android:id="@+id/tvSalonesDisponibles"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="10dp"
-                                android:fontFamily="sans-serif"
-                                android:text="Salones disponibles en Torre A - Piso 6:"
-                                android:textColor="#6B7280"
-                                android:textSize="9sp" />
-
-                            <!-- SALONES FILA 1 -->
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="8dp"
-                                android:orientation="horizontal">
-
-                                <!-- ITEM DE EJEMPLO (SELECCIONADO) / DATO DESDE BASE DE DATOS -->
-                                <com.google.android.material.card.MaterialCardView
-                                    android:id="@+id/itemSalonA0601"
-                                    android:layout_width="0dp"
-                                    android:layout_height="42dp"
-                                    android:layout_marginEnd="8dp"
-                                    android:layout_weight="1"
-                                    android:clickable="true"
-                                    android:focusable="true"
-                                    app:cardBackgroundColor="#B71C1C"
-                                    app:cardCornerRadius="8dp"
-                                    app:cardElevation="0dp"
-                                    app:strokeColor="#B71C1C"
-                                    app:strokeWidth="1dp">
-
-                                    <LinearLayout
-                                        android:layout_width="match_parent"
-                                        android:layout_height="match_parent"
-                                        android:gravity="center"
-                                        android:orientation="vertical">
-
-                                        <TextView
-                                            android:id="@+id/tvCodigoSalonA0601"
-                                            android:layout_width="wrap_content"
-                                            android:layout_height="wrap_content"
-                                            android:fontFamily="monospace"
-                                            android:text="A0601"
-                                            android:textColor="#FFFFFF"
-                                            android:textSize="10.5sp"
-                                            android:textStyle="bold" />
-
-                                        <TextView
-                                            android:id="@+id/tvNombreSalonA0601"
-                                            android:layout_width="wrap_content"
-                                            android:layout_height="wrap_content"
-                                            android:layout_marginTop="2dp"
-                                            android:fontFamily="sans-serif"
-                                            android:text="Teoría A"
-                                            android:textColor="#FECACA"
-                                            android:textSize="8sp" />
-                                    </LinearLayout>
-                                </com.google.android.material.card.MaterialCardView>
-
-                                <!-- ITEM DE EJEMPLO -->
-                                <com.google.android.material.card.MaterialCardView
-                                    android:id="@+id/itemSalonA0602"
-                                    android:layout_width="0dp"
-                                    android:layout_height="42dp"
-                                    android:layout_marginEnd="8dp"
-                                    android:layout_weight="1"
-                                    android:clickable="true"
-                                    android:focusable="true"
-                                    app:cardBackgroundColor="#FFFFFF"
-                                    app:cardCornerRadius="8dp"
-                                    app:cardElevation="0dp"
-                                    app:strokeColor="#E5E7EB"
-                                    app:strokeWidth="1dp">
-
-                                    <LinearLayout
-                                        android:layout_width="match_parent"
-                                        android:layout_height="match_parent"
-                                        android:gravity="center"
-                                        android:orientation="vertical">
-
-                                        <TextView
-                                            android:id="@+id/tvCodigoSalonA0602"
-                                            android:layout_width="wrap_content"
-                                            android:layout_height="wrap_content"
-                                            android:fontFamily="monospace"
-                                            android:text="A0602"
-                                            android:textColor="#111827"
-                                            android:textSize="10.5sp"
-                                            android:textStyle="bold" />
-
-                                        <TextView
-                                            android:id="@+id/tvNombreSalonA0602"
-                                            android:layout_width="wrap_content"
-                                            android:layout_height="wrap_content"
-                                            android:layout_marginTop="2dp"
-                                            android:fontFamily="sans-serif"
-                                            android:text="Lab. Redes"
-                                            android:textColor="#6B7280"
-                                            android:textSize="8sp" />
-                                    </LinearLayout>
-                                </com.google.android.material.card.MaterialCardView>
-
-                                <!-- ITEM DE EJEMPLO -->
-                                <com.google.android.material.card.MaterialCardView
-                                    android:id="@+id/itemSalonA0603"
-                                    android:layout_width="0dp"
-                                    android:layout_height="42dp"
-                                    android:layout_weight="1"
-                                    android:clickable="true"
-                                    android:focusable="true"
-                                    app:cardBackgroundColor="#FFFFFF"
-                                    app:cardCornerRadius="8dp"
-                                    app:cardElevation="0dp"
-                                    app:strokeColor="#E5E7EB"
-                                    app:strokeWidth="1dp">
-
-                                    <LinearLayout
-                                        android:layout_width="match_parent"
-                                        android:layout_height="match_parent"
-                                        android:gravity="center"
-                                        android:orientation="vertical">
-
-                                        <TextView
-                                            android:id="@+id/tvCodigoSalonA0603"
-                                            android:layout_width="wrap_content"
-                                            android:layout_height="wrap_content"
-                                            android:fontFamily="monospace"
-                                            android:text="A0603"
-                                            android:textColor="#111827"
-                                            android:textSize="10.5sp"
-                                            android:textStyle="bold" />
-
-                                        <TextView
-                                            android:id="@+id/tvNombreSalonA0603"
-                                            android:layout_width="wrap_content"
-                                            android:layout_height="wrap_content"
-                                            android:layout_marginTop="2dp"
-                                            android:fontFamily="sans-serif"
-                                            android:text="Teoría B"
-                                            android:textColor="#6B7280"
-                                            android:textSize="8sp" />
-                                    </LinearLayout>
-                                </com.google.android.material.card.MaterialCardView>
-                            </LinearLayout>
-
-                            <!-- SALONES FILA 2 -->
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="8dp"
-                                android:orientation="horizontal">
-
-                                <!-- ITEM DE EJEMPLO -->
-                                <com.google.android.material.card.MaterialCardView
-                                    android:id="@+id/itemSalonA0604"
-                                    android:layout_width="0dp"
-                                    android:layout_height="42dp"
-                                    android:layout_marginEnd="8dp"
-                                    android:layout_weight="1"
-                                    android:clickable="true"
-                                    android:focusable="true"
-                                    app:cardBackgroundColor="#FFFFFF"
-                                    app:cardCornerRadius="8dp"
-                                    app:cardElevation="0dp"
-                                    app:strokeColor="#E5E7EB"
-                                    app:strokeWidth="1dp">
-
-                                    <LinearLayout
-                                        android:layout_width="match_parent"
-                                        android:layout_height="match_parent"
-                                        android:gravity="center"
-                                        android:orientation="vertical">
-
-                                        <TextView
-                                            android:id="@+id/tvCodigoSalonA0604"
-                                            android:layout_width="wrap_content"
-                                            android:layout_height="wrap_content"
-                                            android:fontFamily="monospace"
-                                            android:text="A0604"
-                                            android:textColor="#111827"
-                                            android:textSize="10.5sp"
-                                            android:textStyle="bold" />
-
-                                        <TextView
-                                            android:id="@+id/tvNombreSalonA0604"
-                                            android:layout_width="wrap_content"
-                                            android:layout_height="wrap_content"
-                                            android:layout_marginTop="2dp"
-                                            android:fontFamily="sans-serif"
-                                            android:text="Taller CAD"
-                                            android:textColor="#6B7280"
-                                            android:textSize="8sp" />
-                                    </LinearLayout>
-                                </com.google.android.material.card.MaterialCardView>
-
-                                <!-- ITEM DE EJEMPLO -->
-                                <com.google.android.material.card.MaterialCardView
-                                    android:id="@+id/itemSalonA0605"
-                                    android:layout_width="0dp"
-                                    android:layout_height="42dp"
-                                    android:layout_marginEnd="8dp"
-                                    android:layout_weight="1"
-                                    android:clickable="true"
-                                    android:focusable="true"
-                                    app:cardBackgroundColor="#FFFFFF"
-                                    app:cardCornerRadius="8dp"
-                                    app:cardElevation="0dp"
-                                    app:strokeColor="#E5E7EB"
-                                    app:strokeWidth="1dp">
-
-                                    <LinearLayout
-                                        android:layout_width="match_parent"
-                                        android:layout_height="match_parent"
-                                        android:gravity="center"
-                                        android:orientation="vertical">
-
-                                        <TextView
-                                            android:id="@+id/tvCodigoSalonA0605"
-                                            android:layout_width="wrap_content"
-                                            android:layout_height="wrap_content"
-                                            android:fontFamily="monospace"
-                                            android:text="A0605"
-                                            android:textColor="#111827"
-                                            android:textSize="10.5sp"
-                                            android:textStyle="bold" />
-
-                                        <TextView
-                                            android:id="@+id/tvNombreSalonA0605"
-                                            android:layout_width="wrap_content"
-                                            android:layout_height="wrap_content"
-                                            android:layout_marginTop="2dp"
-                                            android:fontFamily="sans-serif"
-                                            android:text="Aula Magna"
-                                            android:textColor="#6B7280"
-                                            android:textSize="8sp" />
-                                    </LinearLayout>
-                                </com.google.android.material.card.MaterialCardView>
-
-                                <!-- ITEM DE EJEMPLO -->
-                                <com.google.android.material.card.MaterialCardView
-                                    android:id="@+id/itemSalonA0606"
-                                    android:layout_width="0dp"
-                                    android:layout_height="42dp"
-                                    android:layout_weight="1"
-                                    android:clickable="true"
-                                    android:focusable="true"
-                                    app:cardBackgroundColor="#FFFFFF"
-                                    app:cardCornerRadius="8dp"
-                                    app:cardElevation="0dp"
-                                    app:strokeColor="#E5E7EB"
-                                    app:strokeWidth="1dp">
-
-                                    <LinearLayout
-                                        android:layout_width="match_parent"
-                                        android:layout_height="match_parent"
-                                        android:gravity="center"
-                                        android:orientation="vertical">
-
-                                        <TextView
-                                            android:id="@+id/tvCodigoSalonA0606"
-                                            android:layout_width="wrap_content"
-                                            android:layout_height="wrap_content"
-                                            android:fontFamily="monospace"
-                                            android:text="A0606"
-                                            android:textColor="#111827"
-                                            android:textSize="10.5sp"
-                                            android:textStyle="bold" />
-
-                                        <TextView
-                                            android:id="@+id/tvNombreSalonA0606"
-                                            android:layout_width="wrap_content"
-                                            android:layout_height="wrap_content"
-                                            android:layout_marginTop="2dp"
-                                            android:fontFamily="sans-serif"
-                                            android:text="Cómputo 02"
-                                            android:textColor="#6B7280"
-                                            android:textSize="8sp" />
-                                    </LinearLayout>
-                                </com.google.android.material.card.MaterialCardView>
-                            </LinearLayout>
-                        </LinearLayout>
-                    </com.google.android.material.card.MaterialCardView>
-                </LinearLayout>
-            </com.google.android.material.card.MaterialCardView>
-
-            <!-- ============ CARD 6: FECHA Y HORA ============ -->
-            <com.google.android.material.card.MaterialCardView
-                android:id="@+id/cardFechaHora"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="16dp"
-                app:cardBackgroundColor="#FFFFFF"
-                app:cardCornerRadius="14dp"
-                app:cardElevation="1dp"
-                app:strokeColor="#E5E7EB"
-                app:strokeWidth="1dp">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:padding="15dp">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="center_vertical"
-                        android:orientation="horizontal">
-
-                        <TextView
-                            android:id="@+id/tvTituloFechaHora"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:fontFamily="sans-serif"
-                            android:text="Fecha y hora de hallazgo *"
-                            android:textColor="#111827"
-                            android:textSize="10sp"
-                            android:textStyle="bold" />
-
-                        <ImageView
-                            android:id="@+id/imgCandado"
-                            android:layout_width="14dp"
-                            android:layout_height="14dp"
-                            android:src="@drawable/ic_lock"
-                            app:tint="#9CA3AF" />
-                    </LinearLayout>
-
-                    <com.google.android.material.card.MaterialCardView
-                        android:id="@+id/cardSelloTemporal"
-                        android:layout_width="match_parent"
-                        android:layout_height="61dp"
-                        android:layout_marginTop="10dp"
-                        app:cardBackgroundColor="#F5F7FA"
-                        app:cardCornerRadius="10dp"
-                        app:cardElevation="0dp"
-                        app:strokeColor="#E5E7EB"
-                        app:strokeWidth="1dp">
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:gravity="center_vertical"
-                            android:orientation="horizontal"
-                            android:paddingStart="12dp"
-                            android:paddingEnd="12dp">
-
-                            <com.google.android.material.card.MaterialCardView
-                                android:id="@+id/cardIconoReloj"
-                                android:layout_width="36dp"
-                                android:layout_height="36dp"
-                                app:cardBackgroundColor="#111827"
-                                app:cardCornerRadius="8dp"
-                                app:cardElevation="0dp"
-                                app:strokeWidth="0dp">
-
-                                <ImageView
-                                    android:id="@+id/imgReloj"
-                                    android:layout_width="18dp"
-                                    android:layout_height="18dp"
-                                    android:layout_gravity="center"
-                                    android:src="@drawable/ic_clock"
-                                    app:tint="#FFFFFF" />
-                            </com.google.android.material.card.MaterialCardView>
-
-                            <LinearLayout
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_marginStart="12dp"
-                                android:layout_weight="1"
-                                android:orientation="vertical">
-
-                                <!-- DATO DESDE BASE DE DATOS -->
-                                <TextView
-                                    android:id="@+id/tvFechaHallazgo"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:fontFamily="monospace"
-                                    android:letterSpacing="0.1"
-                                    android:text="VIE, 04 SET. 2026"
-                                    android:textColor="#9CA3AF"
-                                    android:textSize="8sp" />
-
-                                <!-- DATO DESDE BASE DE DATOS -->
-                                <TextView
-                                    android:id="@+id/tvHoraHallazgo"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginTop="2dp"
-                                    android:fontFamily="monospace"
-                                    android:text="12:34:19 p. m."
-                                    android:textColor="#111827"
-                                    android:textSize="13sp"
-                                    android:textStyle="bold" />
-                            </LinearLayout>
-
-                            <ImageView
-                                android:id="@+id/imgEscudoVerificado"
-                                android:layout_width="16dp"
-                                android:layout_height="16dp"
-                                android:src="@drawable/ic_shield_check"
-                                app:tint="#9CA3AF" />
-                        </LinearLayout>
-                    </com.google.android.material.card.MaterialCardView>
-
-                    <TextView
-                        android:id="@+id/tvNotaSelloTemporal"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
-                        android:fontFamily="sans-serif"
-                        android:lineSpacingExtra="3dp"
-                        android:text="Sello temporal inmutable fijado al abrir el registro. No editable por protocolo institucional de trazabilidad."
-                        android:textColor="#6B7280"
-                        android:textSize="9sp" />
-                </LinearLayout>
-            </com.google.android.material.card.MaterialCardView>
-
-            <!-- ============ CARD 7: OBJETOS PERDIDOS / ANAQUEL ============ -->
-            <com.google.android.material.card.MaterialCardView
-                android:id="@+id/cardObjetosPerdidos"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="19dp"
-                app:cardBackgroundColor="#FFFFFF"
-                app:cardCornerRadius="14dp"
+                android:id="@+id/cardPuntoBadge"
+                android:layout_width="8dp"
+                android:layout_height="8dp"
+                app:cardBackgroundColor="#B80C2E"
+                app:cardCornerRadius="4dp"
                 app:cardElevation="0dp"
-                app:strokeColor="#F3D67D"
-                app:strokeWidth="1dp">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:padding="15dp">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="center_vertical"
-                        android:orientation="horizontal">
-
-                        <com.google.android.material.card.MaterialCardView
-                            android:id="@+id/cardLogoUtp"
-                            android:layout_width="26dp"
-                            android:layout_height="27dp"
-                            app:cardBackgroundColor="#B71C1C"
-                            app:cardCornerRadius="5dp"
-                            app:cardElevation="0dp"
-                            app:strokeWidth="0dp">
-
-                            <TextView
-                                android:id="@+id/tvLogoUtp"
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:fontFamily="sans-serif"
-                                android:gravity="center"
-                                android:text="UTP"
-                                android:textColor="#FFFFFF"
-                                android:textSize="8sp"
-                                android:textStyle="bold" />
-                        </com.google.android.material.card.MaterialCardView>
-
-                        <LinearLayout
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="10dp"
-                            android:layout_weight="1"
-                            android:orientation="vertical">
-
-                            <TextView
-                                android:id="@+id/tvObjetosPerdidos"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:fontFamily="sans-serif"
-                                android:text="Objetos Perdidos"
-                                android:textColor="#111827"
-                                android:textSize="11.5sp"
-                                android:textStyle="bold" />
-
-                            <!-- DATO DESDE BASE DE DATOS -->
-                            <TextView
-                                android:id="@+id/tvSedeCampus"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="1dp"
-                                android:fontFamily="sans-serif"
-                                android:letterSpacing="0.1"
-                                android:text="UTP • CAMPUS ATE"
-                                android:textColor="#9CA3AF"
-                                android:textSize="8sp"
-                                android:textStyle="bold" />
-                        </LinearLayout>
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="15dp"
-                        android:gravity="center_vertical"
-                        android:orientation="horizontal">
-
-                        <TextView
-                            android:id="@+id/tvLabelAnaquel"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:fontFamily="sans-serif-medium"
-                            android:text="Asignar Anaquel / Estante:"
-                            android:textColor="#4B5563"
-                            android:textSize="10sp" />
-
-                        <ImageView
-                            android:id="@+id/imgFlechaAnaquel"
-                            android:layout_width="12dp"
-                            android:layout_height="12dp"
-                            android:src="@drawable/ic_arrow_down"
-                            app:tint="#6B7280" />
-                    </LinearLayout>
-
-                    <!-- DATO DESDE BASE DE DATOS -->
-                    <com.google.android.material.card.MaterialCardView
-                        android:id="@+id/cardSelectorAnaquel"
-                        android:layout_width="match_parent"
-                        android:layout_height="33dp"
-                        android:layout_marginTop="8dp"
-                        android:clickable="true"
-                        android:focusable="true"
-                        app:cardBackgroundColor="#FFFFFF"
-                        app:cardCornerRadius="8dp"
-                        app:cardElevation="0dp"
-                        app:strokeColor="#D1D5DB"
-                        app:strokeWidth="1dp">
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:gravity="center_vertical"
-                            android:orientation="horizontal"
-                            android:paddingStart="12dp"
-                            android:paddingEnd="12dp">
-
-                            <TextView
-                                android:id="@+id/tvAnaquelSeleccionado"
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:fontFamily="sans-serif-medium"
-                                android:text="Anaquel 02 - Prendas Mochilas"
-                                android:textColor="#111827"
-                                android:textSize="10.5sp" />
-
-                            <ImageView
-                                android:id="@+id/imgChevronAnaquel"
-                                android:layout_width="14dp"
-                                android:layout_height="14dp"
-                                android:src="@drawable/ic_chevron_down"
-                                app:tint="#4B5563" />
-                        </LinearLayout>
-                    </com.google.android.material.card.MaterialCardView>
-                </LinearLayout>
-            </com.google.android.material.card.MaterialCardView>
-
-            <!-- ============ BOTÓN REGISTRAR ============ -->
-            <com.google.android.material.card.MaterialCardView
-                android:id="@+id/btnRegistrarEnviar"
-                android:layout_width="match_parent"
-                android:layout_height="52dp"
-                android:clickable="true"
-                android:focusable="true"
-                app:cardBackgroundColor="#B71C1C"
-                app:cardCornerRadius="10dp"
-                app:cardElevation="4dp"
-                app:strokeWidth="0dp">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal"
-                    android:paddingStart="16dp"
-                    android:paddingEnd="16dp">
-
-                    <ImageView
-                        android:id="@+id/imgCheckRegistrar"
-                        android:layout_width="16dp"
-                        android:layout_height="16dp"
-                        android:src="@drawable/ic_check_circle"
-                        app:tint="#FFFFFF" />
-
-                    <TextView
-                        android:id="@+id/tvTextoRegistrar"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="6dp"
-                        android:layout_marginEnd="22dp"
-                        android:layout_weight="1"
-                        android:fontFamily="sans-serif"
-                        android:gravity="center"
-                        android:letterSpacing="0.03"
-                        android:lineSpacingExtra="2dp"
-                        android:text="REGISTRAR Y ENVIAR A SAE (PENDIENTE\nRECEPCION)"
-                        android:textColor="#FFFFFF"
-                        android:textSize="10sp"
-                        android:textStyle="bold" />
-                </LinearLayout>
-            </com.google.android.material.card.MaterialCardView>
+                app:strokeWidth="0dp" />
 
             <TextView
-                android:id="@+id/tvDeclaracionJuramento"
-                android:layout_width="match_parent"
+                android:id="@+id/tvBadgeAcceso"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="15dp"
-                android:layout_marginTop="16dp"
-                android:layout_marginEnd="15dp"
-                android:fontFamily="sans-serif"
-                android:gravity="center"
-                android:lineSpacingExtra="3dp"
-                android:text="Al registrar, declaras bajo juramento haber encontrado este artículo dentro de las instalaciones UTP."
-                android:textColor="#6B7280"
-                android:textSize="9sp" />
-
+                android:layout_marginStart="8dp"
+                android:fontFamily="monospace"
+                android:includeFontPadding="false"
+                android:letterSpacing="0.02"
+                android:text="ACCESO INSTITUCIONAL"
+                android:textColor="#B80C2E"
+                android:textSize="11sp"
+                android:textStyle="bold" />
         </LinearLayout>
-    </androidx.core.widget.NestedScrollView>
+    </com.google.android.material.card.MaterialCardView>
+
+    <!-- TITULO -->
+    <TextView
+        android:id="@+id/tvTitulo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:includeFontPadding="false"
+        android:text="Iniciar Sesión"
+        android:textColor="#0F172A"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="@id/guideStart"
+        app:layout_constraintTop_toBottomOf="@id/cardBadgeAcceso" />
+
+    <!-- SUBTITULO -->
+    <TextView
+        android:id="@+id/tvSubtitulo"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="9dp"
+        android:includeFontPadding="false"
+        android:lineSpacingExtra="4dp"
+        android:text="Ingresa tus credenciales institucionales autorizadas para continuar."
+        android:textColor="#64748B"
+        android:textSize="13sp"
+        app:layout_constraintEnd_toEndOf="@id/guideEnd"
+        app:layout_constraintStart_toStartOf="@id/guideStart"
+        app:layout_constraintTop_toBottomOf="@id/tvTitulo" />
+
+    <!-- LABEL USUARIO -->
+    <TextView
+        android:id="@+id/tvLabelUsuario"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="19dp"
+        android:fontFamily="monospace"
+        android:includeFontPadding="false"
+        android:letterSpacing="0.08"
+        android:text="USUARIO O CÓDIGO INSTITUCIONAL"
+        android:textColor="#334155"
+        android:textSize="11sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="@id/guideStart"
+        app:layout_constraintTop_toBottomOf="@id/tvSubtitulo" />
+
+    <!-- INPUT USUARIO -->
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/cardUsuario"
+        android:layout_width="0dp"
+        android:layout_height="46dp"
+        android:layout_marginTop="11dp"
+        app:cardBackgroundColor="#FFFFFF"
+        app:cardCornerRadius="12dp"
+        app:cardElevation="1dp"
+        app:layout_constraintEnd_toEndOf="@id/guideEnd"
+        app:layout_constraintStart_toStartOf="@id/guideStart"
+        app:layout_constraintTop_toBottomOf="@id/tvLabelUsuario"
+        app:strokeColor="#CBD5E1"
+        app:strokeWidth="1dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp">
+
+            <ImageView
+                android:id="@+id/imgIconoUsuario"
+                android:layout_width="16dp"
+                android:layout_height="16dp"
+                android:importantForAccessibility="no"
+                android:src="@drawable/ic_usuario"
+                app:tint="#94A3B8" />
+
+            <EditText
+                android:id="@+id/etUsuario"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginStart="12dp"
+                android:layout_weight="1"
+                android:autofillHints="username"
+                android:background="@null"
+                android:fontFamily="sans-serif-medium"
+                android:gravity="center_vertical"
+                android:inputType="text"
+                android:hint="Escribe tu usuario"
+                android:minHeight="0dp"
+                android:padding="0dp"
+                android:textColor="#0F172A"
+                android:textColorHint="#94A3B8"
+                android:textSize="15sp" />
+        </LinearLayout>
+    </com.google.android.material.card.MaterialCardView>
+
+    <!-- LABEL CONTRASEÑA -->
+    <TextView
+        android:id="@+id/tvLabelContrasena"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="14dp"
+        android:fontFamily="monospace"
+        android:includeFontPadding="false"
+        android:letterSpacing="0.08"
+        android:text="CONTRASEÑA"
+        android:textColor="#334155"
+        android:textSize="11sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="@id/guideStart"
+        app:layout_constraintTop_toBottomOf="@id/cardUsuario" />
+
+    <!-- LINK OLVIDASTE TU CLAVE -->
+    <TextView
+        android:id="@+id/tvOlvidasteClave"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="2dp"
+        android:clickable="true"
+        android:focusable="true"
+        android:fontFamily="sans-serif-medium"
+        android:includeFontPadding="false"
+        android:text="¿Olvidaste tu clave?"
+        android:textColor="#B80C2E"
+        android:textSize="13sp"
+        app:layout_constraintEnd_toEndOf="@id/guideEnd"
+        app:layout_constraintTop_toTopOf="@id/tvLabelContrasena" />
+
+    <!-- INPUT CONTRASEÑA -->
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/cardContrasena"
+        android:layout_width="0dp"
+        android:layout_height="46dp"
+        android:layout_marginTop="11dp"
+        app:cardBackgroundColor="#FFFFFF"
+        app:cardCornerRadius="12dp"
+        app:cardElevation="1dp"
+        app:layout_constraintEnd_toEndOf="@id/guideEnd"
+        app:layout_constraintStart_toStartOf="@id/guideStart"
+        app:layout_constraintTop_toBottomOf="@id/tvLabelContrasena"
+        app:strokeColor="#CBD5E1"
+        app:strokeWidth="1dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingStart="16dp"
+            android:paddingEnd="14dp">
+
+            <ImageView
+                android:id="@+id/imgIconoCandado"
+                android:layout_width="16dp"
+                android:layout_height="16dp"
+                android:importantForAccessibility="no"
+                android:src="@drawable/ic_candado"
+                app:tint="#94A3B8" />
+
+            <EditText
+                android:id="@+id/etContrasena"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginStart="12dp"
+                android:layout_weight="1"
+                android:autofillHints="password"
+                android:background="@null"
+                android:fontFamily="sans-serif-medium"
+                android:gravity="center_vertical"
+                android:hint="Escribe tu contraseña"
+                android:inputType="textPassword"
+                android:minHeight="0dp"
+                android:padding="0dp"
+                android:textColor="#0F172A"
+                android:textColorHint="#94A3B8"
+                android:textSize="15sp" />
+
+            <ImageView
+                android:id="@+id/imgMostrarClave"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_marginStart="8dp"
+                android:clickable="true"
+                android:contentDescription="Mostrar u ocultar contraseña"
+                android:focusable="true"
+                android:src="@drawable/ic_ojo"
+                app:tint="#94A3B8" />
+        </LinearLayout>
+    </com.google.android.material.card.MaterialCardView>
+
+    <!-- CHECKBOX MANTENER SESION -->
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/cardCheckMantener"
+        android:layout_width="16dp"
+        android:layout_height="16dp"
+        android:layout_marginTop="20dp"
+        android:clickable="true"
+        android:focusable="true"
+        app:cardBackgroundColor="#B80C2E"
+        app:cardCornerRadius="4dp"
+        app:cardElevation="0dp"
+        app:layout_constraintStart_toStartOf="@id/guideStart"
+        app:layout_constraintTop_toBottomOf="@id/cardContrasena"
+        app:strokeWidth="0dp" />
+
+    <TextView
+        android:id="@+id/tvMantenerSesion"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:includeFontPadding="false"
+        android:text="Mantener sesión iniciada en este dispositivo"
+        android:textColor="#475569"
+        android:textSize="13sp"
+        app:layout_constraintBottom_toBottomOf="@id/cardCheckMantener"
+        app:layout_constraintEnd_toEndOf="@id/guideEnd"
+        app:layout_constraintStart_toEndOf="@id/cardCheckMantener"
+        app:layout_constraintTop_toTopOf="@id/cardCheckMantener" />
+
+    <!-- BOTON INGRESAR -->
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/btnLogin"
+        android:layout_width="0dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="28dp"
+        android:clickable="true"
+        android:focusable="true"
+        android:outlineAmbientShadowColor="#66B80C2E"
+        android:outlineSpotShadowColor="#B80C2E"
+        app:cardBackgroundColor="#B80C2E"
+        app:cardCornerRadius="12dp"
+        app:cardElevation="6dp"
+        app:layout_constraintEnd_toEndOf="@id/guideEnd"
+        app:layout_constraintStart_toStartOf="@id/guideStart"
+        app:layout_constraintTop_toBottomOf="@id/cardCheckMantener"
+        app:strokeWidth="0dp"
+        tools:targetApi="p">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tvBtnLogin"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="sans-serif-medium"
+                android:includeFontPadding="false"
+                android:letterSpacing="0.01"
+                android:text="Ingresar al Sistema"
+                android:textColor="#FFFFFF"
+                android:textSize="15sp" />
+
+            <ImageView
+                android:id="@+id/imgFlechaLogin"
+                android:layout_width="16dp"
+                android:layout_height="16dp"
+                android:layout_marginStart="9dp"
+                android:importantForAccessibility="no"
+                android:src="@drawable/ic_flecha_derecha"
+                app:tint="#FFFFFF" />
+        </LinearLayout>
+    </com.google.android.material.card.MaterialCardView>
+
+    <!-- CARD INFO CREDENCIALES -->
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/cardInfoCredenciales"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:cardBackgroundColor="#FFFFFF"
+        app:cardCornerRadius="14dp"
+        app:cardElevation="0dp"
+        app:layout_constraintEnd_toEndOf="@id/guideEnd"
+        app:layout_constraintStart_toStartOf="@id/guideStart"
+        app:layout_constraintTop_toTopOf="@id/guideInfoTop"
+        app:strokeColor="#FBD5DA"
+        app:strokeWidth="1dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingStart="14dp"
+            android:paddingTop="14dp"
+            android:paddingEnd="16dp"
+            android:paddingBottom="16dp">
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cardIconoInfo"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_marginTop="2dp"
+                app:cardBackgroundColor="#FDEEF0"
+                app:cardCornerRadius="8dp"
+                app:cardElevation="0dp"
+                app:strokeWidth="0dp">
+
+                <ImageView
+                    android:id="@+id/imgIconoInfo"
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:layout_gravity="center"
+                    android:importantForAccessibility="no"
+                    android:src="@drawable/ic_reloj"
+                    app:tint="#B80C2E" />
+            </com.google.android.material.card.MaterialCardView>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tvInfoTitulo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:includeFontPadding="false"
+                    android:text="¿No recuerdas tus credenciales UTP?"
+                    android:textColor="#0F172A"
+                    android:textSize="13sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tvInfoDescripcion"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:includeFontPadding="false"
+                    android:lineSpacingExtra="3.5dp"
+                    android:text="Si no recuerdas tu código o contraseña, comunícate con el SAE UTP o visita los módulos de atención en campus."
+                    android:textColor="#64748B"
+                    android:textSize="12sp" />
+            </LinearLayout>
+        </LinearLayout>
+    </com.google.android.material.card.MaterialCardView>
+
+    <!-- ============ NOTA DE CREDENCIALES (demo) ============ -->
+    <!-- Hallador  -> usuario: jair   contraseña: jair
+         Servicio  -> usuario: jair   contraseña: jair123 -->
+    <TextView
+        android:id="@+id/tvNotaCredenciales"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:fontFamily="monospace"
+        android:lineSpacingExtra="2dp"
+        android:text="CREDENCIALES DEMO\nHallador:  jair / jair\nServicio:   jair / jair123"
+        android:textColor="#64748B"
+        android:textSize="11sp"
+        app:layout_constraintEnd_toEndOf="@id/guideEnd"
+        app:layout_constraintStart_toStartOf="@id/guideStart"
+        app:layout_constraintTop_toBottomOf="@id/cardInfoCredenciales" />
+
+    <!-- FOOTER -->
+    <TextView
+        android:id="@+id/tvFooter"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="14dp"
+        android:fontFamily="monospace"
+        android:gravity="center"
+        android:includeFontPadding="false"
+        android:letterSpacing="0.05"
+        android:text="SISTEMA INTERNO • VERSIÓN WIREFRAME 1.0"
+        android:textColor="#B5BFD1"
+        android:textSize="10sp"
+        app:layout_constraintEnd_toEndOf="@id/guideEnd"
+        app:layout_constraintStart_toStartOf="@id/guideStart"
+        app:layout_constraintTop_toBottomOf="@id/tvNotaCredenciales" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

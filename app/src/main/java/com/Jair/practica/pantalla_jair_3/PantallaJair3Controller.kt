@@ -8,8 +8,10 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.Jair.practica.R
 import com.Jair.practica.pantalla_jair_1.PantallaJair1Activity
-import com.Jair.practica.pantalla_jair_2.PantallaJair2Activity
+import com.Jair.practica.pantalla_noe_2.PantallaNoe2Activity
 import com.google.android.material.card.MaterialCardView
+import com.google.android.material.chip.Chip
+import com.google.android.material.chip.ChipGroup
 
 class PantallaJair3Controller(private val activity: AppCompatActivity) {
 
@@ -42,17 +44,21 @@ class PantallaJair3Controller(private val activity: AppCompatActivity) {
         )
         ids.forEach { id ->
             activity.findViewById<MaterialCardView>(id).setOnClickListener {
-                Toast.makeText(activity, "Actualmente no disponible", Toast.LENGTH_SHORT).show()
+                activity.startActivity(Intent(activity, PantallaNoe2Activity::class.java))
             }
         }
     }
 
     private fun wireChips() {
-        val ids = listOf(R.id.chipTodas, R.id.chipEstaSemana, R.id.chipLaptops)
-        ids.forEach { id ->
-            activity.findViewById<MaterialCardView>(id).setOnClickListener {
-                Toast.makeText(activity, "Filtro en desarrollo", Toast.LENGTH_SHORT).show()
-            }
+        val grupo = activity.findViewById<ChipGroup>(R.id.grupoFiltrosHistorial)
+        grupo.setOnCheckedStateChangeListener { _, checkedIds ->
+            val id = checkedIds.firstOrNull() ?: return@setOnCheckedStateChangeListener
+            val chip = activity.findViewById<Chip>(id)
+            Toast.makeText(
+                activity,
+                activity.getString(R.string.filtro_demo_seleccionado, chip.text),
+                Toast.LENGTH_SHORT
+            ).show()
         }
     }
 
@@ -61,7 +67,7 @@ class PantallaJair3Controller(private val activity: AppCompatActivity) {
             activity.startActivity(Intent(activity, PantallaJair1Activity::class.java))
         }
         activity.findViewById<android.view.View>(R.id.navCustodia).setOnClickListener {
-            activity.startActivity(Intent(activity, PantallaJair2Activity::class.java))
+            // "Resuelto" ya es la pantalla actual.
         }
     }
 }
