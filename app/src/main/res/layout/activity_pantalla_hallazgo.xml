@@ -332,13 +332,25 @@
                         app:strokeColor="#D1D5DB"
                         app:strokeWidth="1dp">
 
-                        <LinearLayout
+                        <FrameLayout
                             android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:gravity="center_horizontal"
-                            android:orientation="vertical"
-                            android:paddingTop="25dp"
-                            android:paddingBottom="19dp">
+                            android:layout_height="match_parent">
+
+                            <ImageView
+                                android:id="@+id/imgFotoPreview"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:contentDescription="Foto del objeto encontrado"
+                                android:scaleType="centerCrop"
+                                android:visibility="gone" />
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:gravity="center_horizontal"
+                                android:orientation="vertical"
+                                android:paddingTop="25dp"
+                                android:paddingBottom="19dp">
 
                             <com.google.android.material.card.MaterialCardView
                                 android:id="@+id/cardCirculoCamara"
@@ -423,7 +435,8 @@
                                         android:textStyle="bold" />
                                 </LinearLayout>
                             </com.google.android.material.card.MaterialCardView>
-                        </LinearLayout>
+                            </LinearLayout>
+                        </FrameLayout>
                     </com.google.android.material.card.MaterialCardView>
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
