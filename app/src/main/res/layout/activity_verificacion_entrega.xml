@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#F8F9FD"
-    tools:context=".pantalla_noe_1.PantallaNoe1Activity">
+    tools:context=".view.devolucion.VerificacionEntregaActivity">
 
     <!-- ===================== HEADER ===================== -->
     <LinearLayout
@@ -332,7 +332,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="12dp"
                         android:labelFor="@id/spinnerTipoDocumento"
-                        android:text="@string/noe_tipo_documento"
+                        android:text="@string/entrega_tipo_documento"
                         android:textColor="#1C1B1F"
                         android:textSize="13sp" />
 
@@ -838,11 +838,11 @@
                             android:layout_marginEnd="4dp"
                             android:minHeight="80dp"
                             android:padding="8dp"
-                            android:background="@drawable/noe_opcion_background"
-                            android:text="@string/noe_aprobar_entrega"
-                            android:textColor="@color/noe_opcion_texto"
+                            android:background="@drawable/entrega_opcion_background"
+                            android:text="@string/entrega_aprobar_entrega"
+                            android:textColor="@color/entrega_opcion_texto"
                             android:textSize="14sp"
-                            app:buttonTint="@color/noe_opcion_texto" />
+                            app:buttonTint="@color/entrega_opcion_texto" />
 
                         <com.google.android.material.radiobutton.MaterialRadioButton
                             android:id="@+id/rbDenegarEntrega"
@@ -853,11 +853,11 @@
                             android:layout_marginEnd="4dp"
                             android:minHeight="80dp"
                             android:padding="8dp"
-                            android:background="@drawable/noe_opcion_background"
-                            android:text="@string/noe_denegar_entrega"
-                            android:textColor="@color/noe_opcion_texto"
+                            android:background="@drawable/entrega_opcion_background"
+                            android:text="@string/entrega_denegar_entrega"
+                            android:textColor="@color/entrega_opcion_texto"
                             android:textSize="14sp"
-                            app:buttonTint="@color/noe_opcion_texto" />
+                            app:buttonTint="@color/entrega_opcion_texto" />
                     </RadioGroup>
 
                     <TextView
@@ -866,7 +866,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
                         android:accessibilityLiveRegion="polite"
-                        android:text="@string/noe_resolucion_aprobada"
+                        android:text="@string/entrega_resolucion_aprobada"
                         android:textColor="#5F6368"
                         android:textSize="12sp" />
 

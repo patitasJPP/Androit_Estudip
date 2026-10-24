@@ -5,12 +5,12 @@ MVVM se usa como **patrón arquitectónico de presentación**. La separación vi
 ```text
 app/src/main/java/com/Jair/practica/
 ├── view/
-│   ├── login/        LoginActivity: ejemplo MVVM completo
-│   ├── hallazgo/     Captura y consulta de objetos encontrados
-│   ├── custodia/     Recepción, inventario y ubicación
+│   ├── login/        Selección de rol y LoginActivity: ejemplo MVVM
+│   ├── hallazgo/     Registro de objetos encontrados
+│   ├── custodia/     Inventario y protocolo de entrega
 │   ├── perdida/      Reportes de pérdida y búsqueda
-│   ├── devolucion/   Reclamación, verificación y entrega
-│   └── common/       Componentes visuales reutilizables
+│   ├── devolucion/   Historial, verificación y acta de entrega
+│   └── common/       Navegación visual compartida
 ├── viewmodel/
 │   ├── login/        LoginViewModel y estado observable
 │   ├── hallazgo/
@@ -38,11 +38,21 @@ El contrato de autenticación del ejemplo es síncrono porque consulta datos loc
 2. `viewmodel/login/LoginViewModel.kt` decide el resultado de la acción usando `AuthRepository` y publica `Idle`, `InvalidCredentials` o `Authenticated` mediante LiveData.
 3. `model/entity/LoginRole.kt` define los roles. `model/repository/AuthRepository.kt` define el contrato; `DemoAuthRepository.kt` lo implementa de forma local y temporal. Una implementación remota podrá sustituirla cuando exista la API.
 
-Para migrar otra pantalla, crear su `ViewModel` y sus entidades/contratos necesarios, mover allí el estado y las decisiones de la pantalla, y dejar en View solamente los eventos visuales y APIs de Android. Actualizar los imports y el `AndroidManifest.xml` al cambiar paquetes. Mantener nombres de clases, rutas y navegación existentes hasta verificar que cada flujo compila y funciona.
+Para migrar otra pantalla, crear su `ViewModel` y sus entidades/contratos necesarios, mover allí el estado y las decisiones de la pantalla, y dejar en View solamente los eventos visuales y APIs de Android. Verificar sus imports, navegación y `AndroidManifest.xml` después de cada migración.
 
-## Estado de los paquetes anteriores
+## Estado de las demás pantallas
 
-Las pantallas en `eleccion_categoria`, `pantalla_hallazgo`, `pantalla_jair_*` y `pantalla_noe*` siguen en sus paquetes originales para no interrumpir el trabajo del equipo. Sus clases `Controller` son **código previo a MVVM**; no deben presentarse como ViewModels. La migración puede hacerse pantalla por pantalla hacia `view/<flujo>` y `viewmodel/<flujo>`.
+Todas las pantallas están agrupadas bajo `view` con nombres por función. Los archivos XML de `res/layout` también tienen nombres funcionales, y los recursos de entrega usan el prefijo `entrega_`. El paquete raíz y el `applicationId` se conservan para no cambiar la identidad instalada de la app.
+
+| Flujo | Pantallas actuales |
+| --- | --- |
+| Acceso | `SeleccionRolActivity` → `LoginActivity` |
+| Hallazgos | `RegistroHallazgoActivity` |
+| Custodia | `InventarioActivity`, `ProtocoloEntregaActivity` |
+| Devoluciones | `HistorialEntregasActivity`, `VerificacionEntregaActivity`, `ActaEntregaActivity` |
+| Pérdidas | Paquete reservado; todavía no existe una pantalla funcional |
+
+Salvo el login, las clases `Controller` siguen siendo **código previo a MVVM**: están en View porque manipulan elementos visuales, pero algunas aún contienen estado y decisiones que deben pasar gradualmente a `ViewModel`. Renombrar y mover archivos no significa que esas pantallas ya implementen MVVM.
 
 ## Tipos de tareas en los flujos
 

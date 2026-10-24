@@ -1,4 +1,4 @@
-package com.Jair.practica.pantalla_noe
+package com.Jair.practica.view.common
 
 import android.content.Intent
 import android.view.View
@@ -7,11 +7,11 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.Jair.practica.R
-import com.Jair.practica.pantalla_jair_1.PantallaJair1Activity
-import com.Jair.practica.pantalla_jair_3.PantallaJair3Activity
+import com.Jair.practica.view.custodia.InventarioActivity
+import com.Jair.practica.view.devolucion.HistorialEntregasActivity
 
 /** Navegación del prototipo; no registra entregas ni modifica datos. */
-object NavegacionNoe {
+object NavegacionPrincipal {
     fun configurar(activity: AppCompatActivity, rootId: Int) {
         val root = activity.findViewById<View>(rootId)
         ViewCompat.setOnApplyWindowInsetsListener(root) { view, insets ->
@@ -26,7 +26,7 @@ object NavegacionNoe {
         activity.findViewById<View>(R.id.navObjetos).setOnClickListener { panel(activity) }
         activity.findViewById<View>(R.id.navCustodia).setOnClickListener { panel(activity) }
         activity.findViewById<View>(R.id.navReportes).setOnClickListener {
-            abrir(activity, PantallaJair3Activity::class.java)
+            abrir(activity, HistorialEntregasActivity::class.java)
         }
         activity.findViewById<View>(R.id.navPerfil).setOnClickListener {
             aviso(activity, "La pantalla de perfil todavía no está disponible")
@@ -34,7 +34,7 @@ object NavegacionNoe {
     }
 
     fun panel(activity: AppCompatActivity) {
-        abrir(activity, PantallaJair1Activity::class.java)
+        abrir(activity, InventarioActivity::class.java)
     }
 
     private fun abrir(activity: AppCompatActivity, destino: Class<out AppCompatActivity>) {

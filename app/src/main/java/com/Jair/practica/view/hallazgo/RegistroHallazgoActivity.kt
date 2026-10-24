@@ -1,12 +1,12 @@
-package com.Jair.practica.pantalla_hallazgo
+package com.Jair.practica.view.hallazgo
 
 import android.os.Bundle
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import com.Jair.practica.R
 
-class PantallaHallazgoActivity : AppCompatActivity() {
-    private lateinit var controller: PantallaHallazgoController
+class RegistroHallazgoActivity : AppCompatActivity() {
+    private lateinit var controller: RegistroHallazgoController
 
     private val tomarFoto = registerForActivityResult(
         ActivityResultContracts.TakePicturePreview()
@@ -16,8 +16,8 @@ class PantallaHallazgoActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_pantalla_hallazgo)
-        controller = PantallaHallazgoController(this) { tomarFoto.launch(null) }
+        setContentView(R.layout.activity_registro_hallazgo)
+        controller = RegistroHallazgoController(this) { tomarFoto.launch(null) }
         controller.iniciar()
     }
 }

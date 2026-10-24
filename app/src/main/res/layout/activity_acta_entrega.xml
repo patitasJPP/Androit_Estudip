@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#F8F9FD"
-    tools:context=".pantalla_noe_2.PantallaNoe2Activity">
+    tools:context=".view.devolucion.ActaEntregaActivity">
 
     <!-- ===================== HEADER ===================== -->
     <LinearLayout

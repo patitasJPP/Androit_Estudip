@@ -1,4 +1,4 @@
-package com.Jair.practica.pantalla_jair_1
+package com.Jair.practica.view.custodia
 
 import android.content.Intent
 import android.widget.Button
@@ -6,11 +6,10 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.Jair.practica.R
-import com.Jair.practica.pantalla_jair_2.PantallaJair2Activity
-import com.Jair.practica.pantalla_jair_3.PantallaJair3Activity
-import com.Jair.practica.pantalla_noe_1.PantallaNoe1Activity
+import com.Jair.practica.view.devolucion.HistorialEntregasActivity
+import com.Jair.practica.view.devolucion.VerificacionEntregaActivity
 
-class PantallaJair1Controller(private val activity: AppCompatActivity) {
+class InventarioController(private val activity: AppCompatActivity) {
 
     fun iniciar() {
         val inventario = 142
@@ -26,21 +25,21 @@ class PantallaJair1Controller(private val activity: AppCompatActivity) {
         )
         botones.forEach { id ->
             activity.findViewById<Button>(id).setOnClickListener {
-                activity.startActivity(Intent(activity, PantallaJair2Activity::class.java))
+                activity.startActivity(Intent(activity, ProtocoloEntregaActivity::class.java))
             }
         }
 
         activity.findViewById<android.view.View>(R.id.navCustodia).setOnClickListener {
-            activity.startActivity(Intent(activity, PantallaJair3Activity::class.java))
+            activity.startActivity(Intent(activity, HistorialEntregasActivity::class.java))
         }
 
         listOf(R.id.btnEntregar1, R.id.btnEntregar2, R.id.btnEntregar3).forEach { id ->
             activity.findViewById<Button>(id).setOnClickListener {
-                activity.startActivity(Intent(activity, PantallaNoe1Activity::class.java))
+                activity.startActivity(Intent(activity, VerificacionEntregaActivity::class.java))
             }
         }
         activity.findViewById<android.view.View>(R.id.navReportes).setOnClickListener {
-            activity.startActivity(Intent(activity, PantallaJair3Activity::class.java))
+            activity.startActivity(Intent(activity, HistorialEntregasActivity::class.java))
         }
 
         resaltarNavItem(R.id.navObjetos)

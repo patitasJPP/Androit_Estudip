@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="entrega_aprobar_entrega">Aprobar entrega</string>
+    <string name="entrega_denegar_entrega">Denegar entrega</string>
+    <string name="entrega_resolucion_aprobada">Aprobación seleccionada. Puedes continuar con la entrega de ejemplo.</string>
+    <string name="entrega_resolucion_denegada">Denegación seleccionada. La confirmación y el acta de entrega quedan deshabilitadas.</string>
+    <string name="entrega_tipo_documento">Tipo de documento</string>
+    <string name="entrega_foto_documento">Fotografía del documento: %1$s</string>
+    <string name="entrega_cotejo_documento">Número de %1$s coincide con registro de admisión UTP.</string>
+    <string name="entrega_documento_legible">Asegúrese de que los datos y el número del documento sean completamente legibles.</string>
+    <string-array name="entrega_tipos_documento">
+        <item>DNI</item>
+        <item>Carné universitario UTP</item>
+        <item>Carné de extranjería</item>
+    </string-array>
+    <string name="filtro_todas">Todas las entregas</string>
+    <string name="filtro_semana">Esta semana</string>
+    <string name="filtro_laptops">Laptops</string>
+    <string name="filtro_demo_seleccionado">Filtro seleccionado: %1$s. Vista de ejemplo.</string>
+    <style name="Widget.Practica.ChipFiltro" parent="Widget.MaterialComponents.Chip.Filter">
+        <item name="android:textColor">@color/entrega_opcion_texto</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="chipBackgroundColor">@color/entrega_chip_fondo</item>
+        <item name="chipIconTint">@color/entrega_opcion_texto</item>
+        <item name="chipIconVisible">true</item>
+        <item name="chipIconSize">16dp</item>
+        <item name="checkedIconVisible">false</item>
+        <item name="chipCornerRadius">8dp</item>
+        <item name="chipStrokeColor">#E5E6EC</item>
+        <item name="chipStrokeWidth">1dp</item>
+        <item name="ensureMinTouchTargetSize">true</item>
+    </style>
+</resources>

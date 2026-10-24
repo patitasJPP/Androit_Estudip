@@ -12,7 +12,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Practica">
         <activity
-            android:name=".eleccion_categoria.MainActivity"
+            android:name=".view.login.SeleccionRolActivity"
             android:exported="true"
             android:windowSoftInputMode="adjustResize">
             <intent-filter>
@@ -23,27 +23,27 @@
         </activity>
 
         <activity
-            android:name=".pantalla_jair_1.PantallaJair1Activity"
+            android:name=".view.custodia.InventarioActivity"
             android:exported="false" />
 
         <activity
-            android:name=".pantalla_jair_2.PantallaJair2Activity"
+            android:name=".view.custodia.ProtocoloEntregaActivity"
             android:exported="false" />
 
         <activity
-            android:name=".pantalla_jair_3.PantallaJair3Activity"
+            android:name=".view.devolucion.HistorialEntregasActivity"
             android:exported="false" />
 
         <activity
-            android:name=".pantalla_noe_1.PantallaNoe1Activity"
+            android:name=".view.devolucion.VerificacionEntregaActivity"
             android:exported="false" />
 
         <activity
-            android:name=".pantalla_noe_2.PantallaNoe2Activity"
+            android:name=".view.devolucion.ActaEntregaActivity"
             android:exported="false" />
 
         <activity
-            android:name=".pantalla_hallazgo.PantallaHallazgoActivity"
+            android:name=".view.hallazgo.RegistroHallazgoActivity"
             android:exported="false" />
 
         <activity

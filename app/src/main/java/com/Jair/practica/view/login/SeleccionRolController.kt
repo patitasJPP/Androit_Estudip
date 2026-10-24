@@ -1,4 +1,4 @@
-package com.Jair.practica.eleccion_categoria
+package com.Jair.practica.view.login
 
 import android.content.Intent
 import android.widget.Button
@@ -6,9 +6,8 @@ import android.widget.RadioGroup
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.Jair.practica.R
-import com.Jair.practica.view.login.LoginActivity
 
-class MainController(private val activity: AppCompatActivity) {
+class SeleccionRolController(private val activity: AppCompatActivity) {
 
     fun iniciar() {
         val grupoRol = activity.findViewById<RadioGroup>(R.id.rgRol)

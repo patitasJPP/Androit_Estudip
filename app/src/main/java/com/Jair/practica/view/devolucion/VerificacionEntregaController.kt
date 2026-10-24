@@ -1,4 +1,4 @@
-package com.Jair.practica.pantalla_noe_1
+package com.Jair.practica.view.devolucion
 
 import android.content.Intent
 import android.graphics.Rect
@@ -10,21 +10,20 @@ import android.widget.Spinner
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.Jair.practica.R
-import com.Jair.practica.pantalla_noe.NavegacionNoe
-import com.Jair.practica.pantalla_noe_2.PantallaNoe2Activity
+import com.Jair.practica.view.common.NavegacionPrincipal
 
-class PantallaNoe1Controller(private val activity: AppCompatActivity) {
+class VerificacionEntregaController(private val activity: AppCompatActivity) {
     fun iniciar() {
         configurarResolucion()
         configurarDocumento()
         activity.findViewById<View>(R.id.cardVolver).setOnClickListener {
-            NavegacionNoe.panel(activity)
+            NavegacionPrincipal.panel(activity)
         }
         activity.findViewById<View>(R.id.btnGenerarReporte).setOnClickListener {
-            activity.startActivity(Intent(activity, PantallaNoe2Activity::class.java))
+            activity.startActivity(Intent(activity, ActaEntregaActivity::class.java))
         }
         activity.findViewById<View>(R.id.btnConfirmarEntregar).setOnClickListener {
-            NavegacionNoe.aviso(activity, "Demostración visual: no se ha registrado ninguna entrega")
+            NavegacionPrincipal.aviso(activity, "Demostración visual: no se ha registrado ninguna entrega")
             val firma = activity.findViewById<View>(R.id.cardFirmaDigital)
             firma.requestRectangleOnScreen(Rect(0, 0, firma.width, firma.height), false)
         }
@@ -39,7 +38,7 @@ class PantallaNoe1Controller(private val activity: AppCompatActivity) {
         )
         accionesVisuales.forEach { (id, mensaje) ->
             activity.findViewById<View>(id).setOnClickListener {
-                NavegacionNoe.aviso(activity, mensaje)
+                NavegacionPrincipal.aviso(activity, mensaje)
             }
         }
     }
@@ -49,7 +48,7 @@ class PantallaNoe1Controller(private val activity: AppCompatActivity) {
         fun actualizarSeleccion(id: Int) {
             val aprobada = id == R.id.rbAprobarEntrega
             activity.findViewById<TextView>(R.id.tvEstadoResolucion).setText(
-                if (aprobada) R.string.noe_resolucion_aprobada else R.string.noe_resolucion_denegada
+                if (aprobada) R.string.entrega_resolucion_aprobada else R.string.entrega_resolucion_denegada
             )
             listOf(R.id.btnConfirmarEntregar, R.id.btnGenerarReporte).forEach { botonId ->
                 activity.findViewById<View>(botonId).apply {
@@ -65,19 +64,19 @@ class PantallaNoe1Controller(private val activity: AppCompatActivity) {
     private fun configurarDocumento() {
         val spinner = activity.findViewById<Spinner>(R.id.spinnerTipoDocumento)
         spinner.adapter = ArrayAdapter.createFromResource(
-            activity, R.array.noe_tipos_documento, R.layout.noe_spinner_item
+            activity, R.array.entrega_tipos_documento, R.layout.entrega_spinner_item
         ).apply {
-            setDropDownViewResource(R.layout.noe_spinner_item)
+            setDropDownViewResource(R.layout.entrega_spinner_item)
         }
         spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, id: Long) {
                 val documento = parent.getItemAtPosition(position).toString()
                 activity.findViewById<TextView>(R.id.tvTituloDni).text =
-                    activity.getString(R.string.noe_foto_documento, documento)
+                    activity.getString(R.string.entrega_foto_documento, documento)
                 activity.findViewById<TextView>(R.id.chkDniCoincide).text =
-                    activity.getString(R.string.noe_cotejo_documento, documento)
+                    activity.getString(R.string.entrega_cotejo_documento, documento)
                 activity.findViewById<TextView>(R.id.tvAvisoLegibilidad).setText(
-                    R.string.noe_documento_legible
+                    R.string.entrega_documento_legible
                 )
             }
 

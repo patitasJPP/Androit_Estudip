@@ -1,4 +1,4 @@
-package com.Jair.practica.pantalla_jair_3
+package com.Jair.practica.view.devolucion
 
 import android.content.Intent
 import android.graphics.Color
@@ -7,13 +7,12 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.Jair.practica.R
-import com.Jair.practica.pantalla_jair_1.PantallaJair1Activity
-import com.Jair.practica.pantalla_noe_2.PantallaNoe2Activity
+import com.Jair.practica.view.custodia.InventarioActivity
 import com.google.android.material.card.MaterialCardView
 import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
 
-class PantallaJair3Controller(private val activity: AppCompatActivity) {
+class HistorialEntregasController(private val activity: AppCompatActivity) {
 
     fun iniciar() {
         wireBotonesActa()
@@ -44,7 +43,7 @@ class PantallaJair3Controller(private val activity: AppCompatActivity) {
         )
         ids.forEach { id ->
             activity.findViewById<MaterialCardView>(id).setOnClickListener {
-                activity.startActivity(Intent(activity, PantallaNoe2Activity::class.java))
+                activity.startActivity(Intent(activity, ActaEntregaActivity::class.java))
             }
         }
     }
@@ -64,7 +63,7 @@ class PantallaJair3Controller(private val activity: AppCompatActivity) {
 
     private fun wireNav() {
         activity.findViewById<android.view.View>(R.id.navObjetos).setOnClickListener {
-            activity.startActivity(Intent(activity, PantallaJair1Activity::class.java))
+            activity.startActivity(Intent(activity, InventarioActivity::class.java))
         }
         activity.findViewById<android.view.View>(R.id.navCustodia).setOnClickListener {
             // "Resuelto" ya es la pantalla actual.

@@ -1,4 +1,4 @@
-package com.Jair.practica.pantalla_hallazgo
+package com.Jair.practica.view.hallazgo
 
 import android.content.res.ColorStateList
 import android.graphics.Bitmap
@@ -18,7 +18,7 @@ import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
 
-class PantallaHallazgoController(
+class RegistroHallazgoController(
     private val activity: AppCompatActivity,
     private val abrirCamara: () -> Unit
 ) {

@@ -7,11 +7,10 @@ import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.Jair.practica.databinding.ActivityLoginBinding
-import com.Jair.practica.eleccion_categoria.MainController
 import com.Jair.practica.model.entity.LoginRole
 import com.Jair.practica.model.repository.DemoAuthRepository
-import com.Jair.practica.pantalla_hallazgo.PantallaHallazgoActivity
-import com.Jair.practica.pantalla_jair_1.PantallaJair1Activity
+import com.Jair.practica.view.custodia.InventarioActivity
+import com.Jair.practica.view.hallazgo.RegistroHallazgoActivity
 import com.Jair.practica.viewmodel.login.LoginUiState
 import com.Jair.practica.viewmodel.login.LoginViewModel
 
@@ -36,8 +35,8 @@ class LoginActivity : AppCompatActivity() {
                 is LoginUiState.Authenticated -> {
                     viewModel.clearResult()
                     val destination = when (state.role) {
-                        LoginRole.HALLADOR -> PantallaHallazgoActivity::class.java
-                        LoginRole.SERVICIO -> PantallaJair1Activity::class.java
+                        LoginRole.HALLADOR -> RegistroHallazgoActivity::class.java
+                        LoginRole.SERVICIO -> InventarioActivity::class.java
                     }
                     startActivity(Intent(this, destination))
                     finish()
@@ -47,7 +46,7 @@ class LoginActivity : AppCompatActivity() {
 
         binding.imgMostrarClave.setOnClickListener { togglePasswordVisibility() }
         binding.btnLogin.setOnClickListener {
-            val role = LoginRole.fromCode(intent.getStringExtra(MainController.EXTRA_ROL))
+            val role = LoginRole.fromCode(intent.getStringExtra(SeleccionRolController.EXTRA_ROL))
             viewModel.signIn(
                 role,
                 binding.etUsuario.text.toString(),
