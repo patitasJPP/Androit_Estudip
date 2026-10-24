@@ -47,7 +47,7 @@
             android:exported="false" />
 
         <activity
-            android:name=".login.LoginActivity"
+            android:name=".view.login.LoginActivity"
             android:exported="false" />
     </application>
 
