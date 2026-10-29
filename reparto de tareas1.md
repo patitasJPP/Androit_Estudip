@@ -157,3 +157,69 @@ Los integrantes 2, 3 y 4 ya pueden comenzar sus módulos siguiendo esta guía. A
 4. Probar su navegación localmente y entregar una breve lista de archivos modificados.
 
 La parte de NOE no está cerrada al cien por ciento hasta integrar y probar los tres módulos del equipo. Después de recibirlos, NOE realizará la integración final, resolverá conflictos de recursos y comprobará la navegación completa.
+
+## Modelo de entidades y repositorios
+
+Para que la arquitectura sea coherente, cada entidad de negocio debe tener un repositorio responsable de consultar, guardar y actualizar sus datos. En esta primera versión se aplicará una relación uno a uno entre entidad y repositorio, tal como solicitó el profesor. Los repositorios aislarán a los ViewModel de la implementación local o remota.
+
+| Entidad | Repositorio | Responsabilidad principal |
+|---|---|---|
+| `Usuario` | `UsuarioRepository` | Autenticación, rol y estado de la cuenta. |
+| `ObjetoEncontrado` | `ObjetoEncontradoRepository` | Hallazgo, código, estado físico y custodia. |
+| `ReportePerdida` | `ReportePerdidaRepository` | Registro, reanudación y cierre de pérdidas. |
+| `Reclamacion` | `ReclamacionRepository` | Evidencia, preguntas y decisión del SAE. |
+| `UbicacionAlmacenamiento` | `UbicacionRepository` | Caja, anaquel y movimientos de ubicación. |
+| `Entrega` | `EntregaRepository` | Reserva, confirmación, recuperación y constancia. |
+| `Evidencia` | `EvidenciaRepository` | Fotografías, características reservadas y sustento. |
+| `PersonaAtendida` | `PersonaAtendidaRepository` | Datos de quien reporta, reclama o recibe. |
+| `Aviso` | `AvisoRepository` | Avisos, destinatarios, estado y resultado de contacto. |
+| `EventoAuditoria` | `AuditoriaRepository` | Usuario, fecha, operación, cambios y motivo. |
+
+`LoginRole` se mantiene como enumeración de roles; no reemplaza a `Usuario`. Las entidades deben ubicarse en `model/entity`, las interfaces en `model/repository` y las implementaciones concretas en `model/local` o `model/remote`.
+
+## Controles obligatorios
+
+Cada pantalla debe incluir controles de interfaz y controles de negocio. No basta con mostrar un botón: el sistema debe impedir operaciones inválidas.
+
+### Controles de entrada
+
+- Validar campos obligatorios, formatos, longitudes y valores vacíos.
+- Mostrar mensajes claros junto al campo que contiene el error.
+- No permitir guardar una pérdida sin descripción y medio de contacto.
+- No permitir confirmar custodia sin código y ubicación válida.
+- No permitir confirmar devolución sin reclamación aprobada y firma capturada.
+
+### Controles de rol y permisos
+
+- El Personal registrador no puede confirmar custodia, revisar evidencia reservada ni entregar objetos.
+- El Administrador SAE es el único que puede confirmar recepción, verificar reclamaciones, entregar objetos y administrar accesos.
+- La pantalla debe ocultar acciones no autorizadas y el repositorio debe volver a validar el permiso.
+
+### Controles de estado
+
+- Un hallazgo reportado no se muestra como disponible hasta pasar a `Bajo custodia`.
+- Una reclamación `Pendiente de verificación` no puede iniciar una devolución.
+- Un objeto `Entregado` no puede volver a reservarse.
+- Una operación incierta debe reanudar la misma operación, no crear un duplicado.
+
+### Controles de integridad y auditoría
+
+- No eliminar registros definitivamente desde la aplicación.
+- Registrar usuario, fecha, estado anterior, estado nuevo y motivo en cada modificación relevante.
+- Evitar doble envío al pulsar dos veces el mismo botón.
+- Mantener separadas la evidencia reservada, la firma y la información visible para el registrador.
+
+## Cómo debe trabajar cada integrante
+
+Para cada RF asignado, el trabajo debe seguir este orden:
+
+1. Identificar las entidades que utiliza la pantalla.
+2. Crear o reutilizar esas entidades en `model/entity`.
+3. Definir el repositorio correspondiente en `model/repository`.
+4. Crear el ViewModel para el estado, validaciones y eventos de la pantalla.
+5. Implementar la Activity y el layout conservando el diseño visual existente.
+6. Aplicar los controles de entrada, rol, estado e integridad definidos en esta guía.
+7. Probar los casos correctos y los casos rechazados.
+8. Entregar una lista de archivos modificados y anotar cualquier dato simulado o pendiente de backend.
+
+Ningún integrante debe crear nombres alternativos para las mismas entidades, estados o roles. Si necesita una entidad nueva, debe agregarla primero a esta tabla y crear su repositorio correspondiente para que NOE pueda integrarla sin duplicidades.
