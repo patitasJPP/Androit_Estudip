@@ -1,0 +1,8 @@
+package com.Jair.practica.model.entity
+
+enum class EstadoObjeto { HALLAZGO_REPORTADO, PENDIENTE_RECEPCION, BAJO_CUSTODIA, ENTREGADO, ANULADO }
+enum class EstadoReportePerdida { BUSCANDO, COINCIDENCIA_SUGERIDA, EN_SEGUIMIENTO, RECUPERADO, CERRADO, ANULADO }
+enum class EstadoReclamacion { PENDIENTE_VERIFICACION, APROBADA, RECHAZADA, ATENDIDA }
+enum class EstadoEntrega { RESERVADA, CONFIRMADA, INCIERTA, CANCELADA }
+enum class TipoUbicacion { CAJA, ANAQUEL }
+enum class EstadoAviso { PENDIENTE, ENVIADO, FALLIDO, LEIDO }

@@ -177,6 +177,10 @@ Para que la arquitectura sea coherente, cada entidad de negocio debe tener un re
 
 `LoginRole` se mantiene como enumeración de roles; no reemplaza a `Usuario`. Las entidades deben ubicarse en `model/entity`, las interfaces en `model/repository` y las implementaciones concretas en `model/local` o `model/remote`.
 
+### Estado de la base compartida
+
+NOE ya creó las diez entidades y sus diez interfaces de repositorio en el proyecto. Por ahora son contratos de dominio sin una base de datos real; cada integrante implementará o conectará el repositorio que necesite para su RF. No se deben crear entidades paralelas con nombres diferentes.
+
 ## Controles obligatorios
 
 Cada pantalla debe incluir controles de interfaz y controles de negocio. No basta con mostrar un botón: el sistema debe impedir operaciones inválidas.
