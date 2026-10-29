@@ -11,6 +11,7 @@ import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.card.MaterialCardView
 import com.Jair.practica.R
@@ -340,6 +341,10 @@ class RegistroHallazgoController(
         }
 
         Toast.makeText(activity, resumen, Toast.LENGTH_LONG).show()
+        activity.startActivity(
+            Intent(activity, ConfirmarRecepcionActivity::class.java)
+                .putExtra(ConfirmarRecepcionActivity.EXTRA_CODIGO, codigoUnico)
+        )
     }
 
     private data class ChipRef(val cardId: Int, val textId: Int, val imgId: Int = 0)

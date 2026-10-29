@@ -35,8 +35,8 @@ class LoginActivity : AppCompatActivity() {
                 is LoginUiState.Authenticated -> {
                     viewModel.clearResult()
                     val destination = when (state.role) {
-                        LoginRole.HALLADOR -> RegistroHallazgoActivity::class.java
-                        LoginRole.SERVICIO -> InventarioActivity::class.java
+                        LoginRole.PERSONAL_REGISTRADOR -> RegistroHallazgoActivity::class.java
+                        LoginRole.ADMINISTRADOR_SAE -> InventarioActivity::class.java
                     }
                     startActivity(Intent(this, destination))
                     finish()
@@ -46,7 +46,10 @@ class LoginActivity : AppCompatActivity() {
 
         binding.imgMostrarClave.setOnClickListener { togglePasswordVisibility() }
         binding.btnLogin.setOnClickListener {
-            val role = LoginRole.fromCode(intent.getStringExtra(SeleccionRolController.EXTRA_ROL))
+            val role = when (binding.rgRolLogin.checkedRadioButtonId) {
+                binding.rbPersonalRegistrador.id -> LoginRole.PERSONAL_REGISTRADOR
+                else -> LoginRole.ADMINISTRADOR_SAE
+            }
             viewModel.signIn(
                 role,
                 binding.etUsuario.text.toString(),

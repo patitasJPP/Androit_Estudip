@@ -104,6 +104,51 @@
         app:layout_constraintStart_toStartOf="@id/guideStart"
         app:layout_constraintTop_toBottomOf="@id/tvTitulo" />
 
+    <TextView
+        android:id="@+id/tvLabelRolLogin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:fontFamily="monospace"
+        android:includeFontPadding="false"
+        android:letterSpacing="0.08"
+        android:text="ROL DE ACCESO"
+        android:textColor="#334155"
+        android:textSize="11sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="@id/guideStart"
+        app:layout_constraintTop_toBottomOf="@id/tvSubtitulo" />
+
+    <RadioGroup
+        android:id="@+id/rgRolLogin"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="@id/guideEnd"
+        app:layout_constraintStart_toStartOf="@id/guideStart"
+        app:layout_constraintTop_toBottomOf="@id/tvLabelRolLogin">
+
+        <RadioButton
+            android:id="@+id/rbPersonalRegistrador"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:checked="true"
+            android:text="Personal registrador"
+            android:textColor="#475569"
+            android:textSize="12sp" />
+
+        <RadioButton
+            android:id="@+id/rbAdministradorSae"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Administrador SAE"
+            android:textColor="#475569"
+            android:textSize="12sp" />
+    </RadioGroup>
+
     <!-- LABEL USUARIO -->
     <TextView
         android:id="@+id/tvLabelUsuario"
@@ -118,7 +163,7 @@
         android:textSize="11sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="@id/guideStart"
-        app:layout_constraintTop_toBottomOf="@id/tvSubtitulo" />
+        app:layout_constraintTop_toBottomOf="@id/rgRolLogin" />
 
     <!-- INPUT USUARIO -->
     <com.google.android.material.card.MaterialCardView
@@ -417,8 +462,8 @@
     </com.google.android.material.card.MaterialCardView>
 
     <!-- ============ NOTA DE CREDENCIALES (demo) ============ -->
-    <!-- Hallador  -> usuario: jair   contraseña: jair
-         Servicio  -> usuario: jair   contraseña: jair123 -->
+    <!-- Personal registrador -> usuario: jair   contraseña: jair
+         Administrador SAE   -> usuario: jair   contraseña: jair123 -->
     <TextView
         android:id="@+id/tvNotaCredenciales"
         android:layout_width="0dp"
@@ -426,7 +471,7 @@
         android:layout_marginTop="12dp"
         android:fontFamily="monospace"
         android:lineSpacingExtra="2dp"
-        android:text="CREDENCIALES DEMO\nHallador:  jair / jair\nServicio:   jair / jair123"
+        android:text="CREDENCIALES DEMO\nPersonal registrador: jair / jair\nAdministrador SAE:   jair / jair123"
         android:textColor="#64748B"
         android:textSize="11sp"
         app:layout_constraintEnd_toEndOf="@id/guideEnd"

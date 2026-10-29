@@ -148,7 +148,7 @@
                     android:layout_marginTop="4dp"
                     android:layout_marginEnd="20dp"
                     android:lineSpacingExtra="4.5dp"
-                    android:text="Normativa obligatoria para el personal de servicio y caseta. Cumplir estrictamente para garantizar la trazabilidad legal y transparencia del proceso."
+                    android:text="Normativa obligatoria para el Administrador SAE. Cumplir estrictamente para garantizar la trazabilidad y transparencia del proceso."
                     android:textColor="#64748B"
                     android:textSize="10.5sp"
                     app:layout_constraintBottom_toBottomOf="parent"

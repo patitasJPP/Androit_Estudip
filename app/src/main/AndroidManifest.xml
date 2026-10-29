@@ -12,7 +12,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Practica">
         <activity
-            android:name=".view.login.SeleccionRolActivity"
+            android:name=".view.login.LoginActivity"
             android:exported="true"
             android:windowSoftInputMode="adjustResize">
             <intent-filter>
@@ -47,7 +47,11 @@
             android:exported="false" />
 
         <activity
-            android:name=".view.login.LoginActivity"
+            android:name=".view.hallazgo.ConfirmarRecepcionActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".view.login.SeleccionRolActivity"
             android:exported="false" />
     </application>
 

@@ -1633,7 +1633,7 @@
                                     android:id="@+id/tvAvisoTitulo"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:text="Aviso al personal de servicio:"
+                                    android:text="Aviso al personal registrador:"
                                     android:textColor="#131B2E"
                                     android:textSize="11sp"
                                     android:textStyle="bold" />
