@@ -1,4 +1,6 @@
 package com.Jair.practica.view.hallazgo
+import com.Jair.practica.model.entity.LoginRole
+import com.Jair.practica.viewmodel.hallazgo.RegistroHallazgoViewModel
 
 import android.content.res.ColorStateList
 import android.graphics.Bitmap
@@ -21,6 +23,8 @@ import java.util.Locale
 
 class RegistroHallazgoController(
     private val activity: AppCompatActivity,
+    private val viewModel: RegistroHallazgoViewModel, // NUEVO
+    private val rolActivo: LoginRole,                 // NUEVO
     private val abrirCamara: () -> Unit
 ) {
 
@@ -311,40 +315,28 @@ class RegistroHallazgoController(
     }
 
     private fun registrarHallazgo() {
-        val descripcion = activity.findViewById<EditText>(R.id.etDescripcionObjeto)
-            .text.toString().trim().ifEmpty { "Sin descripción" }
-        val codigoUnico = activity.findViewById<TextView>(R.id.tvCodigoUnico).text.toString()
-        val anaquel = activity.findViewById<TextView>(R.id.tvAnaquelSeleccionado).text.toString()
+        // Bloqueo para evitar doble registro
+        activity.findViewById<View>(R.id.btnRegistrarEnviar).isEnabled = false
+
+        val descripcion = activity.findViewById<EditText>(R.id.etDescripcionObjeto).text.toString().trim()
         val campus = activity.findViewById<TextView>(R.id.tvSedeCampus).text.toString()
         val campusCentral = activity.findViewById<TextView>(R.id.tvCampusCentral).text.toString()
+        val lugarFormateado = "$campusCentral - $campus, $torreSeleccionada, $pisoSeleccionado, $areaSeleccionada - ${salonSeleccionado.codigo}"
 
-        val resumen = buildString {
-            appendLine("=== REGISTRO DE HALLAZGO ===")
-            appendLine("Ayudador: $codigoAyudador")
-            appendLine("Código único: $codigoUnico")
-            appendLine("Descripción: $descripcion")
-            appendLine("--- UBICACIÓN ---")
-            appendLine("Campus: $campusCentral")
-            appendLine("Sede: $campus")
-            appendLine("Torre: $torreSeleccionada")
-            appendLine("Piso: $pisoSeleccionado")
-            appendLine("Área específica: $areaSeleccionada")
-            appendLine("Salón: ${salonSeleccionado.codigo}")
-            appendLine("Nombre del salón: ${salonSeleccionado.nombre}")
-            appendLine("Nomenclatura: $torreSeleccionada • $pisoSeleccionado • $areaSeleccionada • ${salonSeleccionado.codigo}")
-            appendLine("--- CUSTODIA ---")
-            appendLine("Anaquel: $anaquel")
-            appendLine("Foto: ${if (fotoTomada) "Capturada" else "Pendiente"}")
-            appendLine("--- SELLO TEMPORAL ---")
-            appendLine("Fecha: $fechaSello")
-            append("Hora: $horaSello")
-        }
-
-        Toast.makeText(activity, resumen, Toast.LENGTH_LONG).show()
-        activity.startActivity(
-            Intent(activity, ConfirmarRecepcionActivity::class.java)
-                .putExtra(ConfirmarRecepcionActivity.EXTRA_CODIGO, codigoUnico)
+        // Delegamos todo al ViewModel, sin resúmenes falsos
+        viewModel.documentarHallazgo(
+            rolActivo = rolActivo,
+            categoria = "Por categorizar",
+            descripcion = descripcion,
+            lugar = lugarFormateado,
+            fechaHora = "$fechaSello $horaSello",
+            contacto = codigoAyudador,
+            tieneEvidencia = fotoTomada
         )
+    }
+
+    fun reactivarBoton() {
+        activity.findViewById<View>(R.id.btnRegistrarEnviar).isEnabled = true
     }
 
     private data class ChipRef(val cardId: Int, val textId: Int, val imgId: Int = 0)
