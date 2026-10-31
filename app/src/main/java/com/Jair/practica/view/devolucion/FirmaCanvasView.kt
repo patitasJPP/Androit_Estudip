@@ -1,6 +1,7 @@
 package com.Jair.practica.view.devolucion
 
 import android.content.Context
+import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Paint
@@ -63,4 +64,19 @@ class FirmaCanvasView(
     }
 
     fun tieneFirma(): Boolean = strokes.isNotEmpty()
+
+    /** RF-10: renderiza los trazos capturados en pantalla a un Bitmap (sin servicios externos). */
+    fun renderFirma(): Bitmap? {
+        if (strokes.isEmpty()) return null
+        val bitmap = Bitmap.createBitmap(width.coerceAtLeast(1), height.coerceAtLeast(1), Bitmap.Config.ARGB_8888)
+        val canvas = Canvas(bitmap)
+        val paint = Paint().apply {
+            color = Color.BLACK
+            strokeWidth = 8f
+            isAntiAlias = true
+            style = Paint.Style.STROKE
+        }
+        strokes.forEach { canvas.drawPath(it, paint) }
+        return bitmap
+    }
 }

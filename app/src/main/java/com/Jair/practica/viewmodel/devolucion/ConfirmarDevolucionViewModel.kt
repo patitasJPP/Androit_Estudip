@@ -23,6 +23,7 @@ import com.Jair.practica.model.repository.ObjetoEncontradoRepository
 import com.Jair.practica.model.repository.PersonaAtendidaRepository
 import com.Jair.practica.model.repository.ReclamacionRepository
 import com.Jair.practica.model.repository.ResultadoEntrega
+import android.graphics.Bitmap
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
@@ -65,6 +66,11 @@ class ConfirmarDevolucionViewModel(
     val state: LiveData<ConfirmarDevolucionUiState> = _state
 
     private var idOperacionActual: String? = UUID.randomUUID().toString()
+    private var firmaBitmap: Bitmap? = null
+
+    fun setFirmaBitmap(bitmap: Bitmap?) {
+        firmaBitmap = bitmap
+    }
 
     fun cargar(reclamacionId: String) {
         val estadoActual = _state.value
@@ -188,9 +194,11 @@ class ConfirmarDevolucionViewModel(
             }
             is ResultadoEntrega.Registrada -> {
                 idOperacionActual = null
+                val entregaConFirma = resultado.entrega.copy(firmaImagen = firmaBitmap)
+                entregaRepository.update(entregaConFirma)
                 _state.value = _state.value?.copy(
                     enviando = false,
-                    entrega = resultado.entrega,
+                    entrega = entregaConFirma,
                     mensajeExito = "Devolución confirmada. El objeto pasa a estado Entregado."
                 )
                 true

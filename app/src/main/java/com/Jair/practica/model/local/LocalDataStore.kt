@@ -1,14 +1,21 @@
 package com.Jair.practica.model.local
 
+import android.graphics.Bitmap
+import android.graphics.Canvas
+import android.graphics.Color
+import android.graphics.Paint
+import android.graphics.Path
 import com.Jair.practica.model.entity.EstadoEntrega
 import com.Jair.practica.model.entity.EstadoObjeto
 import com.Jair.practica.model.entity.EstadoReclamacion
 import com.Jair.practica.model.entity.Entrega
 import com.Jair.practica.model.entity.Evidencia
 import com.Jair.practica.model.entity.EventoAuditoria
+import com.Jair.practica.model.entity.LoginRole
 import com.Jair.practica.model.entity.ObjetoEncontrado
 import com.Jair.practica.model.entity.PersonaAtendida
 import com.Jair.practica.model.entity.Reclamacion
+import com.Jair.practica.model.entity.Usuario
 
 class LocalDataStore {
     val objetos = mutableListOf<ObjetoEncontrado>()
@@ -17,6 +24,7 @@ class LocalDataStore {
     val personas = mutableListOf<PersonaAtendida>()
     val eventosAuditoria = mutableListOf<EventoAuditoria>()
     val entregas = mutableListOf<Entrega>()
+    val usuarios = mutableListOf<Usuario>()
     val operacionesAplicadas = mutableSetOf<String>()
     val operacionesEntregas = mutableSetOf<String>()
 
@@ -53,6 +61,27 @@ class LocalDataStore {
         const val USUARIO_ADMINISTRADOR_ID = "usr-administrador-01"
         const val USUARIO_REGISTRADOR_ID = "usr-registrador-01"
         const val RECLAMACION_DEMO_ID = "rec-2026-0001"
+    }
+
+    private fun crearFirmaDemo(): Bitmap {
+        val bitmap = Bitmap.createBitmap(320, 120, Bitmap.Config.ARGB_8888)
+        val canvas = Canvas(bitmap)
+        val paint = Paint().apply {
+            color = Color.BLACK
+            strokeWidth = 6f
+            isAntiAlias = true
+            style = Paint.Style.STROKE
+        }
+        val path = Path().apply {
+            moveTo(12f, 96f)
+            lineTo(60f, 40f)
+            lineTo(105f, 78f)
+            lineTo(150f, 30f)
+            lineTo(195f, 66f)
+            lineTo(245f, 24f)
+        }
+        canvas.drawPath(path, paint)
+        return bitmap
     }
 
     private fun cargarSemilla() {
@@ -153,7 +182,17 @@ class LocalDataStore {
                 fechaConfirmacion = "2026-10-30 10:24",
                 firmaCapturada = true,
                 estado = EstadoEntrega.CONFIRMADA,
-                idOperacion = "op-demo-entrega-0001"
+                idOperacion = "op-demo-entrega-0001",
+                firmaImagen = try { crearFirmaDemo() } catch (e: Throwable) { null }
+            )
+        )
+
+        usuarios.add(
+            Usuario(
+                id = LocalDataStore.USUARIO_ADMINISTRADOR_ID,
+                username = "administrador_sae",
+                nombre = "Administrador SAE",
+                role = LoginRole.ADMINISTRADOR_SAE
             )
         )
 

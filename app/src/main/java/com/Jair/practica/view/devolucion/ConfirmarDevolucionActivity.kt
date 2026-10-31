@@ -51,6 +51,7 @@ class ConfirmarDevolucionActivity : AppCompatActivity() {
 
         binding.viewFirma.cambioEstadoFirma = { capturada ->
             viewModel.onFirmaChange(capturada)
+            viewModel.setFirmaBitmap(if (capturada) binding.viewFirma.renderFirma() else null)
         }
 
         binding.etReceptorId.addTextChangedListener(object : TextWatcher {
