@@ -11,5 +11,12 @@ data class ObjetoEncontrado(
     val registradoPor: String,
     val estado: EstadoObjeto = EstadoObjeto.HALLAZGO_REPORTADO,
     val ubicacionId: String? = null,
-    val contactoHalladorId: String? = null
+    val contactoHalladorId: String? = null,
+    // --- Integrante 3 (RF-06): datos PÚBLICOS para filtrar coincidencias ---
+    val color: String? = null,
+    val marca: String? = null,
+    val modelo: String? = null,
+    val pabellon: String? = null,
+    val piso: String? = null,
+    val aula: String? = null
 )

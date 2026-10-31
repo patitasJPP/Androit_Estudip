@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Textos del módulo de pérdidas y coincidencias (Integrante 3, RF-05 y RF-06).
+    Están en su propio archivo, con prefijo "perdida_", para no chocar con los demás integrantes.
+-->
+<resources>
+    <!-- Registrar pérdida (RF-05) -->
+    <string name="perdida_titulo_registrar">Registrar pérdida</string>
+    <string name="perdida_subtitulo_registrar">Registra la pérdida que una persona te comunicó presencialmente. Las coincidencias que encuentres son solo sugerencias.</string>
+    <string name="perdida_acceso_denegado">Esta pantalla solo está disponible para el Personal registrador.</string>
+    <string name="perdida_pendientes_titulo">REPORTES PENDIENTES</string>
+    <string name="perdida_btn_reanudar">Reanudar</string>
+    <string name="perdida_pendiente_sin_descripcion">(Sin descripción todavía)</string>
+    <string name="perdida_estado_nuevo">Reporte nuevo</string>
+    <string name="perdida_estado_reanudando">Reporte %1$s · %2$s</string>
+    <string name="perdida_seccion_objeto">DATOS DEL OBJETO</string>
+    <string name="perdida_seccion_ubicacion">DÓNDE LO PERDIÓ (APROXIMADO)</string>
+    <string name="perdida_seccion_contacto">DATOS DE CONTACTO</string>
+    <string name="perdida_hint_descripcion">Descripción del objeto *</string>
+    <string name="perdida_hint_lugar">Lugar aproximado</string>
+    <string name="perdida_hint_categoria">Categoría</string>
+    <string name="perdida_hint_color">Color</string>
+    <string name="perdida_hint_marca">Marca</string>
+    <string name="perdida_hint_modelo">Modelo</string>
+    <string name="perdida_hint_pabellon">Pabellón</string>
+    <string name="perdida_hint_piso">Piso</string>
+    <string name="perdida_hint_aula">Aula</string>
+    <string name="perdida_hint_contacto_nombre">Nombre de contacto</string>
+    <string name="perdida_hint_contacto_correo">Correo</string>
+    <string name="perdida_hint_contacto_telefono">Teléfono</string>
+    <string name="perdida_btn_guardar_borrador">Guardar borrador</string>
+    <string name="perdida_btn_registrar">Registrar reporte</string>
+    <string name="perdida_btn_buscar_coincidencias">Buscar coincidencias</string>
+    <string name="perdida_btn_nuevo_reporte">Nuevo reporte</string>
+    <string name="perdida_volver">Volver</string>
+
+    <!-- Buscar coincidencias (RF-06) -->
+    <string name="perdida_titulo_busqueda">Buscar coincidencias</string>
+    <string name="perdida_aviso_sugerencia">Las coincidencias son solo sugerencias. No autorizan ninguna entrega: la devolución la decide únicamente el Administrador SAE.</string>
+    <string name="perdida_caso_estado">Estado del caso: %1$s</string>
+    <string name="perdida_filtros_titulo">FILTROS</string>
+    <string name="perdida_btn_buscar">Buscar</string>
+    <string name="perdida_btn_limpiar">Limpiar filtros</string>
+    <string name="perdida_resultados_titulo">POSIBLES COINCIDENCIAS</string>
+    <string name="perdida_sin_buscar">Aún no has buscado. Elige los filtros y pulsa Buscar.</string>
+    <string name="perdida_sin_resultados">No hay objetos bajo custodia que coincidan con esos filtros.</string>
+    <string name="perdida_bloqueado">Registra el reporte antes de buscar coincidencias.</string>
+    <string name="perdida_no_encontrado">No se encontró el reporte o no es tuyo.</string>
+    <string name="perdida_btn_seguimiento">Dar seguimiento</string>
+    <string name="perdida_en_seguimiento">En seguimiento</string>
+    <string name="perdida_item_codigo">Código %1$s</string>
+    <string name="perdida_item_pabellon">Pabellón %1$s</string>
+    <string name="perdida_item_piso">Piso %1$s</string>
+    <string name="perdida_item_aula">Aula %1$s</string>
+    <string name="perdida_item_hallado">Hallado el %1$s</string>
+</resources>

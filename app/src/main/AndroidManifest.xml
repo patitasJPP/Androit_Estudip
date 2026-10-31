@@ -53,6 +53,17 @@
         <activity
             android:name=".view.login.SeleccionRolActivity"
             android:exported="false" />
+
+        <!-- Integrante 3: RF-05 (registrar/reanudar pérdida) y RF-06 (buscar coincidencias) -->
+        <activity
+            android:name=".view.perdida.RegistrarPerdidaActivity"
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize" />
+
+        <activity
+            android:name=".view.perdida.BuscarCoincidenciasActivity"
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize" />
     </application>
 
 </manifest>
