@@ -11,6 +11,7 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.Jair.practica.databinding.ActivityConfirmarDevolucionBinding
 import com.Jair.practica.model.entity.EstadoReclamacion
+import com.Jair.practica.model.entity.LoginRole
 import com.Jair.practica.model.local.LocalAuditoriaRepository
 import com.Jair.practica.model.local.LocalDataStore
 import com.Jair.practica.model.local.LocalEntregaRepository
@@ -117,6 +118,7 @@ class ConfirmarDevolucionActivity : AppCompatActivity() {
                         startActivity(
                             Intent(this, HistorialEntregasActivity::class.java).apply {
                                 putExtra("usuarioId", LocalDataStore.USUARIO_ADMINISTRADOR_ID)
+                                putExtra("rol", LoginRole.ADMINISTRADOR_SAE.code)
                             }
                         )
                         finish()

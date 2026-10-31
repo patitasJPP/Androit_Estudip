@@ -38,6 +38,13 @@ class LocalEntregaRepository(
 
     override fun list(): List<Entrega> = store.entregas.toList()
 
+    override fun listByAdministrador(actorRol: LoginRole): List<Entrega> =
+        if (actorRol == LoginRole.ADMINISTRADOR_SAE) {
+            store.entregas.filter { it.estado == EstadoEntrega.CONFIRMADA }
+        } else {
+            emptyList()
+        }
+
     override fun confirmarEntrega(
         reclamacionId: String,
         receptorId: String,

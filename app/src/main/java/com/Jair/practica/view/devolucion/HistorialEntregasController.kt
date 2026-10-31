@@ -2,23 +2,27 @@ package com.Jair.practica.view.devolucion
 
 import android.content.Intent
 import android.graphics.Color
+import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.Jair.practica.R
 import com.Jair.practica.view.custodia.InventarioActivity
-import com.google.android.material.card.MaterialCardView
-import com.google.android.material.chip.Chip
-import com.google.android.material.chip.ChipGroup
 
 class HistorialEntregasController(private val activity: AppCompatActivity) {
 
     fun iniciar() {
-        wireBotonesActa()
-        wireChips()
         wireNav()
         resaltarNavItem(R.id.navCustodia)
+    }
+
+    private fun wireNav() {
+        activity.findViewById<android.view.View>(R.id.navObjetos).setOnClickListener {
+            activity.startActivity(Intent(activity, InventarioActivity::class.java))
+        }
+        activity.findViewById<android.view.View>(R.id.navCustodia).setOnClickListener {
+            // "Resuelto" ya es la pantalla actual.
+        }
     }
 
     private fun resaltarNavItem(itemActivoId: Int) {
@@ -32,41 +36,6 @@ class HistorialEntregasController(private val activity: AppCompatActivity) {
             val color = if (itemId == itemActivoId) "#930029" else "#1B1B25"
             activity.findViewById<ImageView>(ids.first).setColorFilter(Color.parseColor(color))
             activity.findViewById<TextView>(ids.second).setTextColor(Color.parseColor(color))
-        }
-    }
-
-    private fun wireBotonesActa() {
-        val ids = listOf(
-            R.id.btnVerActa1, R.id.btnFicha1,
-            R.id.btnVerActa2, R.id.btnFicha2,
-            R.id.btnVerActa3, R.id.btnFicha3
-        )
-        ids.forEach { id ->
-            activity.findViewById<MaterialCardView>(id).setOnClickListener {
-                activity.startActivity(Intent(activity, ActaEntregaActivity::class.java))
-            }
-        }
-    }
-
-    private fun wireChips() {
-        val grupo = activity.findViewById<ChipGroup>(R.id.grupoFiltrosHistorial)
-        grupo.setOnCheckedStateChangeListener { _, checkedIds ->
-            val id = checkedIds.firstOrNull() ?: return@setOnCheckedStateChangeListener
-            val chip = activity.findViewById<Chip>(id)
-            Toast.makeText(
-                activity,
-                activity.getString(R.string.filtro_demo_seleccionado, chip.text),
-                Toast.LENGTH_SHORT
-            ).show()
-        }
-    }
-
-    private fun wireNav() {
-        activity.findViewById<android.view.View>(R.id.navObjetos).setOnClickListener {
-            activity.startActivity(Intent(activity, InventarioActivity::class.java))
-        }
-        activity.findViewById<android.view.View>(R.id.navCustodia).setOnClickListener {
-            // "Resuelto" ya es la pantalla actual.
         }
     }
 }

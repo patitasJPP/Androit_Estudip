@@ -1,5 +1,6 @@
 package com.Jair.practica.model.local
 
+import com.Jair.practica.model.entity.EstadoEntrega
 import com.Jair.practica.model.entity.EstadoObjeto
 import com.Jair.practica.model.entity.EstadoReclamacion
 import com.Jair.practica.model.entity.Entrega
@@ -139,6 +140,20 @@ class LocalDataStore {
                 referenciaArchivo = "evidencias/evi-2026-0002.jpg",
                 reservada = false,
                 registradaPor = LocalDataStore.USUARIO_REGISTRADOR_ID
+            )
+        )
+
+        entregas.add(
+            Entrega(
+                id = "ent-2026-0001",
+                objetoEncontradoId = "obj-2026-0001",
+                reclamacionId = RECLAMACION_DEMO_ID,
+                receptorId = "per-2026-0001",
+                administradorId = LocalDataStore.USUARIO_ADMINISTRADOR_ID,
+                fechaConfirmacion = "2026-10-30 10:24",
+                firmaCapturada = true,
+                estado = EstadoEntrega.CONFIRMADA,
+                idOperacion = "op-demo-entrega-0001"
             )
         )
 

@@ -20,6 +20,7 @@ class LocalEntregaRepositoryTest {
     private val repository: EntregaRepository = LocalEntregaRepository(store, LoginRole.ADMINISTRADOR_SAE)
 
     private fun prepararContexto() {
+        store.entregas.clear()
         store.personas.add(
             PersonaAtendida(
                 id = "per-rf08-0001",
@@ -189,5 +190,34 @@ class LocalEntregaRepositoryTest {
         assertTrue(primera is ResultadoEntrega.Registrada)
         assertTrue(segunda is ResultadoEntrega.Registrada)
         assertEquals(1, store.entregas.size)
+    }
+
+    @Test
+    fun listaSoloEntregasConfirmadasParaAdministrador() {
+        prepararContexto()
+        store.entregas.add(
+            Entrega(
+                id = "ent-rf09-0001",
+                objetoEncontradoId = "obj-rf08-0001",
+                reclamacionId = "rec-rf08-0001",
+                receptorId = "per-rf08-0001",
+                administradorId = LocalDataStore.USUARIO_ADMINISTRADOR_ID,
+                fechaConfirmacion = "2026-10-31 09:00",
+                firmaCapturada = true,
+                estado = EstadoEntrega.CONFIRMADA,
+                idOperacion = "op-rf09-001"
+            )
+        )
+
+        val entregasAdmin = repository.listByAdministrador(LoginRole.ADMINISTRADOR_SAE)
+        assertEquals(1, entregasAdmin.size)
+        assertEquals(EstadoEntrega.CONFIRMADA, entregasAdmin.first().estado)
+
+        val entregasPersonal = LocalEntregaRepository(
+            store,
+            LoginRole.PERSONAL_REGISTRADOR
+        ).listByAdministrador(LoginRole.PERSONAL_REGISTRADOR)
+
+        assertTrue(entregasPersonal.isEmpty())
     }
 }

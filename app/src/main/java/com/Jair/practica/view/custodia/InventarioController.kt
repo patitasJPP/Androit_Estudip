@@ -33,7 +33,12 @@ class InventarioController(private val activity: AppCompatActivity) {
         }
 
         activity.findViewById<android.view.View>(R.id.navCustodia).setOnClickListener {
-            activity.startActivity(Intent(activity, HistorialEntregasActivity::class.java))
+            activity.startActivity(
+                Intent(activity, HistorialEntregasActivity::class.java).apply {
+                    putExtra("usuarioId", LocalDataStore.USUARIO_ADMINISTRADOR_ID)
+                    putExtra("rol", LoginRole.ADMINISTRADOR_SAE.code)
+                }
+            )
         }
 
         listOf(R.id.btnEntregar1, R.id.btnEntregar2, R.id.btnEntregar3).forEach { id ->
@@ -42,7 +47,12 @@ class InventarioController(private val activity: AppCompatActivity) {
             }
         }
         activity.findViewById<android.view.View>(R.id.navReportes).setOnClickListener {
-            activity.startActivity(Intent(activity, HistorialEntregasActivity::class.java))
+            activity.startActivity(
+                Intent(activity, HistorialEntregasActivity::class.java).apply {
+                    putExtra("usuarioId", LocalDataStore.USUARIO_ADMINISTRADOR_ID)
+                    putExtra("rol", LoginRole.ADMINISTRADOR_SAE.code)
+                }
+            )
         }
 
         activity.findViewById<Button>(R.id.btnVerReclamaciones).setOnClickListener {

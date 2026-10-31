@@ -2,6 +2,7 @@ package com.Jair.practica.model.repository
 
 import com.Jair.practica.model.entity.EstadoEntrega
 import com.Jair.practica.model.entity.Entrega
+import com.Jair.practica.model.entity.LoginRole
 
 enum class MotivoRechazoEntrega {
     ROL_NO_AUTORIZADO,
@@ -30,6 +31,8 @@ interface EntregaRepository {
     fun update(entrega: Entrega): Entrega
 
     fun list(): List<Entrega>
+
+    fun listByAdministrador(actorRol: LoginRole): List<Entrega>
 
     fun confirmarEntrega(
         reclamacionId: String,
