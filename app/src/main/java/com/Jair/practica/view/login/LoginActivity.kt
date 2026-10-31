@@ -8,9 +8,11 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.Jair.practica.databinding.ActivityLoginBinding
 import com.Jair.practica.model.entity.LoginRole
+import com.Jair.practica.model.local.LocalDataStore
 import com.Jair.practica.model.repository.DemoAuthRepository
 import com.Jair.practica.view.custodia.InventarioActivity
 import com.Jair.practica.view.hallazgo.RegistroHallazgoActivity
+import com.Jair.practica.view.login.SeleccionRolController
 import com.Jair.practica.viewmodel.login.LoginUiState
 import com.Jair.practica.viewmodel.login.LoginViewModel
 
@@ -38,13 +40,31 @@ class LoginActivity : AppCompatActivity() {
                         LoginRole.PERSONAL_REGISTRADOR -> RegistroHallazgoActivity::class.java
                         LoginRole.ADMINISTRADOR_SAE -> InventarioActivity::class.java
                     }
-                    startActivity(Intent(this, destination))
+                    val usuarioId = if (state.role == LoginRole.PERSONAL_REGISTRADOR) {
+                        LocalDataStore.USUARIO_REGISTRADOR_ID
+                    } else {
+                        LocalDataStore.USUARIO_ADMINISTRADOR_ID
+                    }
+                    startActivity(
+                        Intent(this, destination).apply {
+                            putExtra("usuarioId", usuarioId)
+                            putExtra("rol", state.role.code)
+                        }
+                    )
                     finish()
                 }
             }
         }
 
         binding.imgMostrarClave.setOnClickListener { togglePasswordVisibility() }
+
+        val rolExtra = intent?.getStringExtra(SeleccionRolController.EXTRA_ROL)
+        if (rolExtra == LoginRole.PERSONAL_REGISTRADOR.code) {
+            binding.rbPersonalRegistrador.isChecked = true
+        } else if (rolExtra == LoginRole.ADMINISTRADOR_SAE.code) {
+            binding.rbAdministradorSae.isChecked = true
+        }
+
         binding.btnLogin.setOnClickListener {
             val role = when (binding.rgRolLogin.checkedRadioButtonId) {
                 binding.rbPersonalRegistrador.id -> LoginRole.PERSONAL_REGISTRADOR

@@ -19,7 +19,12 @@ class SeleccionRolController(private val activity: AppCompatActivity) {
                 return@setOnClickListener
             }
 
-            val rol = if (idSeleccionado == R.id.rbHallador) ROL_HALLADOR else ROL_SERVICIO
+            val rol = when (idSeleccionado) {
+                R.id.rbPersonalRegistrador -> ROL_PERSONAL_REGISTRADOR
+                R.id.rbAdministradorSae -> ROL_ADMINISTRADOR_SAE
+                else -> ROL_PERSONAL_REGISTRADOR
+            }
+
             activity.startActivity(
                 Intent(activity, LoginActivity::class.java).putExtra(EXTRA_ROL, rol)
             )
@@ -28,7 +33,7 @@ class SeleccionRolController(private val activity: AppCompatActivity) {
 
     companion object {
         const val EXTRA_ROL = "rol"
-        const val ROL_HALLADOR = "hallador"
-        const val ROL_SERVICIO = "servicio"
+        const val ROL_PERSONAL_REGISTRADOR = "personal_registrador"
+        const val ROL_ADMINISTRADOR_SAE = "administrador_sae"
     }
 }

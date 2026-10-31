@@ -10,9 +10,9 @@ class DemoAuthRepositoryTest {
 
     @Test
     fun preservesExistingDemoCredentialsForEachRole() {
-        assertTrue(repository.authenticate(LoginRole.HALLADOR, "jair", "jair"))
-        assertTrue(repository.authenticate(LoginRole.SERVICIO, "jair", "jair123"))
-        assertFalse(repository.authenticate(LoginRole.HALLADOR, "jair", "jair123"))
-        assertFalse(repository.authenticate(LoginRole.SERVICIO, "jair", "jair"))
+        assertTrue(repository.authenticate(LoginRole.PERSONAL_REGISTRADOR, "jair", "jair"))
+        assertTrue(repository.authenticate(LoginRole.ADMINISTRADOR_SAE, "jair", "jair123"))
+        assertFalse(repository.authenticate(LoginRole.PERSONAL_REGISTRADOR, "jair", "jair123"))
+        assertFalse(repository.authenticate(LoginRole.ADMINISTRADOR_SAE, "jair", "jair"))
     }
 }

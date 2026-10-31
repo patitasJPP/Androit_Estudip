@@ -6,8 +6,11 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.Jair.practica.R
+import com.Jair.practica.model.entity.LoginRole
+import com.Jair.practica.model.local.LocalDataStore
 import com.Jair.practica.view.devolucion.HistorialEntregasActivity
 import com.Jair.practica.view.devolucion.VerificacionEntregaActivity
+import com.Jair.practica.view.devolucion.VerificarReclamacionActivity
 
 class InventarioController(private val activity: AppCompatActivity) {
 
@@ -40,6 +43,16 @@ class InventarioController(private val activity: AppCompatActivity) {
         }
         activity.findViewById<android.view.View>(R.id.navReportes).setOnClickListener {
             activity.startActivity(Intent(activity, HistorialEntregasActivity::class.java))
+        }
+
+        activity.findViewById<Button>(R.id.btnVerReclamaciones).setOnClickListener {
+            activity.startActivity(
+                Intent(activity, VerificarReclamacionActivity::class.java).apply {
+                    putExtra("usuarioId", LocalDataStore.USUARIO_ADMINISTRADOR_ID)
+                    putExtra("rol", LoginRole.ADMINISTRADOR_SAE.code)
+                    putExtra(VerificarReclamacionActivity.EXTRA_RECLAMACION, LocalDataStore.RECLAMACION_DEMO_ID)
+                }
+            )
         }
 
         resaltarNavItem(R.id.navObjetos)

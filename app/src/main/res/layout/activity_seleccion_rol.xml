@@ -163,26 +163,26 @@
         app:layout_constraintTop_toBottomOf="@id/tvDescripcion">
 
         <RadioButton
-            android:id="@+id/rbHallador"
+            android:id="@+id/rbPersonalRegistrador"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingStart="8dp"
             android:paddingTop="12dp"
             android:paddingEnd="8dp"
             android:paddingBottom="12dp"
-            android:text="Hallador\nPersona que encontró y reportó el hallazgo de algún objeto perdido"
+            android:text="Personal registrador\nPersona encargada de registrar hallazgos y confirmar recepción"
             android:textColor="#131B2E"
             android:textSize="14sp" />
 
         <RadioButton
-            android:id="@+id/rbServicio"
+            android:id="@+id/rbAdministradorSae"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingStart="8dp"
             android:paddingTop="12dp"
             android:paddingEnd="8dp"
             android:paddingBottom="12dp"
-            android:text="Servicio\nCaseta central, custodia de objetos y atención general"
+            android:text="Administrador SAE\nVerificación de reclamaciones y devolución"
             android:textColor="#131B2E"
             android:textSize="14sp" />
     </RadioGroup>

@@ -39,6 +39,10 @@
             android:exported="false" />
 
         <activity
+            android:name=".view.devolucion.VerificarReclamacionActivity"
+            android:exported="false" />
+
+        <activity
             android:name=".view.devolucion.ActaEntregaActivity"
             android:exported="false" />
 

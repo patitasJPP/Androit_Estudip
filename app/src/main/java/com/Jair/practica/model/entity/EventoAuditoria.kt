@@ -7,5 +7,7 @@ data class EventoAuditoria(
     val accion: String,
     val usuarioId: String,
     val fecha: String,
-    val detalle: String? = null
+    val detalle: String? = null,
+    val estadoAnterior: String? = null,
+    val estadoNuevo: String? = null
 )
