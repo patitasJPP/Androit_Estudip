@@ -17,6 +17,7 @@ class LocalDataStore {
     val eventosAuditoria = mutableListOf<EventoAuditoria>()
     val entregas = mutableListOf<Entrega>()
     val operacionesAplicadas = mutableSetOf<String>()
+    val operacionesEntregas = mutableSetOf<String>()
 
     init {
         cargarSemilla()

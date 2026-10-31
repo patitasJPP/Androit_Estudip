@@ -1,5 +1,6 @@
 package com.Jair.practica.view.devolucion
 
+import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -11,6 +12,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.Jair.practica.R
 import com.Jair.practica.databinding.ActivityVerificarReclamacionBinding
 import com.Jair.practica.model.entity.EstadoReclamacion
+import com.Jair.practica.model.entity.LoginRole
 import com.Jair.practica.model.local.LocalAuditoriaRepository
 import com.Jair.practica.model.local.LocalDataStore
 import com.Jair.practica.model.local.LocalEvidenciaRepository
@@ -19,6 +21,8 @@ import com.Jair.practica.model.local.LocalPersonaAtendidaRepository
 import com.Jair.practica.model.local.LocalReclamacionRepository
 import com.Jair.practica.model.repository.AuditoriaRepository
 import com.Jair.practica.model.repository.EvidenciaRepository
+import com.Jair.practica.model.repository.ObjetoEncontradoRepository
+import com.Jair.practica.model.repository.PersonaAtendidaRepository
 import com.Jair.practica.model.repository.ReclamacionRepository
 import com.Jair.practica.viewmodel.devolucion.VerificarReclamacionViewModel
 import com.Jair.practica.viewmodel.devolucion.VerificarReclamacionViewModel.Companion.etiquetaEstado
@@ -148,6 +152,24 @@ class VerificarReclamacionActivity : AppCompatActivity() {
             state.mensajeExito?.let { binding.tvMensajeExito.text = it }
             binding.tvErrorGeneral.visibility = if (state.errorGeneral != null) View.VISIBLE else View.GONE
             state.errorGeneral?.let { binding.tvErrorGeneral.text = it }
+
+            if (state.mensajeExito != null && state.reclamacion?.estado == EstadoReclamacion.APROBADA) {
+                binding.tvMensajeExito.post {
+                    if (!isDestroyed) {
+                        startActivity(
+                            Intent(
+                                this,
+                                ConfirmarDevolucionActivity::class.java
+                            ).apply {
+                                putExtra(ConfirmarDevolucionActivity.EXTRA_RECLAMACION, state.reclamacion?.id)
+                                putExtra("usuarioId", LocalDataStore.USUARIO_ADMINISTRADOR_ID)
+                                putExtra("rol", LoginRole.ADMINISTRADOR_SAE.code)
+                            }
+                        )
+                        finish()
+                    }
+                }
+            }
 
             binding.btnRegistrarDecision.isEnabled =
                 !state.cargando && !state.errorAcceso && !state.bloqueada && !state.enviando && state.decisionSeleccionada

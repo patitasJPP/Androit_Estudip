@@ -8,5 +8,6 @@ data class Entrega(
     val administradorId: String,
     val fechaConfirmacion: String? = null,
     val firmaCapturada: Boolean = false,
-    val estado: EstadoEntrega = EstadoEntrega.RESERVADA
+    val estado: EstadoEntrega = EstadoEntrega.RESERVADA,
+    val idOperacion: String? = null
 )
