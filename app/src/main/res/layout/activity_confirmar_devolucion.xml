@@ -139,7 +139,7 @@
             <!-- Cuerpo de la reclamación aprobada y objeto -->
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/cardCuerpoReclamacion"
-                android:layout_width="0dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 app:cardBackgroundColor="#FFFFFF"
@@ -195,7 +195,7 @@
             <!-- Datos del receptor -->
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/cardReceptor"
-                android:layout_width="0dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 app:cardBackgroundColor="#FFFFFF"
@@ -343,7 +343,7 @@
             <!-- Captura de firma -->
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/cardFirma"
-                android:layout_width="0dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 app:cardBackgroundColor="#FFFFFF"
@@ -414,7 +414,7 @@
             <!-- Confirmación -->
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/cardConfirmar"
-                android:layout_width="0dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 app:cardBackgroundColor="#FFFFFF"

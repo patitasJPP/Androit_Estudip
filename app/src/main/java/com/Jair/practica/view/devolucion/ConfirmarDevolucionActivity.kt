@@ -96,9 +96,15 @@ class ConfirmarDevolucionActivity : AppCompatActivity() {
                 binding.tvDescripcionObjeto.text = state.objeto?.descripcion ?: ""
             }
 
-            binding.etReceptorId.setText(state.receptorId)
-            binding.etDni.setText(state.dni)
-            binding.etCorreo.setText(state.correo)
+            if (binding.etReceptorId.text.toString() != state.receptorId) {
+                binding.etReceptorId.setText(state.receptorId)
+            }
+            if (binding.etDni.text.toString() != state.dni) {
+                binding.etDni.setText(state.dni)
+            }
+            if (binding.etCorreo.text.toString() != state.correo) {
+                binding.etCorreo.setText(state.correo)
+            }
 
             binding.tvErrorReceptor.visibility = if (state.errorReceptor) View.VISIBLE else View.GONE
             binding.tvErrorDni.visibility = if (state.errorDni) View.VISIBLE else View.GONE

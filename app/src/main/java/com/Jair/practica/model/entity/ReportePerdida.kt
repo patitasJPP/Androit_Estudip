@@ -7,5 +7,6 @@ data class ReportePerdida(
     val lugarAproximado: String? = null,
     val fechaReporte: String,
     val estado: EstadoReportePerdida = EstadoReportePerdida.BUSCANDO,
-    val creadoPor: String
+    val creadoPor: String,
+    val contacto: String? = null
 )

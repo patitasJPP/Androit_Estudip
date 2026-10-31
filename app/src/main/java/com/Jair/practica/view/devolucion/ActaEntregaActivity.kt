@@ -71,7 +71,7 @@ class ActaEntregaActivity : AppCompatActivity() {
         persona?.let { p ->
             findViewById<TextView>(R.id.tvNombreEstudiante).text = p.nombre
             findViewById<TextView>(R.id.tvCodigoEstudiante).text = p.identificador ?: ""
-            findViewById<TextView>(R.id.tvDniEstudiante).text = p.identificador ?: ""
+            findViewById<TextView>(R.id.tvDniEstudiante).text = p.dni ?: ""
             findViewById<TextView>(R.id.tvEstadoMatricula).text = p.vinculoUniversidad
             findViewById<TextView>(R.id.tvSedeInstitucional).text = objeto?.lugarHallazgo ?: ""
             findViewById<TextView>(R.id.tvCorreoUtp).text = p.correo ?: ""
@@ -80,10 +80,9 @@ class ActaEntregaActivity : AppCompatActivity() {
         findViewById<TextView>(R.id.tvNombreEquipo).text = objeto?.codigoCustodia ?: ""
         findViewById<TextView>(R.id.tvUbicacionHallazgo).text = objeto?.lugarHallazgo ?: ""
 
-        val firmaBitmap = entrega.firmaImagen
-        findViewById<ImageView>(R.id.imgFirmaEstudiante).setImageBitmap(firmaBitmap)
+        findViewById<ImageView>(R.id.imgFirmaEstudiante).setImageResource(android.R.drawable.ic_menu_edit)
         findViewById<TextView>(R.id.tvNombreFirmaEstudiante).text = persona?.nombre ?: ""
-        findViewById<ImageView>(R.id.imgFirmaOficial).setImageBitmap(firmaBitmap)
+        findViewById<ImageView>(R.id.imgFirmaOficial).setImageResource(android.R.drawable.ic_menu_edit)
         findViewById<TextView>(R.id.tvNombreFirmaOficial).text = administrador?.nombre ?: ""
 
         findViewById<TextView>(R.id.tvDeclaracionJurada).text =

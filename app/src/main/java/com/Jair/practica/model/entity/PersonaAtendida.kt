@@ -5,6 +5,7 @@ data class PersonaAtendida(
     val nombre: String,
     val vinculoUniversidad: String,
     val identificador: String? = null,
+    val dni: String? = null,
     val correo: String? = null,
     val telefono: String? = null
 )

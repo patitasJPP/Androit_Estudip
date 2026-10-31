@@ -29,8 +29,7 @@ import com.Jair.practica.viewmodel.devolucion.VerificarReclamacionViewModel.Comp
 
 class VerificarReclamacionActivity : AppCompatActivity() {
     private lateinit var binding: ActivityVerificarReclamacionBinding
-    private lateinit var preguntaWatcher: TextWatcher
-    private var preguntaRespuestaId: String? = null
+    private var actualizandoPreguntas = false
     private val viewModel: VerificarReclamacionViewModel by viewModels {
         VerificarReclamacionViewModel.Factory(
             reclamacionRepository = LocalReclamacionRepository(),
@@ -66,14 +65,6 @@ class VerificarReclamacionActivity : AppCompatActivity() {
                 viewModel.onMotivoChange(s?.toString() ?: "")
             }
         })
-
-        preguntaWatcher = object : TextWatcher {
-            override fun beforeTextChanged(before: CharSequence?, start: Int, count: Int, after: Int) = Unit
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) = Unit
-            override fun afterTextChanged(s: Editable?) {
-                viewModel.onRespuestaChange(preguntaRespuestaId ?: "", s?.toString() ?: "")
-            }
-        }
 
         binding.rgDecisionReclamacion.setOnCheckedChangeListener { _, checkedId ->
             val estado = when (checkedId) {
@@ -130,6 +121,7 @@ class VerificarReclamacionActivity : AppCompatActivity() {
             binding.tvValorCaracteristicasReservadas.text = state.objeto?.caracteristicasReservadas ?: ""
 
             binding.llPreguntas.removeAllViews()
+            actualizandoPreguntas = true
             state.preguntas.forEach { pregunta ->
                 val row = layoutInflater.inflate(
                     R.layout.item_pregunta_verificacion,
@@ -138,12 +130,19 @@ class VerificarReclamacionActivity : AppCompatActivity() {
                 )
                 row.findViewById<TextView>(R.id.tvPreguntaItem).text = pregunta.texto
                 val respuesta = row.findViewById<EditText>(R.id.etRespuestaItem)
-                preguntaRespuestaId = pregunta.id
-                respuesta.removeTextChangedListener(preguntaWatcher)
-                respuesta.addTextChangedListener(preguntaWatcher)
                 respuesta.setText(pregunta.respuesta ?: "")
+                respuesta.addTextChangedListener(object : TextWatcher {
+                    override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) = Unit
+                    override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) = Unit
+                    override fun afterTextChanged(s: Editable?) {
+                        if (!actualizandoPreguntas) {
+                            viewModel.onRespuestaChange(pregunta.id, s?.toString().orEmpty())
+                        }
+                    }
+                })
                 binding.llPreguntas.addView(row)
             }
+            actualizandoPreguntas = false
 
             binding.tvErrorPregunta.visibility = if (state.errorPregunta) View.VISIBLE else View.GONE
             binding.tvErrorDecision.visibility = if (state.errorDecision) View.VISIBLE else View.GONE

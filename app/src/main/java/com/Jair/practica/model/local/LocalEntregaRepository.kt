@@ -79,7 +79,8 @@ class LocalEntregaRepository(
         }
 
         val objeto = store.objetos.firstOrNull { it.id == reclamacion.objetoEncontradoId }
-        if (objeto?.estado == EstadoObjeto.ENTREGADO) {
+            ?: return ResultadoEntrega.Denegada(MotivoRechazoEntrega.ENTREGA_NO_ENCONTRADA)
+        if (objeto.estado == EstadoObjeto.ENTREGADO) {
             return ResultadoEntrega.Denegada(MotivoRechazoEntrega.OBJETO_ENTREGADO)
         }
 
@@ -88,7 +89,7 @@ class LocalEntregaRepository(
         }
 
         val persona = store.personas.firstOrNull { it.id == receptorId }
-        val dnicliente = persona?.identificador ?: ""
+        val dnicliente = persona?.dni ?: ""
         val correoValido = Regex("^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$")
             .matches(persona?.correo ?: "")
         val dniValido = dnicliente.length == 8 && dnicliente.all { it.isDigit() }
@@ -111,7 +112,7 @@ class LocalEntregaRepository(
         store.entregas.add(entrega)
         store.operacionesEntregas.add(idOperacion)
 
-        val indiceObjeto = store.objetos.indexOfFirst { it.id == objeto?.id }
+        val indiceObjeto = store.objetos.indexOfFirst { it.id == objeto.id }
         if (indiceObjeto >= 0) {
             store.objetos[indiceObjeto] = store.objetos[indiceObjeto].copy(estado = EstadoObjeto.ENTREGADO)
         }

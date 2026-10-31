@@ -1,7 +1,5 @@
 package com.Jair.practica.model.entity
 
-import android.graphics.Bitmap
-
 data class Entrega(
     val id: String,
     val objetoEncontradoId: String,
@@ -12,5 +10,8 @@ data class Entrega(
     val firmaCapturada: Boolean = false,
     val estado: EstadoEntrega = EstadoEntrega.RESERVADA,
     val idOperacion: String? = null,
-    val firmaImagen: Bitmap? = null
+    /** Referencia persistible de la firma capturada; la imagen no pertenece al dominio. */
+    val firmaReferencia: String? = null,
+    val receptorDni: String? = null,
+    val receptorCorreo: String? = null
 )

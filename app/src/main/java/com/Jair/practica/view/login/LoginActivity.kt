@@ -9,9 +9,11 @@ import androidx.appcompat.app.AppCompatActivity
 import com.Jair.practica.databinding.ActivityLoginBinding
 import com.Jair.practica.model.entity.LoginRole
 import com.Jair.practica.model.local.LocalDataStore
+import com.Jair.practica.model.local.AlmacenLocal
 import com.Jair.practica.model.repository.DemoAuthRepository
 import com.Jair.practica.view.custodia.InventarioActivity
 import com.Jair.practica.view.hallazgo.RegistroHallazgoActivity
+import com.Jair.practica.view.common.MenuPrincipalActivity
 import com.Jair.practica.view.login.SeleccionRolController
 import com.Jair.practica.viewmodel.login.LoginUiState
 import com.Jair.practica.viewmodel.login.LoginViewModel
@@ -26,6 +28,7 @@ class LoginActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        intent.getStringExtra("mensaje")?.let { Toast.makeText(this, it, Toast.LENGTH_LONG).show() }
 
         viewModel.uiState.observe(this) { state ->
             when (state) {
@@ -36,10 +39,7 @@ class LoginActivity : AppCompatActivity() {
                 }
                 is LoginUiState.Authenticated -> {
                     viewModel.clearResult()
-                    val destination = when (state.role) {
-                        LoginRole.PERSONAL_REGISTRADOR -> RegistroHallazgoActivity::class.java
-                        LoginRole.ADMINISTRADOR_SAE -> InventarioActivity::class.java
-                    }
+                    val destination = MenuPrincipalActivity::class.java
                     val usuarioId = if (state.role == LoginRole.PERSONAL_REGISTRADOR) {
                         LocalDataStore.USUARIO_REGISTRADOR_ID
                     } else {
@@ -49,6 +49,7 @@ class LoginActivity : AppCompatActivity() {
                         Intent(this, destination).apply {
                             putExtra("usuarioId", usuarioId)
                             putExtra("rol", state.role.code)
+                            putExtra("pendienteId", AlmacenLocal.instancia.ultimoObjetoPendienteId)
                         }
                     )
                     finish()

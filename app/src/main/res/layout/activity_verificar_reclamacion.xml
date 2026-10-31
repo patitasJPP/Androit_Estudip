@@ -139,7 +139,7 @@
             <!-- Cuerpo de la reclamación -->
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/cardCuerpoReclamacion"
-                android:layout_width="0dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 app:cardBackgroundColor="#FFFFFF"
@@ -237,7 +237,7 @@
             <!-- Comparación solicitante vs registro -->
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/cardComparacion"
-                android:layout_width="0dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 app:cardBackgroundColor="#FFFFFF"
@@ -377,7 +377,7 @@
             <!-- Características reservadas -->
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/cardCaracteristicasReservadas"
-                android:layout_width="0dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:visibility="gone"
@@ -425,7 +425,7 @@
             <!-- Evidencias -->
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/cardEvidencias"
-                android:layout_width="0dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 app:cardBackgroundColor="#FFFFFF"
@@ -462,7 +462,7 @@
             <!-- Preguntas -->
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/cardPreguntas"
-                android:layout_width="0dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 app:cardBackgroundColor="#FFFFFF"
@@ -503,7 +503,8 @@
                         android:orientation="vertical" />
 
                     <LinearLayout
-                        android:layout_width="0dp"
+                        android:id="@+id/llNuevaPregunta"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
                         android:orientation="horizontal">
@@ -546,7 +547,7 @@
             <!-- Decisión -->
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/cardDecision"
-                android:layout_width="0dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 app:cardBackgroundColor="#FFFFFF"
@@ -639,10 +640,9 @@
 
                     <EditText
                         android:id="@+id/etMotivo"
-                        android:layout_width="0dp"
+                        android:layout_width="match_parent"
                         android:layout_height="48dp"
                         android:layout_marginTop="6dp"
-                        android:layout_weight="1"
                         android:background="@null"
                         android:fontFamily="sans-serif-medium"
                         android:hint="Describe el motivo de la decisión"

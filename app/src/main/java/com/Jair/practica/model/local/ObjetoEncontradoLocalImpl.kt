@@ -6,8 +6,7 @@ import java.util.UUID
 
 class ObjetoEncontradoLocalImpl : ObjetoEncontradoRepository {
 
-    // Simulación de base de datos temporal en memoria
-    private val objetos = mutableListOf<ObjetoEncontrado>()
+    private val objetos get() = AlmacenLocal.instancia.objetos
 
     override fun findById(id: String): ObjetoEncontrado? {
         return objetos.find { it.id == id }
@@ -30,6 +29,7 @@ class ObjetoEncontradoLocalImpl : ObjetoEncontradoRepository {
         } else {
             objeto
         }
+        objetos.removeAll { it.id == nuevoObjeto.id }
         objetos.add(nuevoObjeto)
         return nuevoObjeto
     }

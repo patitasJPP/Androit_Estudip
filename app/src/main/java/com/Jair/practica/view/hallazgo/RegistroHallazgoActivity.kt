@@ -24,7 +24,9 @@ class RegistroHallazgoActivity : AppCompatActivity() {
         setContentView(R.layout.activity_registro_hallazgo)
 
         // Recuperamos el rol de la sesión. (Simulando PERSONAL_REGISTRADOR si no viene del Login)
-        val rolActualStr = intent.getStringExtra("ROL_USUARIO") ?: LoginRole.PERSONAL_REGISTRADOR.code
+        val rolActualStr = intent.getStringExtra("rol")
+            ?: intent.getStringExtra("ROL_USUARIO")
+            ?: LoginRole.PERSONAL_REGISTRADOR.code
         val rolActivo = LoginRole.fromCode(rolActualStr)
 
         // Observar errores de validación
@@ -38,8 +40,8 @@ class RegistroHallazgoActivity : AppCompatActivity() {
             Toast.makeText(this, "Hallazgo registrado. Estado: ${objeto?.estado}", Toast.LENGTH_SHORT).show()
 
             // Navegamos pasando el ID real generado en la base de datos local
-            val intent = android.content.Intent(this, ConfirmarRecepcionActivity::class.java)
-            intent.putExtra("ID_OBJETO_GUARDADO", objeto?.id)
+            val intent = android.content.Intent(this, com.Jair.practica.view.login.LoginActivity::class.java)
+            intent.putExtra("mensaje", "Hallazgo registrado. El Administrador SAE debe confirmar la recepción.")
             startActivity(intent)
             finish()
         }

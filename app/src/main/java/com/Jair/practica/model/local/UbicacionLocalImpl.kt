@@ -5,8 +5,7 @@ import com.Jair.practica.model.repository.UbicacionRepository
 
 class UbicacionLocalImpl : UbicacionRepository {
 
-    // Lista mutable para simular la base de datos temporal
-    private val ubicaciones = mutableListOf<UbicacionAlmacenamiento>()
+    private val ubicaciones get() = AlmacenLocal.instancia.ubicaciones
 
     override fun findById(id: String): UbicacionAlmacenamiento? {
         // Nota: Si el identificador en la entidad no se llama 'id', cámbialo aquí

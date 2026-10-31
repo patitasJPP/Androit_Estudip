@@ -119,7 +119,7 @@ class ConfirmarDevolucionViewModel(
             persona = persona,
             decision = reclamacion.estado,
             receptorId = persona?.id ?: "",
-            dni = persona?.identificador ?: "",
+            dni = persona?.dni ?: "",
             correo = persona?.correo ?: "",
             bloqueada = bloqueada
         )
@@ -194,7 +194,7 @@ class ConfirmarDevolucionViewModel(
             }
             is ResultadoEntrega.Registrada -> {
                 idOperacionActual = null
-                val entregaConFirma = resultado.entrega.copy(firmaImagen = firmaBitmap)
+                val entregaConFirma = resultado.entrega.copy(firmaReferencia = if (firmaBitmap != null) "firma-${resultado.entrega.id}" else null)
                 entregaRepository.update(entregaConFirma)
                 _state.value = _state.value?.copy(
                     enviando = false,

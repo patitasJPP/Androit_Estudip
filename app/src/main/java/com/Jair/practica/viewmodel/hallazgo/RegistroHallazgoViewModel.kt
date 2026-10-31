@@ -7,6 +7,7 @@ import com.Jair.practica.model.entity.EstadoObjeto
 import com.Jair.practica.model.entity.LoginRole
 import com.Jair.practica.model.entity.ObjetoEncontrado
 import com.Jair.practica.model.local.ObjetoEncontradoLocalImpl
+import com.Jair.practica.model.local.AlmacenLocal
 import com.Jair.practica.model.repository.ObjetoEncontradoRepository
 
 class RegistroHallazgoViewModel : ViewModel() {
@@ -38,8 +39,8 @@ class RegistroHallazgoViewModel : ViewModel() {
         }
 
         // Controles de entrada: Validar campos obligatorios vacíos
-        if (descripcion.isBlank() || lugar.isBlank() || fechaHora.isBlank() || contacto.isBlank() || !tieneEvidencia) {
-            _mensajeError.value = "Debe completar descripción, lugar, fecha, contacto y adjuntar evidencia."
+        if (descripcion.isBlank() || lugar.isBlank() || fechaHora.isBlank() || contacto.isBlank()) {
+            _mensajeError.value = "Debe completar descripción, lugar, fecha y contacto del hallador."
             return
         }
 
@@ -52,13 +53,14 @@ class RegistroHallazgoViewModel : ViewModel() {
             lugarHallazgo = lugar,
             fechaHallazgo = fechaHora,
             contactoHalladorId = contacto,
-            registradoPor = "Usuario_Simulado", // Dato simulado por ahora
+            registradoPor = "usr-registrador-01",
             estado = EstadoObjeto.HALLAZGO_REPORTADO
         )
 
         try {
             // Guardar en el repositorio local
             val objetoGuardado = repository.save(nuevoHallazgo)
+            AlmacenLocal.instancia.ultimoObjetoPendienteId = objetoGuardado.id
             _registroExitoso.value = objetoGuardado
         } catch (e: Exception) {
             _mensajeError.value = "Ocurrió un error al guardar: ${e.message}"

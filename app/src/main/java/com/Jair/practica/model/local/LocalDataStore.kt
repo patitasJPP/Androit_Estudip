@@ -1,10 +1,5 @@
 package com.Jair.practica.model.local
 
-import android.graphics.Bitmap
-import android.graphics.Canvas
-import android.graphics.Color
-import android.graphics.Paint
-import android.graphics.Path
 import com.Jair.practica.model.entity.EstadoEntrega
 import com.Jair.practica.model.entity.EstadoObjeto
 import com.Jair.practica.model.entity.EstadoReclamacion
@@ -16,8 +11,12 @@ import com.Jair.practica.model.entity.ObjetoEncontrado
 import com.Jair.practica.model.entity.PersonaAtendida
 import com.Jair.practica.model.entity.Reclamacion
 import com.Jair.practica.model.entity.Usuario
+import com.Jair.practica.model.entity.UbicacionAlmacenamiento
+import com.Jair.practica.model.entity.TipoUbicacion
+import com.Jair.practica.model.entity.ReportePerdida
 
 class LocalDataStore {
+    var ultimoObjetoPendienteId: String? = null
     val objetos = mutableListOf<ObjetoEncontrado>()
     val reclamaciones = mutableListOf<Reclamacion>()
     val evidencias = mutableListOf<Evidencia>()
@@ -25,6 +24,8 @@ class LocalDataStore {
     val eventosAuditoria = mutableListOf<EventoAuditoria>()
     val entregas = mutableListOf<Entrega>()
     val usuarios = mutableListOf<Usuario>()
+    val ubicaciones = mutableListOf<UbicacionAlmacenamiento>()
+    val reportesPerdida = mutableListOf<ReportePerdida>()
     val operacionesAplicadas = mutableSetOf<String>()
     val operacionesEntregas = mutableSetOf<String>()
 
@@ -63,34 +64,16 @@ class LocalDataStore {
         const val RECLAMACION_DEMO_ID = "rec-2026-0001"
     }
 
-    private fun crearFirmaDemo(): Bitmap {
-        val bitmap = Bitmap.createBitmap(320, 120, Bitmap.Config.ARGB_8888)
-        val canvas = Canvas(bitmap)
-        val paint = Paint().apply {
-            color = Color.BLACK
-            strokeWidth = 6f
-            isAntiAlias = true
-            style = Paint.Style.STROKE
-        }
-        val path = Path().apply {
-            moveTo(12f, 96f)
-            lineTo(60f, 40f)
-            lineTo(105f, 78f)
-            lineTo(150f, 30f)
-            lineTo(195f, 66f)
-            lineTo(245f, 24f)
-        }
-        canvas.drawPath(path, paint)
-        return bitmap
-    }
-
     private fun cargarSemilla() {
+        ubicaciones.add(UbicacionAlmacenamiento("ubi-001", TipoUbicacion.CAJA, "CAJA-A01", "Caja principal de objetos recibidos"))
+        ubicaciones.add(UbicacionAlmacenamiento("ubi-002", TipoUbicacion.ANAQUEL, "ANAQUEL-B02", "Anaquel de custodia"))
         personas.add(
             PersonaAtendida(
                 id = "per-2026-0001",
                 nombre = "María Fernanda Quispe Rojas",
                 vinculoUniversidad = "Estudiante",
                 identificador = "U202114587",
+                dni = "72875982",
                 correo = "mquisep@edu.utp.edu.pe",
                 telefono = "947123456"
             )
@@ -183,7 +166,9 @@ class LocalDataStore {
                 firmaCapturada = true,
                 estado = EstadoEntrega.CONFIRMADA,
                 idOperacion = "op-demo-entrega-0001",
-                firmaImagen = try { crearFirmaDemo() } catch (e: Throwable) { null }
+                firmaReferencia = "firma-demo-ent-2026-0001",
+                receptorDni = "72123456",
+                receptorCorreo = "mquisep@edu.utp.edu.pe"
             )
         )
 

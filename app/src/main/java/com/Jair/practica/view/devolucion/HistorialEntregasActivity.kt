@@ -36,6 +36,7 @@ class HistorialEntregasActivity : AppCompatActivity() {
             Intent(this, ActaEntregaActivity::class.java).apply {
                 putExtra(ActaEntregaActivity.EXTRA_ID_ENTREGA, entrega.id)
                 putExtra("usuarioId", LocalDataStore.USUARIO_ADMINISTRADOR_ID)
+                putExtra("rol", LoginRole.ADMINISTRADOR_SAE.code)
             }
         )
     }
