@@ -1,89 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="#F8F9FF">
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="24dp">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Confirmar recepción y custodia"
-            android:textColor="#0F172A"
-            android:textSize="24sp"
-            android:textStyle="bold" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:text="El Administrador SAE confirma que recibió físicamente el objeto antes de publicarlo como disponible."
-            android:textColor="#64748B"
-            android:textSize="14sp" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="28dp"
-            android:text="CÓDIGO DE CUSTODIA"
-            android:textColor="#334155"
-            android:textSize="11sp"
-            android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/tvCodigoRecepcion"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:background="#FFFFFF"
-            android:padding="16dp"
-            android:text="UTP-0001"
-            android:textColor="#B80C2E"
-            android:textSize="20sp"
-            android:textStyle="bold" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
-            android:text="UBICACIÓN FÍSICA"
-            android:textColor="#334155"
-            android:textSize="11sp"
-            android:textStyle="bold" />
-
-        <Spinner
-            android:id="@+id/spinnerUbicacionCustodia"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:entries="@array/ubicaciones_custodia" />
-
-        <TextView
-            android:id="@+id/tvEstadoRecepcion"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
-            android:text="Pendiente de confirmación física"
-            android:textColor="#92400E"
-            android:textSize="14sp" />
-
-        <Button
-            android:id="@+id/btnConfirmarRecepcion"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
-            android:text="Confirmar recepción física" />
-
-        <Button
-            android:id="@+id/btnVolverRecepcion"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:text="Volver" />
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto" android:layout_width="match_parent" android:layout_height="match_parent" android:background="#F7F8FC">
+    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:padding="16dp">
+        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:gravity="center_vertical" android:paddingBottom="12dp">
+            <TextView android:id="@+id/tvVolverRecepcion" android:layout_width="36dp" android:layout_height="36dp" android:gravity="center" android:text="‹" android:textColor="#1F2937" android:textSize="30sp" />
+            <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:orientation="vertical">
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Confirmar recepción" android:textColor="#1F2937" android:textSize="22sp" android:textStyle="bold" />
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="MÓDULO DE CUSTODIA" android:textColor="#64748B" android:textSize="10sp" />
+            </LinearLayout>
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="UTP+" android:textColor="#B5122B" android:textSize="14sp" android:textStyle="bold" />
+        </LinearLayout>
+        <com.google.android.material.card.MaterialCardView android:layout_width="match_parent" android:layout_height="wrap_content" app:cardBackgroundColor="#FFFFFF" app:cardCornerRadius="16dp" app:cardElevation="1dp" app:strokeColor="#E2E8F0" app:strokeWidth="1dp">
+            <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:padding="16dp">
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Recepción física del hallazgo" android:textColor="#1F2937" android:textSize="16sp" android:textStyle="bold" />
+                <TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="5dp" android:text="Confirma que el SAE recibió el objeto y define dónde quedará bajo custodia." android:textColor="#64748B" android:textSize="12sp" />
+                <TextView android:id="@+id/tvObjetoRecepcion" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="14dp" android:background="#FFFFFF" android:padding="12dp" android:text="Objeto recibido: cargando…" android:textColor="#1F2937" android:textSize="13sp" />
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="18dp" android:text="CÓDIGO DE CUSTODIA" android:textColor="#64748B" android:textSize="10sp" android:textStyle="bold" />
+                <TextView android:id="@+id/tvCodigoRecepcion" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="7dp" android:background="#FFF4F5" android:padding="14dp" android:text="Código: Pendiente de generación..." android:textColor="#B5122B" android:textSize="17sp" android:textStyle="bold" />
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="18dp" android:text="UBICACIÓN FÍSICA" android:textColor="#64748B" android:textSize="10sp" android:textStyle="bold" />
+                <Spinner android:id="@+id/spinnerUbicacionCustodia" android:layout_width="match_parent" android:layout_height="48dp" android:layout_marginTop="7dp" android:background="#F8FAFC" />
+                <TextView android:id="@+id/tvEstadoRecepcion" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="16dp" android:background="#FFF7E6" android:padding="10dp" android:text="Pendiente de confirmación física" android:textColor="#9A6700" android:textSize="12sp" />
+                <Button android:id="@+id/btnConfirmarRecepcion" android:layout_width="match_parent" android:layout_height="48dp" android:layout_marginTop="16dp" android:backgroundTint="#B5122B" android:text="Confirmar recepción física" android:textAllCaps="false" android:textColor="#FFFFFF" android:textStyle="bold" />
+                <Button android:id="@+id/btnVolverRecepcion" android:layout_width="match_parent" android:layout_height="46dp" android:layout_marginTop="8dp" android:backgroundTint="#E8ECF3" android:text="Volver" android:textAllCaps="false" android:textColor="#1F2937" android:textStyle="bold" />
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
     </LinearLayout>
 </ScrollView>

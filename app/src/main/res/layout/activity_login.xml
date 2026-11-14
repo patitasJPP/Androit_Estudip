@@ -158,7 +158,7 @@
         android:fontFamily="monospace"
         android:includeFontPadding="false"
         android:letterSpacing="0.08"
-        android:text="USUARIO O CÓDIGO INSTITUCIONAL"
+        android:text="CORREO INSTITUCIONAL"
         android:textColor="#334155"
         android:textSize="11sp"
         android:textStyle="bold"
@@ -202,12 +202,12 @@
                 android:layout_height="match_parent"
                 android:layout_marginStart="12dp"
                 android:layout_weight="1"
-                android:autofillHints="username"
+                android:autofillHints="emailAddress"
                 android:background="@null"
                 android:fontFamily="sans-serif-medium"
                 android:gravity="center_vertical"
-                android:inputType="text"
-                android:hint="Escribe tu usuario"
+                android:inputType="textEmailAddress"
+                android:hint="correo@utp.edu.pe"
                 android:minHeight="0dp"
                 android:padding="0dp"
                 android:textColor="#0F172A"
@@ -461,23 +461,6 @@
         </LinearLayout>
     </com.google.android.material.card.MaterialCardView>
 
-    <!-- ============ NOTA DE CREDENCIALES (demo) ============ -->
-    <!-- Personal registrador -> usuario: jair   contraseña: jair
-         Administrador SAE   -> usuario: jair   contraseña: jair123 -->
-    <TextView
-        android:id="@+id/tvNotaCredenciales"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
-        android:fontFamily="monospace"
-        android:lineSpacingExtra="2dp"
-        android:text="CREDENCIALES DEMO\nPersonal registrador: jair / jair\nAdministrador SAE:   jair / jair123"
-        android:textColor="#64748B"
-        android:textSize="11sp"
-        app:layout_constraintEnd_toEndOf="@id/guideEnd"
-        app:layout_constraintStart_toStartOf="@id/guideStart"
-        app:layout_constraintTop_toBottomOf="@id/cardInfoCredenciales" />
-
     <!-- FOOTER -->
     <TextView
         android:id="@+id/tvFooter"
@@ -493,6 +476,6 @@
         android:textSize="10sp"
         app:layout_constraintEnd_toEndOf="@id/guideEnd"
         app:layout_constraintStart_toStartOf="@id/guideStart"
-        app:layout_constraintTop_toBottomOf="@id/tvNotaCredenciales" />
+        app:layout_constraintTop_toBottomOf="@id/cardInfoCredenciales" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

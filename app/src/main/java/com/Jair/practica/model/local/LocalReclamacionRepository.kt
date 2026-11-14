@@ -9,6 +9,8 @@ import com.Jair.practica.model.repository.MotivoRechazo
 import com.Jair.practica.model.repository.ReclamacionRepository
 import com.Jair.practica.model.repository.ResultadoDecision
 import com.Jair.practica.model.entity.LoginRole
+import com.Jair.practica.PersistenciaLocal
+import com.Jair.practica.model.remote.SincronizacionCasos
 
 class LocalReclamacionRepository(
     private val store: LocalDataStore = AlmacenLocal.instancia
@@ -37,6 +39,8 @@ class LocalReclamacionRepository(
         } else {
             store.reclamaciones.add(reclamacion)
         }
+        PersistenciaLocal.guardarReclamaciones(store.reclamaciones)
+        SincronizacionCasos.sincronizarPendientes()
         return reclamacion
     }
 
@@ -45,6 +49,8 @@ class LocalReclamacionRepository(
         if (index >= 0) {
             store.reclamaciones[index] = reclamacion
         }
+        PersistenciaLocal.guardarReclamaciones(store.reclamaciones)
+        SincronizacionCasos.sincronizarPendientes()
         return reclamacion
     }
 
@@ -129,6 +135,8 @@ class LocalReclamacionRepository(
                 estadoNuevo = nuevoEstado.name
             )
         )
+
+        SincronizacionCasos.sincronizarPendientes()
 
         return ResultadoDecision.Registrada(actualizada, estadoAnterior)
     }

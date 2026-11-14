@@ -9,6 +9,7 @@ import com.Jair.practica.model.entity.LoginRole
 import com.Jair.practica.model.repository.EntregaRepository
 import com.Jair.practica.model.repository.MotivoRechazoEntrega
 import com.Jair.practica.model.repository.ResultadoEntrega
+import com.Jair.practica.PersistenciaLocal
 
 class LocalEntregaRepository(
     private val store: LocalDataStore = AlmacenLocal.instancia,
@@ -25,6 +26,7 @@ class LocalEntregaRepository(
         } else {
             store.entregas.add(entrega)
         }
+        PersistenciaLocal.guardarEntregas(store.entregas)
         return entrega
     }
 
@@ -33,6 +35,7 @@ class LocalEntregaRepository(
         if (index >= 0) {
             store.entregas[index] = entrega
         }
+        PersistenciaLocal.guardarEntregas(store.entregas)
         return entrega
     }
 
@@ -121,6 +124,10 @@ class LocalEntregaRepository(
         if (indiceReclamacion >= 0) {
             store.reclamaciones[indiceReclamacion] = reclamacion.copy(estado = EstadoReclamacion.ATENDIDA)
         }
+
+        PersistenciaLocal.guardarObjetos(store.objetos)
+        PersistenciaLocal.guardarReclamaciones(store.reclamaciones)
+        PersistenciaLocal.guardarEntregas(store.entregas)
 
         store.eventosAuditoria.add(
             EventoAuditoria(

@@ -11,9 +11,20 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.Jair.practica.R
 import com.Jair.practica.view.common.NavegacionPrincipal
+import com.Jair.practica.model.entity.ObjetoEncontrado
 
-class VerificacionEntregaController(private val activity: AppCompatActivity) {
+class VerificacionEntregaController(
+    private val activity: AppCompatActivity,
+    private val objeto: ObjetoEncontrado? = null
+) {
     fun iniciar() {
+        objeto?.let {
+            activity.findViewById<TextView>(R.id.tvNombreObjeto).text = it.descripcion
+            activity.findViewById<TextView>(R.id.tvFechaEncontrado).text =
+                "ENCONTRADO EL: ${it.fechaHallazgo ?: "Registro reciente"}"
+            activity.findViewById<TextView>(R.id.tvLugarHallazgo).text =
+                "Lugar: ${it.lugarHallazgo ?: it.ubicacionId ?: "Ubicación pendiente"} · Estado: ${estadoVisible(it)}"
+        }
         configurarResolucion()
         configurarDocumento()
         activity.findViewById<View>(R.id.cardVolver).setOnClickListener {
@@ -82,5 +93,12 @@ class VerificacionEntregaController(private val activity: AppCompatActivity) {
 
             override fun onNothingSelected(parent: AdapterView<*>) = Unit
         }
+    }
+
+    private fun estadoVisible(objeto: ObjetoEncontrado): String = when (objeto.estado.name) {
+        "BAJO_CUSTODIA" -> "Bajo custodia"
+        "ENTREGADO" -> "Entregado"
+        "PENDIENTE_RECEPCION" -> "Pendiente de recepción"
+        else -> "Hallazgo reportado"
     }
 }

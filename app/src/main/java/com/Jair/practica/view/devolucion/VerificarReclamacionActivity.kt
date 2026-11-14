@@ -30,6 +30,7 @@ import com.Jair.practica.viewmodel.devolucion.VerificarReclamacionViewModel.Comp
 class VerificarReclamacionActivity : AppCompatActivity() {
     private lateinit var binding: ActivityVerificarReclamacionBinding
     private var actualizandoPreguntas = false
+    private var preguntasRenderizadas: List<Pair<String, String>> = emptyList()
     private val viewModel: VerificarReclamacionViewModel by viewModels {
         VerificarReclamacionViewModel.Factory(
             reclamacionRepository = LocalReclamacionRepository(),
@@ -120,29 +121,33 @@ class VerificarReclamacionActivity : AppCompatActivity() {
                 if (state.mostrarCaracteristicasReservadas) View.VISIBLE else View.GONE
             binding.tvValorCaracteristicasReservadas.text = state.objeto?.caracteristicasReservadas ?: ""
 
-            binding.llPreguntas.removeAllViews()
-            actualizandoPreguntas = true
-            state.preguntas.forEach { pregunta ->
-                val row = layoutInflater.inflate(
-                    R.layout.item_pregunta_verificacion,
-                    binding.llPreguntas,
-                    false
-                )
-                row.findViewById<TextView>(R.id.tvPreguntaItem).text = pregunta.texto
-                val respuesta = row.findViewById<EditText>(R.id.etRespuestaItem)
-                respuesta.setText(pregunta.respuesta ?: "")
-                respuesta.addTextChangedListener(object : TextWatcher {
-                    override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) = Unit
-                    override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) = Unit
-                    override fun afterTextChanged(s: Editable?) {
-                        if (!actualizandoPreguntas) {
-                            viewModel.onRespuestaChange(pregunta.id, s?.toString().orEmpty())
+            val nuevaLista = state.preguntas.map { it.id to it.texto }
+            if (nuevaLista != preguntasRenderizadas) {
+                binding.llPreguntas.removeAllViews()
+                actualizandoPreguntas = true
+                state.preguntas.forEach { pregunta ->
+                    val row = layoutInflater.inflate(
+                        R.layout.item_pregunta_verificacion,
+                        binding.llPreguntas,
+                        false
+                    )
+                    row.findViewById<TextView>(R.id.tvPreguntaItem).text = pregunta.texto
+                    val respuesta = row.findViewById<EditText>(R.id.etRespuestaItem)
+                    respuesta.setText(pregunta.respuesta)
+                    respuesta.addTextChangedListener(object : TextWatcher {
+                        override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) = Unit
+                        override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) = Unit
+                        override fun afterTextChanged(s: Editable?) {
+                            if (!actualizandoPreguntas) {
+                                viewModel.onRespuestaChange(pregunta.id, s?.toString().orEmpty())
+                            }
                         }
-                    }
-                })
-                binding.llPreguntas.addView(row)
+                    })
+                    binding.llPreguntas.addView(row)
+                }
+                preguntasRenderizadas = nuevaLista
+                actualizandoPreguntas = false
             }
-            actualizandoPreguntas = false
 
             binding.tvErrorPregunta.visibility = if (state.errorPregunta) View.VISIBLE else View.GONE
             binding.tvErrorDecision.visibility = if (state.errorDecision) View.VISIBLE else View.GONE

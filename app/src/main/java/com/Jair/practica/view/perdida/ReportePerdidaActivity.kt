@@ -1,41 +1,92 @@
 package com.Jair.practica.view.perdida
 
 import android.content.Intent
-import android.graphics.Color
 import android.os.Bundle
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.EditText
 import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import com.Jair.practica.R
 import com.Jair.practica.model.entity.LoginRole
+import com.Jair.practica.model.local.AlmacenLocal
+import com.Jair.practica.model.remote.SesionRemota
 import com.Jair.practica.viewmodel.perdida.ReportePerdidaViewModel
+import com.Jair.practica.view.common.AppUi
 
 /** RF-05/RF-06: documentar una pérdida y consultar sugerencias de coincidencia. */
 class ReportePerdidaActivity : AppCompatActivity() {
     private val viewModel: ReportePerdidaViewModel by viewModels()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val root = LinearLayout(this).apply { orientation = LinearLayout.VERTICAL; setPadding(32, 32, 32, 32) }
-        fun campo(hint: String) = EditText(this).apply { this.hint = hint; setPadding(12, 12, 12, 12) }
-        root.addView(TextView(this).apply { text = "Reportar pérdida"; textSize = 24f; setTextColor(Color.rgb(147,0,41)) })
-        val descripcion = campo("Descripción del objeto perdido")
-        val lugar = campo("Pabellón, piso o aula (opcional)")
-        val contacto = campo("Correo o teléfono de contacto")
-        root.addView(descripcion, lp()); root.addView(lugar, lp()); root.addView(contacto, lp())
-        val guardar = Button(this).apply { text = "Guardar reporte y buscar coincidencias" }
-        root.addView(guardar, lp())
-        setContentView(root)
         val rol = LoginRole.fromCode(intent.getStringExtra("rol") ?: LoginRole.PERSONAL_REGISTRADOR.code)
         val usuario = intent.getStringExtra("usuarioId") ?: "usr-registrador-01"
+        val (scroll, root) = AppUi.screen(this)
+        root.addView(AppUi.header(this, "Reportar pérdida", "Módulo de pérdidas") { finish() })
+        val progress = TextView(this).apply { text = "01  REPORTAR   ─────   02  REVISAR COINCIDENCIAS"; textSize = 10f; setTextColor(AppUi.RED) }
+        root.addView(progress)
+
+        val intro = AppUi.card(this, 14)
+        intro.addView(TextView(this).apply { text = "Describe lo que perdiste"; textSize = 16f; setTextColor(AppUi.INK); typeface = android.graphics.Typeface.DEFAULT_BOLD })
+        intro.addView(TextView(this).apply { text = "La información se conservará para buscar coincidencias y contactar al solicitante."; textSize = 12f; setTextColor(AppUi.MUTED); setPadding(0, AppUi.dp(this@ReportePerdidaActivity, 5), 0, 0) })
+        root.addView(intro)
+
+        val reportesPrevios = AlmacenLocal.instancia.reportesPerdida
+            .filter { it.registradoPorRemoto == SesionRemota.usuarioId }
+            .takeLast(5).asReversed()
+        if (reportesPrevios.isNotEmpty()) {
+            val anteriores = AppUi.card(this)
+            anteriores.addView(TextView(this).apply {
+                text = "Reanudar un reporte"
+                textSize = 16f
+                setTextColor(AppUi.INK)
+                typeface = android.graphics.Typeface.DEFAULT_BOLD
+            })
+            reportesPrevios.forEach { reporte ->
+                anteriores.addView(AppUi.secondary(this, "Buscar de nuevo: ${reporte.descripcion}").apply {
+                    setOnClickListener {
+                        startActivity(Intent(this@ReportePerdidaActivity, CoincidenciasActivity::class.java).apply {
+                            putExtra("reporteId", reporte.id)
+                        })
+                    }
+                }, LinearLayout.LayoutParams(-1, -2).apply {
+                    topMargin = AppUi.dp(this@ReportePerdidaActivity, 8)
+                })
+            }
+            root.addView(anteriores)
+        }
+
+        val datos = AppUi.card(this)
+        datos.addView(AppUi.sectionTitle(this, "Descripción del objeto", true))
+        val descripcion = AppUi.field(this, "Ej. Laptop negra Lenovo con stickers")
+        descripcion.id = R.id.etPerdidaDescripcion
+        datos.addView(descripcion)
+        datos.addView(AppUi.sectionTitle(this, "Lugar aproximado", true).apply { setPadding(0, AppUi.dp(this@ReportePerdidaActivity, 15), 0, AppUi.dp(this@ReportePerdidaActivity, 7)) })
+        val lugar = AppUi.field(this, "Pabellón, piso o aula")
+        lugar.id = R.id.etPerdidaLugar
+        datos.addView(lugar)
+        datos.addView(AppUi.sectionTitle(this, "Medio de contacto", true).apply { setPadding(0, AppUi.dp(this@ReportePerdidaActivity, 15), 0, AppUi.dp(this@ReportePerdidaActivity, 7)) })
+        val contacto = AppUi.field(this, "Correo o teléfono")
+        contacto.id = R.id.etPerdidaContacto
+        datos.addView(contacto)
+        root.addView(datos)
+
+        val nota = AppUi.card(this)
+        nota.addView(TextView(this).apply { text = "Consejo para una mejor búsqueda"; textSize = 13f; typeface = android.graphics.Typeface.DEFAULT_BOLD; setTextColor(AppUi.INK) })
+        nota.addView(TextView(this).apply { text = "Incluye color, marca, modelo, accesorios o una característica que no sea visible para todos."; textSize = 12f; setTextColor(AppUi.MUTED); setPadding(0, AppUi.dp(this@ReportePerdidaActivity, 6), 0, 0) })
+        root.addView(nota)
+
+        val guardar = AppUi.primary(this, "Guardar reporte y buscar coincidencias")
+        guardar.id = R.id.btnGuardarPerdida
         guardar.setOnClickListener { guardar.isEnabled = false; viewModel.registrar(rol, usuario, descripcion.text.toString(), lugar.text.toString(), contacto.text.toString()) }
+        root.addView(guardar, LinearLayout.LayoutParams(-1, -2).apply { topMargin = AppUi.dp(this@ReportePerdidaActivity, 16) })
+        root.addView(AppUi.secondary(this, "Cancelar").apply { setOnClickListener { finish() } }, LinearLayout.LayoutParams(-1, -2).apply { topMargin = AppUi.dp(this@ReportePerdidaActivity, 8) })
+        root.addView(AppUi.bottomNav(this, { finish() }, { Toast.makeText(this, "Consulta tus casos atendidos desde el panel.", Toast.LENGTH_SHORT).show() }, { Toast.makeText(this, "Elige un reporte desde el panel.", Toast.LENGTH_SHORT).show() }, { Toast.makeText(this, "Perfil del usuario autenticado.", Toast.LENGTH_SHORT).show() }), LinearLayout.LayoutParams(-1, -2).apply { topMargin = AppUi.dp(this@ReportePerdidaActivity, 22) })
+        setContentView(scroll)
         viewModel.mensaje.observe(this) { guardar.isEnabled = true; Toast.makeText(this, it, Toast.LENGTH_LONG).show() }
         viewModel.reporte.observe(this) { reporte ->
             startActivity(Intent(this, CoincidenciasActivity::class.java).apply { putExtra("reporteId", reporte.id) })
         }
     }
-    private fun lp() = LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT).apply { bottomMargin = 18 }
 }

@@ -25,6 +25,7 @@ class FirmaCanvasView(
 
     private val strokes = mutableListOf<Path>()
     private var currentStroke = Path()
+    private var dibujando = false
     var cambioEstadoFirma: ((tiene: Boolean) -> Unit)? = null
 
     private fun notificarFirma() {
@@ -34,17 +35,34 @@ class FirmaCanvasView(
     override fun onTouchEvent(event: MotionEvent): Boolean {
         when (event.actionMasked) {
             MotionEvent.ACTION_DOWN -> {
+                parent?.requestDisallowInterceptTouchEvent(true)
                 currentStroke = Path().apply { moveTo(event.x, event.y) }
+                dibujando = true
+                invalidate()
                 return true
             }
             MotionEvent.ACTION_MOVE -> {
-                currentStroke.lineTo(event.x, event.y)
+                if (dibujando) currentStroke.lineTo(event.x, event.y)
                 invalidate()
                 return true
             }
             MotionEvent.ACTION_UP -> {
-                strokes.add(currentStroke)
+                if (dibujando) {
+                    currentStroke.lineTo(event.x, event.y)
+                    strokes.add(currentStroke)
+                }
                 currentStroke = Path()
+                dibujando = false
+                parent?.requestDisallowInterceptTouchEvent(false)
+                invalidate()
+                notificarFirma()
+                performClick()
+                return true
+            }
+            MotionEvent.ACTION_CANCEL -> {
+                currentStroke = Path()
+                dibujando = false
+                parent?.requestDisallowInterceptTouchEvent(false)
                 invalidate()
                 return true
             }
@@ -52,15 +70,23 @@ class FirmaCanvasView(
         return super.onTouchEvent(event)
     }
 
+    override fun performClick(): Boolean {
+        super.performClick()
+        return true
+    }
+
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
         strokes.forEach { canvas.drawPath(it, paint) }
-        notificarFirma()
+        if (dibujando) canvas.drawPath(currentStroke, paint)
     }
 
     fun limpiar() {
         strokes.clear()
+        currentStroke = Path()
+        dibujando = false
         invalidate()
+        notificarFirma()
     }
 
     fun tieneFirma(): Boolean = strokes.isNotEmpty()

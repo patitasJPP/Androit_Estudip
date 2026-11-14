@@ -2,7 +2,9 @@ package com.Jair.practica.model.local
 
 import com.Jair.practica.model.entity.ObjetoEncontrado
 import com.Jair.practica.model.repository.ObjetoEncontradoRepository
+import com.Jair.practica.PersistenciaLocal
 import java.util.UUID
+import com.Jair.practica.model.remote.SincronizacionRemota
 
 class ObjetoEncontradoLocalImpl : ObjetoEncontradoRepository {
 
@@ -25,12 +27,17 @@ class ObjetoEncontradoLocalImpl : ObjetoEncontradoRepository {
         // RF-02: Se aplica el guardado del Hallazgo.
         // Si el id viene vacío desde el ViewModel, le asignamos un UUID.
         val nuevoObjeto = if (objeto.id.isEmpty()) {
-            objeto.copy(id = UUID.randomUUID().toString())
+            // Prefijo funcional para distinguir hallazgos creados durante la
+            // operación de los datos iniciales de demostración.
+            objeto.copy(id = "hallazgo-${UUID.randomUUID()}")
         } else {
             objeto
         }
         objetos.removeAll { it.id == nuevoObjeto.id }
         objetos.add(nuevoObjeto)
+        AlmacenLocal.instancia.ultimoObjetoRegistradoId = nuevoObjeto.id
+        PersistenciaLocal.guardarObjetos(objetos)
+        SincronizacionRemota.enviarHallazgo(nuevoObjeto)
         return nuevoObjeto
     }
 
@@ -39,6 +46,8 @@ class ObjetoEncontradoLocalImpl : ObjetoEncontradoRepository {
         val index = objetos.indexOfFirst { it.id == objeto.id }
         if (index != -1) {
             objetos[index] = objeto
+            PersistenciaLocal.guardarObjetos(objetos)
+            SincronizacionRemota.enviarHallazgo(objeto)
             return objeto
         } else {
             throw IllegalArgumentException("El objeto no existe en el registro")

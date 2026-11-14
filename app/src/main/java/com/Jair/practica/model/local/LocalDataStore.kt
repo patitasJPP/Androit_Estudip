@@ -3,6 +3,7 @@ package com.Jair.practica.model.local
 import com.Jair.practica.model.entity.EstadoEntrega
 import com.Jair.practica.model.entity.EstadoObjeto
 import com.Jair.practica.model.entity.EstadoReclamacion
+import com.Jair.practica.model.entity.EstadoReportePerdida
 import com.Jair.practica.model.entity.Entrega
 import com.Jair.practica.model.entity.Evidencia
 import com.Jair.practica.model.entity.EventoAuditoria
@@ -14,9 +15,12 @@ import com.Jair.practica.model.entity.Usuario
 import com.Jair.practica.model.entity.UbicacionAlmacenamiento
 import com.Jair.practica.model.entity.TipoUbicacion
 import com.Jair.practica.model.entity.ReportePerdida
+import com.Jair.practica.PersistenciaLocal
 
 class LocalDataStore {
     var ultimoObjetoPendienteId: String? = null
+    var ultimoObjetoRegistradoId: String? = null
+    var ultimaReclamacionPendienteId: String? = null
     val objetos = mutableListOf<ObjetoEncontrado>()
     val reclamaciones = mutableListOf<Reclamacion>()
     val evidencias = mutableListOf<Evidencia>()
@@ -31,6 +35,27 @@ class LocalDataStore {
 
     init {
         cargarSemilla()
+        PersistenciaLocal.cargarObjetos().forEach { persistido ->
+            objetos.removeAll { it.id == persistido.id }
+            objetos.add(persistido)
+        }
+        PersistenciaLocal.cargarReportes().forEach { persistido ->
+            reportesPerdida.removeAll { it.id == persistido.id }
+            reportesPerdida.add(persistido)
+        }
+        PersistenciaLocal.cargarReclamaciones().forEach { persistido ->
+            reclamaciones.removeAll { it.id == persistido.id }
+            reclamaciones.add(persistido)
+        }
+        PersistenciaLocal.cargarEntregas().forEach { persistido ->
+            entregas.removeAll { it.id == persistido.id }
+            entregas.add(persistido)
+            persistido.idOperacion?.let(operacionesEntregas::add)
+        }
+        PersistenciaLocal.cargarPersonas().forEach { persistida ->
+            personas.removeAll { it.id == persistida.id }
+            personas.add(persistida)
+        }
     }
 
     fun guardarObjetos(objetos: List<ObjetoEncontrado>) {
@@ -91,6 +116,25 @@ class LocalDataStore {
                 registradoPor = LocalDataStore.USUARIO_REGISTRADOR_ID,
                 estado = EstadoObjeto.BAJO_CUSTODIA,
                 ubicacionId = "ubi-001"
+            )
+        )
+
+        // Datos semilla adicionales para que el inventario y los reportes
+        // representen una operación real desde el primer arranque.
+        listOf(
+            ObjetoEncontrado("obj-2026-0003", "UTP-2026-0150", "Billetera", "Billetera marrón con tarjetas", "Iniciales J.P. en el interior", "Torre C - Pasillo central", "2026-10-26", USUARIO_REGISTRADOR_ID, EstadoObjeto.BAJO_CUSTODIA, "ubi-001"),
+            ObjetoEncontrado("obj-2026-0004", "UTP-2026-0151", "Mochila", "Mochila azul con cuaderno de cálculo", "Llavero metálico en el cierre", "Pabellón A - Aula 204", "2026-10-27", USUARIO_REGISTRADOR_ID, EstadoObjeto.BAJO_CUSTODIA, "ubi-002"),
+            ObjetoEncontrado("obj-2026-0005", "UTP-2026-0152", "Carné", "Carné universitario UTP", "Código visible en el reverso", "Biblioteca - Mesa 12", "2026-10-28", USUARIO_REGISTRADOR_ID, EstadoObjeto.PENDIENTE_RECEPCION, null),
+            ObjetoEncontrado("obj-2026-0006", "UTP-2026-0153", "Audífonos", "Audífonos inalámbricos negros", "Estuche con una marca blanca", "Torre B - Laboratorio 3", "2026-10-28", USUARIO_REGISTRADOR_ID, EstadoObjeto.BAJO_CUSTODIA, "ubi-002"),
+            ObjetoEncontrado("obj-2026-0007", "UTP-2026-0101", "Calculadora", "Calculadora científica gris", "Etiqueta con nombre del propietario", "Pabellón C - Aula 101", "2026-10-18", USUARIO_REGISTRADOR_ID, EstadoObjeto.ENTREGADO, "ubi-001"),
+            ObjetoEncontrado("obj-2026-0008", "UTP-2026-0102", "USB", "Memoria USB roja de 32 GB", "Sticker de una estrella", "Sala de cómputo 2", "2026-10-19", USUARIO_REGISTRADOR_ID, EstadoObjeto.ENTREGADO, "ubi-001")
+        ).forEach(objetos::add)
+
+        reportesPerdida.addAll(
+            listOf(
+                ReportePerdida("rep-2026-0001", "per-2026-0001", "Laptop negra con stickers de la UTP", "Pabellón B - Aula 302", "2026-10-27 09:10", EstadoReportePerdida.COINCIDENCIA_SUGERIDA, USUARIO_REGISTRADOR_ID, "mquisep@edu.utp.edu.pe"),
+                ReportePerdida("rep-2026-0002", "per-2026-0001", "Carné universitario azul", "Biblioteca", "2026-10-28 14:20", EstadoReportePerdida.BUSCANDO, USUARIO_REGISTRADOR_ID, "947123456"),
+                ReportePerdida("rep-2026-0003", "per-2026-0001", "Audífonos inalámbricos negros", "Torre B", "2026-10-29 11:05", EstadoReportePerdida.EN_SEGUIMIENTO, USUARIO_REGISTRADOR_ID, "mquisep@edu.utp.edu.pe")
             )
         )
 

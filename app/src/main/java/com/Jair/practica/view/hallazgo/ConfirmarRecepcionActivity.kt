@@ -10,6 +10,7 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.Jair.practica.R
 import com.Jair.practica.model.entity.LoginRole
+import com.Jair.practica.model.local.LocalObjetoEncontradoRepository
 import com.Jair.practica.viewmodel.hallazgo.ConfirmarRecepcionViewModel
 
 /** RF-03: confirmación de recepción física y ubicación bajo custodia. */
@@ -22,9 +23,11 @@ class ConfirmarRecepcionActivity : AppCompatActivity() {
         setContentView(R.layout.activity_confirmar_recepcion)
 
         val tvCodigoRecepcion = findViewById<TextView>(R.id.tvCodigoRecepcion)
+        val tvObjetoRecepcion = findViewById<TextView>(R.id.tvObjetoRecepcion)
         val tvEstadoRecepcion = findViewById<TextView>(R.id.tvEstadoRecepcion)
         val btnConfirmarRecepcion = findViewById<Button>(R.id.btnConfirmarRecepcion)
         val btnVolverRecepcion = findViewById<Button>(R.id.btnVolverRecepcion)
+        findViewById<TextView>(R.id.tvVolverRecepcion).setOnClickListener { finish() }
         val spinner = findViewById<Spinner>(R.id.spinnerUbicacionCustodia)
 
         // Limpiamos el texto inicial porque el código se genera AL confirmar, no antes (Regla RF-03)
@@ -32,8 +35,10 @@ class ConfirmarRecepcionActivity : AppCompatActivity() {
 
         // Recuperamos el ID real del objeto que viene del RegistroHallazgoActivity
         val idObjeto = intent.getStringExtra("ID_OBJETO_GUARDADO") ?: ""
+        LocalObjetoEncontradoRepository().findById(idObjeto)?.let { objeto ->
+            tvObjetoRecepcion.text = "Objeto recibido: ${objeto.descripcion}\nLugar del hallazgo: ${objeto.lugarHallazgo ?: "No indicado"}"
+        }
 
-        // Simulamos que quien abrió esta pantalla es el Administrador SAE para poder probar el flujo
         val rolActivo = LoginRole.fromCode(
             intent.getStringExtra("rol") ?: LoginRole.PERSONAL_REGISTRADOR.code
         )
@@ -54,6 +59,7 @@ class ConfirmarRecepcionActivity : AppCompatActivity() {
             // Mostramos el código de custodia real generado por el ViewModel
             tvCodigoRecepcion.text = "CÓDIGO GENERADO: ${objeto.codigoCustodia}"
             tvEstadoRecepcion.text = "Recepción confirmada · Objeto bajo custodia"
+            btnConfirmarRecepcion.isEnabled = false
             com.Jair.practica.model.local.AlmacenLocal.instancia.ultimoObjetoPendienteId = null
             Toast.makeText(this, "El objeto ahora está en el inventario.", Toast.LENGTH_SHORT).show()
         }

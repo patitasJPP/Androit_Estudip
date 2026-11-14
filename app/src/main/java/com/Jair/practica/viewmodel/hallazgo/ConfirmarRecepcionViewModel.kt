@@ -55,6 +55,11 @@ class ConfirmarRecepcionViewModel : ViewModel() {
                 _mensajeError.value = "El objeto especificado no existe en el sistema."
                 return
             }
+            if (objetoActual.estado != EstadoObjeto.HALLAZGO_REPORTADO &&
+                objetoActual.estado != EstadoObjeto.PENDIENTE_RECEPCION) {
+                _mensajeError.value = "Este objeto ya fue recibido o cerrado; no puede confirmarse otra vez."
+                return
+            }
 
             // Generación de código de custodia y asignación de estado (RF-03)
             val codigoGenerado = "CUST-${UUID.randomUUID().toString().substring(0, 6).uppercase()}"

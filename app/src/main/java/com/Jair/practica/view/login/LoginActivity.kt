@@ -10,7 +10,7 @@ import com.Jair.practica.databinding.ActivityLoginBinding
 import com.Jair.practica.model.entity.LoginRole
 import com.Jair.practica.model.local.LocalDataStore
 import com.Jair.practica.model.local.AlmacenLocal
-import com.Jair.practica.model.repository.DemoAuthRepository
+import com.Jair.practica.model.repository.SupabaseAuthRepository
 import com.Jair.practica.view.custodia.InventarioActivity
 import com.Jair.practica.view.hallazgo.RegistroHallazgoActivity
 import com.Jair.practica.view.common.MenuPrincipalActivity
@@ -21,7 +21,7 @@ import com.Jair.practica.viewmodel.login.LoginViewModel
 class LoginActivity : AppCompatActivity() {
     private lateinit var binding: ActivityLoginBinding
     private val viewModel: LoginViewModel by viewModels {
-        LoginViewModel.Factory(DemoAuthRepository())
+        LoginViewModel.Factory(SupabaseAuthRepository())
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -33,11 +33,16 @@ class LoginActivity : AppCompatActivity() {
         viewModel.uiState.observe(this) { state ->
             when (state) {
                 LoginUiState.Idle -> Unit
-                LoginUiState.InvalidCredentials -> {
+                LoginUiState.Loading -> binding.btnLogin.isEnabled = false
+                is LoginUiState.InvalidCredentials -> {
+                    binding.btnLogin.isEnabled = true
+                    binding.tvInfoDescripcion.text = state.detalle
+                    binding.tvInfoDescripcion.setTextColor(android.graphics.Color.rgb(184, 12, 46))
                     viewModel.clearResult()
-                    Toast.makeText(this, "Contraseña incorrecta", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, state.detalle, Toast.LENGTH_LONG).show()
                 }
                 is LoginUiState.Authenticated -> {
+                    binding.btnLogin.isEnabled = true
                     viewModel.clearResult()
                     val destination = MenuPrincipalActivity::class.java
                     val usuarioId = if (state.role == LoginRole.PERSONAL_REGISTRADOR) {
@@ -67,6 +72,8 @@ class LoginActivity : AppCompatActivity() {
         }
 
         binding.btnLogin.setOnClickListener {
+            binding.tvInfoDescripcion.text = "Validando credenciales institucionales..."
+            binding.tvInfoDescripcion.setTextColor(android.graphics.Color.rgb(100, 116, 139))
             val role = when (binding.rgRolLogin.checkedRadioButtonId) {
                 binding.rbPersonalRegistrador.id -> LoginRole.PERSONAL_REGISTRADOR
                 else -> LoginRole.ADMINISTRADOR_SAE

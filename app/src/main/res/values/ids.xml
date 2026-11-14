@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="rootReportes" type="id" />
+    <item name="rootPerfil" type="id" />
+    <item name="btnExportarCsv" type="id" />
+    <item name="etPerdidaDescripcion" type="id" />
+    <item name="etPerdidaLugar" type="id" />
+    <item name="etPerdidaContacto" type="id" />
+    <item name="btnGuardarPerdida" type="id" />
+</resources>

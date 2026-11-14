@@ -7,28 +7,82 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.Jair.practica.R
 import com.Jair.practica.model.entity.LoginRole
+import com.Jair.practica.model.entity.EstadoObjeto
 import com.Jair.practica.model.local.LocalDataStore
+import com.Jair.practica.model.local.LocalObjetoEncontradoRepository
+import com.Jair.practica.model.local.AlmacenLocal
 import com.Jair.practica.view.devolucion.HistorialEntregasActivity
 import com.Jair.practica.view.devolucion.VerificacionEntregaActivity
 import com.Jair.practica.view.devolucion.VerificarReclamacionActivity
+import com.Jair.practica.view.common.PendientesSaeActivity
+import com.Jair.practica.model.remote.SincronizacionRemota
+import android.view.View
 
 class InventarioController(private val activity: AppCompatActivity) {
 
     fun iniciar() {
-        val inventario = 142
-        val reclamados = 89
-        val vencen = 28
+        SincronizacionRemota.refrescarObjetos { cargarResumen() }
+        cargarResumen()
+    }
+
+    private fun cargarResumen() {
+        // El inventario se alimenta del mismo repositorio local usado por el
+        // registrador. Así, un hallazgo creado en el otro rol aparece aquí
+        // después de confirmar su recepción, en lugar de quedar como dato de
+        // demostración aislado.
+        val objetos = LocalObjetoEncontradoRepository().list()
+        val ultimoId = AlmacenLocal.instancia.ultimoObjetoRegistradoId
+        val inventario = objetos.count { it.estado == EstadoObjeto.BAJO_CUSTODIA }
+        val reclamados = objetos.count { it.estado == EstadoObjeto.ENTREGADO }
+        val vencen = objetos.count { it.estado == EstadoObjeto.PENDIENTE_RECEPCION || it.estado == EstadoObjeto.HALLAZGO_REPORTADO }
 
         activity.findViewById<TextView>(R.id.tvInventarioValor).text = inventario.toString()
         activity.findViewById<TextView>(R.id.tvReclamadosValor).text = reclamados.toString()
         activity.findViewById<TextView>(R.id.tvVencenValor).text = vencen.toString()
 
+        val reciente = ultimoId?.let { id -> objetos.firstOrNull { it.id == id } }
+            ?: objetos.lastOrNull()
+        reciente?.let { objeto ->
+            activity.findViewById<TextView>(R.id.tvZonaSubtitulo).text =
+                "Último hallazgo sincronizado · ${objeto.descripcion} · Estado: ${estadoVisible(objeto.estado)}"
+        }
+
+        // Las tarjetas se construyen con los objetos reales del repositorio
+        // local, que a su vez se actualiza desde Supabase. Así, la acción
+        // Entregar siempre trabaja sobre el objeto que el administrador ve.
+        val objetosVisibles = objetos
+            .filter { it.estado != EstadoObjeto.ENTREGADO && it.estado != EstadoObjeto.ANULADO }
+            .sortedByDescending { it.fechaHallazgo.orEmpty() }
+            .take(3)
+        val tarjetas = listOf(
+            Triple(R.id.cardObjeto1, R.id.tvTituloObjeto1, R.id.tvFechaObjeto1) to R.id.tvUbicacionObjeto1,
+            Triple(R.id.cardObjeto2, R.id.tvTituloObjeto2, R.id.tvFechaObjeto2) to R.id.tvUbicacionObjeto2,
+            Triple(R.id.cardObjeto3, R.id.tvTituloObjeto3, R.id.tvFechaObjeto3) to R.id.tvUbicacionObjeto3
+        )
+        tarjetas.forEachIndexed { index, tarjeta ->
+            val objeto = objetosVisibles.getOrNull(index)
+            val card = activity.findViewById<View>(tarjeta.first.first)
+            if (objeto == null) {
+                card.visibility = View.GONE
+                return@forEachIndexed
+            }
+            card.visibility = View.VISIBLE
+            activity.findViewById<TextView>(tarjeta.first.second).text = objeto.descripcion
+            activity.findViewById<TextView>(tarjeta.first.third).text = objeto.fechaHallazgo ?: "Registro reciente"
+            activity.findViewById<TextView>(tarjeta.second).text =
+                "Estado: ${estadoVisible(objeto.estado)} · ${objeto.lugarHallazgo ?: objeto.ubicacionId ?: "Ubicación pendiente"}"
+        }
+
         val botones = listOf(
             R.id.btnVerFicha1, R.id.btnVerFicha2, R.id.btnVerFicha3
         )
-        botones.forEach { id ->
+        botones.forEachIndexed { index, id ->
             activity.findViewById<Button>(id).setOnClickListener {
-                activity.startActivity(Intent(activity, ProtocoloEntregaActivity::class.java))
+                objetosVisibles.getOrNull(index)?.let { objeto ->
+                    activity.startActivity(Intent(activity, ProtocoloEntregaActivity::class.java).apply {
+                        putExtra("objetoId", objeto.id)
+                    })
+                }
             }
         }
 
@@ -41,9 +95,13 @@ class InventarioController(private val activity: AppCompatActivity) {
             )
         }
 
-        listOf(R.id.btnEntregar1, R.id.btnEntregar2, R.id.btnEntregar3).forEach { id ->
+        listOf(R.id.btnEntregar1, R.id.btnEntregar2, R.id.btnEntregar3).forEachIndexed { index, id ->
             activity.findViewById<Button>(id).setOnClickListener {
-                activity.startActivity(Intent(activity, VerificacionEntregaActivity::class.java))
+                objetosVisibles.getOrNull(index)?.let { objeto ->
+                    activity.startActivity(Intent(activity, VerificacionEntregaActivity::class.java).apply {
+                        putExtra("objetoId", objeto.id)
+                    })
+                }
             }
         }
         activity.findViewById<android.view.View>(R.id.navReportes).setOnClickListener {
@@ -57,15 +115,19 @@ class InventarioController(private val activity: AppCompatActivity) {
 
         activity.findViewById<Button>(R.id.btnVerReclamaciones).setOnClickListener {
             activity.startActivity(
-                Intent(activity, VerificarReclamacionActivity::class.java).apply {
+                Intent(activity, PendientesSaeActivity::class.java).apply {
                     putExtra("usuarioId", LocalDataStore.USUARIO_ADMINISTRADOR_ID)
                     putExtra("rol", LoginRole.ADMINISTRADOR_SAE.code)
-                    putExtra(VerificarReclamacionActivity.EXTRA_RECLAMACION, LocalDataStore.RECLAMACION_DEMO_ID)
+                    putExtra(PendientesSaeActivity.EXTRA_TIPO, PendientesSaeActivity.TIPO_RECLAMACIONES)
                 }
             )
         }
 
         resaltarNavItem(R.id.navObjetos)
+    }
+
+    fun actualizarDesdeSupabase() {
+        SincronizacionRemota.refrescarObjetos { cargarResumen() }
     }
 
     private fun resaltarNavItem(itemActivoId: Int) {
@@ -84,5 +146,13 @@ class InventarioController(private val activity: AppCompatActivity) {
                 android.graphics.Color.parseColor(color)
             )
         }
+    }
+
+    private fun estadoVisible(estado: EstadoObjeto): String = when (estado) {
+        EstadoObjeto.BAJO_CUSTODIA -> "Bajo custodia"
+        EstadoObjeto.PENDIENTE_RECEPCION -> "Pendiente de recepción"
+        EstadoObjeto.HALLAZGO_REPORTADO -> "Hallazgo reportado"
+        EstadoObjeto.ENTREGADO -> "Entregado"
+        EstadoObjeto.ANULADO -> "Anulado"
     }
 }

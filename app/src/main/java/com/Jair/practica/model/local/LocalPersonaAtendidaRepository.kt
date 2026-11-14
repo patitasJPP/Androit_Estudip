@@ -2,6 +2,7 @@ package com.Jair.practica.model.local
 
 import com.Jair.practica.model.entity.PersonaAtendida
 import com.Jair.practica.model.repository.PersonaAtendidaRepository
+import com.Jair.practica.PersistenciaLocal
 
 class LocalPersonaAtendidaRepository(
     private val store: LocalDataStore = AlmacenLocal.instancia
@@ -17,6 +18,7 @@ class LocalPersonaAtendidaRepository(
         } else {
             store.personas.add(persona)
         }
+        PersistenciaLocal.guardarPersonas(store.personas)
         return persona
     }
 
@@ -25,6 +27,7 @@ class LocalPersonaAtendidaRepository(
         if (index >= 0) {
             store.personas[index] = persona
         }
+        PersistenciaLocal.guardarPersonas(store.personas)
         return persona
     }
 }

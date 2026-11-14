@@ -23,6 +23,8 @@ import com.Jair.practica.model.repository.ObjetoEncontradoRepository
 import com.Jair.practica.model.repository.PersonaAtendidaRepository
 import com.Jair.practica.model.repository.ReclamacionRepository
 import com.Jair.practica.model.repository.ResultadoEntrega
+import com.Jair.practica.model.remote.SincronizacionCasos
+import com.Jair.practica.model.remote.SesionRemota
 import android.graphics.Bitmap
 import java.text.SimpleDateFormat
 import java.util.Date
@@ -161,6 +163,11 @@ class ConfirmarDevolucionViewModel(
             )
             return false
         }
+        if (estadoActual.objeto?.estado != EstadoObjeto.BAJO_CUSTODIA) {
+            _state.value = estadoActual.copy(enviando = false,
+                errorGeneral = "El objeto debe estar bajo custodia antes de confirmar la devolución.")
+            return false
+        }
         if (!estadoActual.firmaCapturada) {
             _state.value = estadoActual.copy(enviando = false, errorFirma = true)
             return false
@@ -175,9 +182,56 @@ class ConfirmarDevolucionViewModel(
             )
             return false;
         }
+        if (personaRepository.findById(estadoActual.receptorId) == null) {
+            _state.value = estadoActual.copy(enviando = false,
+                errorGeneral = "No se encontró al receptor. Revisa la reclamación antes de continuar.")
+            return false
+        }
 
         _state.value = estadoActual.copy(enviando = true, errorGeneral = null)
 
+        val reclamacion = estadoActual.reclamacion ?: return false
+        val esCasoReal = reclamacion.reportePerdidaId?.length == 36
+        if (esCasoReal) {
+            val firma = firmaBitmap
+            val operacion = idOperacionActual
+            if (firma == null || operacion == null || SesionRemota.accessToken == null) {
+                _state.value = _state.value?.copy(enviando = false, errorGeneral = "La sesión o la firma no están disponibles. Reintenta la entrega.")
+                return false
+            }
+            SincronizacionCasos.confirmarEntrega(
+                reclamacion = reclamacion,
+                receptor = estadoActual.persona?.nombre ?: estadoActual.receptorId,
+                dni = estadoActual.dni,
+                correo = estadoActual.correo,
+                firma = firma,
+                codigoOperacion = operacion,
+                alTerminar = { resultadoRemoto ->
+                    resultadoRemoto.fold(
+                        onSuccess = { registrarEntregaLocal() },
+                        onFailure = { error ->
+                            _state.value = _state.value?.copy(
+                                enviando = false,
+                                errorGeneral = error.message ?: "No se pudo registrar la entrega en Supabase"
+                            )
+                        }
+                    )
+                }
+            )
+            return true
+        }
+
+        return registrarEntregaLocal()
+    }
+
+    private fun registrarEntregaLocal(): Boolean {
+        val estadoActual = _state.value ?: return false
+        val personaActual = personaRepository.findById(estadoActual.receptorId)
+        if (personaActual == null) {
+            _state.value = estadoActual.copy(enviando = false, errorGeneral = "No se encontró al receptor de la entrega.")
+            return false
+        }
+        personaRepository.update(personaActual.copy(dni = estadoActual.dni, correo = estadoActual.correo))
         val resultado = entregaRepository.confirmarEntrega(
             reclamacionId = estadoActual.reclamacion?.id ?: return false,
             receptorId = estadoActual.receptorId,
@@ -193,13 +247,22 @@ class ConfirmarDevolucionViewModel(
                 false
             }
             is ResultadoEntrega.Registrada -> {
+                val referenciaFirma = if (estadoActual.reclamacion?.reportePerdidaId?.length == 36)
+                    "firmas/${idOperacionActual}.png"
+                else if (firmaBitmap != null) "firma-${resultado.entrega.id}" else null
                 idOperacionActual = null
-                val entregaConFirma = resultado.entrega.copy(firmaReferencia = if (firmaBitmap != null) "firma-${resultado.entrega.id}" else null)
+                val entregaConFirma = resultado.entrega.copy(
+                    firmaReferencia = referenciaFirma,
+                    receptorDni = estadoActual.dni,
+                    receptorCorreo = estadoActual.correo
+                )
                 entregaRepository.update(entregaConFirma)
                 _state.value = _state.value?.copy(
                     enviando = false,
                     entrega = entregaConFirma,
-                    mensajeExito = "Devolución confirmada. El objeto pasa a estado Entregado."
+                    mensajeExito = if (estadoActual.reclamacion?.reportePerdidaId?.length == 36)
+                        "Devolución confirmada en Supabase. El objeto pasa a estado Entregado."
+                    else "Entrega de demostración confirmada solo en este dispositivo."
                 )
                 true
             }

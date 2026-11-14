@@ -2,6 +2,8 @@ package com.Jair.practica.model.local
 
 import com.Jair.practica.model.entity.ObjetoEncontrado
 import com.Jair.practica.model.repository.ObjetoEncontradoRepository
+import com.Jair.practica.PersistenciaLocal
+import com.Jair.practica.model.remote.SincronizacionRemota
 
 class LocalObjetoEncontradoRepository(
     private val store: LocalDataStore = AlmacenLocal.instancia
@@ -22,6 +24,8 @@ class LocalObjetoEncontradoRepository(
         } else {
             store.objetos.add(objeto)
         }
+        PersistenciaLocal.guardarObjetos(store.objetos)
+        SincronizacionRemota.enviarHallazgo(objeto)
         return objeto
     }
 
@@ -30,6 +34,8 @@ class LocalObjetoEncontradoRepository(
         if (index >= 0) {
             store.objetos[index] = objeto
         }
+        PersistenciaLocal.guardarObjetos(store.objetos)
+        SincronizacionRemota.enviarHallazgo(objeto)
         return objeto
     }
 }

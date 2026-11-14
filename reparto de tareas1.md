@@ -227,3 +227,17 @@ Para cada RF asignado, el trabajo debe seguir este orden:
 8. Entregar una lista de archivos modificados y anotar cualquier dato simulado o pendiente de backend.
 
 Ningún integrante debe crear nombres alternativos para las mismas entidades, estados o roles. Si necesita una entidad nueva, debe agregarla primero a esta tabla y crear su repositorio correspondiente para que NOE pueda integrarla sin duplicidades.
+
+## Validación automatizada de RF-01 a RF-12
+
+La suite `RfUiAutomatorTest` ejecuta el flujo completo de la aplicación en un emulador Android: inicia sesión por rol, documenta un hallazgo, confirma custodia, consulta inventario, registra una pérdida, revisa coincidencias, verifica una reclamación, confirma una devolución, consulta el historial, administra accesos y revisa avisos.
+
+Para ejecutarla desde Android Studio: abre `app/src/androidTest/java/com/Jair/practica/RfUiAutomatorTest.kt`, conecta o inicia el emulador Pixel 4 y pulsa el icono de ejecución junto al método `recorrerRf01AlRf12`.
+
+También puede ejecutarse desde la terminal del proyecto con:
+
+```text
+gradlew.bat :app:connectedDebugAndroidTest
+```
+
+Las capturas de evidencia se guardan en el almacenamiento externo de prueba del paquete, dentro de `files/rf-evidence/`, con una captura identificada para cada RF o grupo de RF.
