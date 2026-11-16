@@ -58,6 +58,11 @@ class ReportePerdidaViewModel : ViewModel() {
     }
 
     /** Una sugerencia no es una reclamación: esta operación exige elegir un objeto concreto. */
+    fun tieneSolicitud(reporteId: String, objetoId: String): Boolean =
+        AlmacenLocal.instancia.reclamaciones.any {
+            it.reportePerdidaId == reporteId && it.objetoEncontradoId == objetoId
+        }
+
     fun solicitarVerificacion(reporte: ReportePerdida, objetoId: String): String {
         val objeto = objetos.list().firstOrNull { it.id == objetoId }
             ?: return "El objeto ya no está disponible. Actualiza la búsqueda."
@@ -67,10 +72,9 @@ class ReportePerdidaViewModel : ViewModel() {
         if (_coincidencias.value.orEmpty().none { it.id == objetoId }) {
             return "Actualiza la búsqueda antes de solicitar la verificación."
         }
-        val existente = AlmacenLocal.instancia.reclamaciones.firstOrNull {
-            it.reportePerdidaId == reporte.id && it.objetoEncontradoId == objetoId
+        if (tieneSolicitud(reporte.id, objetoId)) {
+            return "Este objeto ya tiene una solicitud de verificación para el reporte."
         }
-        if (existente != null) return "Este objeto ya tiene una solicitud de verificación para el reporte."
 
         val personaId = "per-${reporte.id}"
         personas.save(PersonaAtendida(

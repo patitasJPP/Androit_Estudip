@@ -64,10 +64,19 @@ class CoincidenciasActivity : AppCompatActivity() {
                 card.addView(TextView(this).apply { text = objeto.descripcion; textSize = 13f; setTextColor(AppUi.INK); setPadding(0, AppUi.dp(this@CoincidenciasActivity, 8), 0, 0) })
                 card.addView(TextView(this).apply { text = "Código ${objeto.codigoCustodia}\nLugar: ${objeto.lugarHallazgo}\nEstado: ${objeto.estado}"; textSize = 12f; setTextColor(AppUi.MUTED); setPadding(0, AppUi.dp(this@CoincidenciasActivity, 5), 0, 0) })
                 card.addView(AppUi.secondary(this, "Solicitar verificación al SAE").apply {
+                    if (viewModel.tieneSolicitud(reporte.id, objeto.id)) {
+                        text = "Verificación solicitada"
+                        isEnabled = false
+                    }
                     setOnClickListener {
+                        isEnabled = false
                         val mensaje = viewModel.solicitarVerificacion(reporte, objeto.id)
                         android.widget.Toast.makeText(this@CoincidenciasActivity, mensaje, android.widget.Toast.LENGTH_LONG).show()
-                        isEnabled = !mensaje.startsWith("Solicitud registrada")
+                        if (viewModel.tieneSolicitud(reporte.id, objeto.id)) {
+                            text = "Verificación solicitada"
+                        } else {
+                            isEnabled = true
+                        }
                     }
                 }, LinearLayout.LayoutParams(-1, -2).apply { topMargin = AppUi.dp(this@CoincidenciasActivity, 12) })
                 contenido.addView(card)
