@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
+import android.view.Gravity
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.Jair.practica.R
@@ -34,26 +35,65 @@ class ReportePerdidaActivity : AppCompatActivity() {
 
         val reportesPrevios = AlmacenLocal.instancia.reportesPerdida
             .filter { it.registradoPorRemoto == SesionRemota.usuarioId }
-            .takeLast(5).asReversed()
+            .asReversed()
         if (reportesPrevios.isNotEmpty()) {
+            val preferencias = getSharedPreferences("reportes_ocultos", MODE_PRIVATE)
+            val clave = "ids_${SesionRemota.usuarioId}"
+            val ocultos = preferencias.getStringSet(clave, emptySet())!!.toMutableSet()
             val anteriores = AppUi.card(this)
-            anteriores.addView(TextView(this).apply {
-                text = "Reanudar un reporte"
-                textSize = 16f
-                setTextColor(AppUi.INK)
-                typeface = android.graphics.Typeface.DEFAULT_BOLD
-            })
-            reportesPrevios.forEach { reporte ->
-                anteriores.addView(AppUi.secondary(this, "Buscar de nuevo: ${reporte.descripcion}").apply {
-                    setOnClickListener {
-                        startActivity(Intent(this@ReportePerdidaActivity, CoincidenciasActivity::class.java).apply {
-                            putExtra("reporteId", reporte.id)
+            var mostrarOcultos = false
+            fun guardarOcultos() {
+                preferencias.edit().putStringSet(clave, ocultos.toSet()).apply()
+            }
+            fun mostrarReportes() {
+                anteriores.removeAllViews()
+                anteriores.addView(TextView(this).apply {
+                    text = "Reanudar un reporte"
+                    textSize = 16f
+                    setTextColor(AppUi.INK)
+                    typeface = android.graphics.Typeface.DEFAULT_BOLD
+                })
+                val visibles = reportesPrevios.filterNot { it.id in ocultos }.take(5)
+                if (visibles.isEmpty()) {
+                    anteriores.addView(TextView(this).apply {
+                        text = "No tienes reportes visibles. Puedes restaurar los ocultos."
+                        setTextColor(AppUi.MUTED)
+                    })
+                }
+                visibles.forEach { reporte ->
+                    anteriores.addView(AppUi.secondary(this, "Buscar de nuevo: ${reporte.descripcion}").apply {
+                        setOnClickListener {
+                            startActivity(Intent(this@ReportePerdidaActivity, CoincidenciasActivity::class.java).apply {
+                                putExtra("reporteId", reporte.id)
+                            })
+                        }
+                    }, LinearLayout.LayoutParams(-1, -2).apply {
+                        topMargin = AppUi.dp(this@ReportePerdidaActivity, 8)
+                    })
+                    anteriores.addView(TextView(this).apply {
+                        text = "Ocultar este reporte"
+                        textSize = 12f
+                        setTextColor(AppUi.RED)
+                        gravity = Gravity.END or Gravity.CENTER_VERTICAL
+                        minHeight = AppUi.dp(this@ReportePerdidaActivity, 40)
+                        setOnClickListener { ocultos.add(reporte.id); guardarOcultos(); mostrarReportes() }
+                    })
+                }
+                val reportesOcultos = reportesPrevios.filter { it.id in ocultos }
+                if (reportesOcultos.isNotEmpty()) {
+                    anteriores.addView(AppUi.secondary(this, if (mostrarOcultos) "Ocultar lista de reportes ocultos" else "Mostrar reportes ocultos (${reportesOcultos.size})").apply {
+                        setOnClickListener { mostrarOcultos = !mostrarOcultos; mostrarReportes() }
+                    })
+                    if (mostrarOcultos) reportesOcultos.forEach { reporte ->
+                        anteriores.addView(AppUi.secondary(this, "Restaurar: ${reporte.descripcion}").apply {
+                            setOnClickListener { ocultos.remove(reporte.id); guardarOcultos(); mostrarReportes() }
+                        }, LinearLayout.LayoutParams(-1, -2).apply {
+                            topMargin = AppUi.dp(this@ReportePerdidaActivity, 8)
                         })
                     }
-                }, LinearLayout.LayoutParams(-1, -2).apply {
-                    topMargin = AppUi.dp(this@ReportePerdidaActivity, 8)
-                })
+                }
             }
+            mostrarReportes()
             root.addView(anteriores)
         }
 

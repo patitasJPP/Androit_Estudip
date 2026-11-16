@@ -15,11 +15,30 @@ data class ObjetoEncontradoRemoto(
     val descripcion: String,
     val lugar_hallazgo: String? = null,
     val fecha_hallazgo: String? = null,
+    val ubicacion_id: String? = null,
     val estado: String = "HALLAZGO_REPORTADO",
     val registrado_por: String
 )
 
+data class UbicacionCustodiaRemota(
+    val id: String,
+    val codigo: String,
+    val tipo: String,
+    val descripcion: String? = null,
+    val disponible: Boolean = true
+)
+
 interface SupabaseApi {
+    @GET("ubicaciones_custodia")
+    fun consultarUbicaciones(@Query("select") columnas: String = "id,codigo,tipo,descripcion,disponible"): Call<List<UbicacionCustodiaRemota>>
+
+    @Headers("Prefer: return=representation")
+    @PATCH("objetos_encontrados")
+    fun actualizarUbicacion(
+        @Query("id") id: String,
+        @Query("estado") estado: String = "eq.BAJO_CUSTODIA",
+        @Body cambio: Map<String, String>
+    ): Call<List<ObjetoEncontradoRemoto>>
     @Headers("Prefer: return=representation")
     @GET("objetos_encontrados")
     fun consultarObjetos(@Query("select") columnas: String = "*"): Call<List<ObjetoEncontradoRemoto>>

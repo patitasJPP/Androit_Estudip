@@ -10,9 +10,6 @@ class ActaEntregaController(private val activity: AppCompatActivity) {
         activity.findViewById<View>(R.id.btnPanelCustodia).setOnClickListener {
             NavegacionPrincipal.panel(activity)
         }
-        activity.findViewById<View>(R.id.btnDescargarActa).setOnClickListener {
-            NavegacionPrincipal.aviso(activity, "Vista de ejemplo: descarga de PDF todavía no disponible")
-        }
         activity.findViewById<View>(R.id.btnReenviarCorreo).setOnClickListener {
             NavegacionPrincipal.aviso(activity, "Vista de ejemplo: envío de correo todavía no disponible")
         }

@@ -75,19 +75,31 @@
         </LinearLayout>
     </com.google.android.material.card.MaterialCardView>
 
+    <!-- Marca UTP+objects -->
+    <ImageView
+        android:id="@+id/imgMarcaApp"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="10dp"
+        android:contentDescription="Logo UTP+objects"
+        android:src="@drawable/utp_objects_mark"
+        app:layout_constraintStart_toStartOf="@id/guideStart"
+        app:layout_constraintTop_toBottomOf="@id/cardBadgeAcceso" />
+
     <!-- TITULO -->
     <TextView
         android:id="@+id/tvTitulo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
+        android:layout_marginStart="8dp"
         android:includeFontPadding="false"
         android:text="Iniciar Sesión"
         android:textColor="#0F172A"
         android:textSize="24sp"
         android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="@id/guideStart"
-        app:layout_constraintTop_toBottomOf="@id/cardBadgeAcceso" />
+        app:layout_constraintStart_toEndOf="@id/imgMarcaApp"
+        app:layout_constraintTop_toTopOf="@id/imgMarcaApp"
+        app:layout_constraintBottom_toBottomOf="@id/imgMarcaApp" />
 
     <!-- SUBTITULO -->
     <TextView

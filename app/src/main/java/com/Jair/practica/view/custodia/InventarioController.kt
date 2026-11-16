@@ -16,11 +16,19 @@ import com.Jair.practica.view.devolucion.VerificacionEntregaActivity
 import com.Jair.practica.view.devolucion.VerificarReclamacionActivity
 import com.Jair.practica.view.common.PendientesSaeActivity
 import com.Jair.practica.model.remote.SincronizacionRemota
+import com.Jair.practica.view.common.AppUi
+import android.widget.LinearLayout
 import android.view.View
 
 class InventarioController(private val activity: AppCompatActivity) {
 
     fun iniciar() {
+        val contenido = activity.findViewById<LinearLayout>(R.id.llContenido)
+        contenido.addView(AppUi.primary(activity, "Consultar y actualizar inventario completo").apply {
+            setOnClickListener { activity.startActivity(Intent(activity, GestionInventarioActivity::class.java)) }
+        }, 3, LinearLayout.LayoutParams(-1, -2).apply {
+            topMargin = AppUi.dp(activity, 12)
+        })
         SincronizacionRemota.refrescarObjetos { cargarResumen() }
         cargarResumen()
     }

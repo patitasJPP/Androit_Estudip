@@ -13,7 +13,7 @@ import retrofit2.Response
 
 /** Autenticación real y autorización contra la tabla de usuarios de Supabase. */
 class SupabaseAuthRepository : AuthRepository {
-    @Volatile var ultimoError: String = "Credenciales rechazadas"
+    @Volatile var ultimoError: String = "Correo o contraseña incorrectos. Comprueba tus credenciales."
 
     override fun authenticate(role: LoginRole, username: String, password: String): Boolean {
         val email = username.trim()
@@ -28,13 +28,17 @@ class SupabaseAuthRepository : AuthRepository {
             })
             tarea.get(8, TimeUnit.SECONDS)
         } catch (error: Exception) {
-            ultimoError = "No se pudo conectar con Supabase: ${error.message ?: "error de red"}"
+            ultimoError = "No se pudo conectar. Comprueba tu conexión a internet e inténtalo de nuevo."
             pool.shutdownNow()
             return false
         }
         pool.shutdownNow()
         if (!respuesta.isSuccessful) {
-            ultimoError = "Supabase HTTP ${respuesta.code()}: ${respuesta.errorBody()?.string()?.take(120) ?: "credenciales inválidas"}"
+            ultimoError = when (respuesta.code()) {
+                400, 401, 422 -> "Correo o contraseña incorrectos. Comprueba tus credenciales."
+                429 -> "Demasiados intentos. Espera un momento e inténtalo de nuevo."
+                else -> "No se pudo iniciar sesión. Inténtalo de nuevo más tarde."
+            }
             return false
         }
         val token = respuesta.body()?.access_token

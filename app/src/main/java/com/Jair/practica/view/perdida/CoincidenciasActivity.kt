@@ -4,10 +4,14 @@ import android.os.Bundle
 import android.view.View
 import android.widget.LinearLayout
 import android.widget.TextView
+import android.text.Editable
+import android.text.TextWatcher
+import com.Jair.practica.model.entity.ObjetoEncontrado
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.Jair.practica.model.local.LocalReportePerdidaRepository
 import com.Jair.practica.model.remote.SincronizacionRemota
+import com.Jair.practica.model.remote.SincronizacionCasos
 import com.Jair.practica.viewmodel.perdida.ReportePerdidaViewModel
 import com.Jair.practica.view.common.AppUi
 
@@ -22,6 +26,15 @@ class CoincidenciasActivity : AppCompatActivity() {
         resumen.addView(TextView(this).apply { text = "Resultado de búsqueda"; textSize = 16f; setTextColor(AppUi.INK); typeface = android.graphics.Typeface.DEFAULT_BOLD })
         resumen.addView(TextView(this).apply { text = "Las sugerencias se basan en descripción y lugar. El SAE debe verificar antes de autorizar cualquier devolución."; textSize = 12f; setTextColor(AppUi.MUTED); setPadding(0, AppUi.dp(this@CoincidenciasActivity, 5), 0, 0) })
         root.addView(resumen)
+        val filtros = AppUi.card(this)
+        filtros.addView(AppUi.sectionTitle(this, "Filtrar sugerencias"))
+        val filtroObjeto = AppUi.field(this, "Código, categoría o descripción")
+        filtros.addView(filtroObjeto)
+        val filtroLugar = AppUi.field(this, "Lugar del hallazgo")
+        filtros.addView(filtroLugar, LinearLayout.LayoutParams(-1, -2).apply {
+            topMargin = AppUi.dp(this@CoincidenciasActivity, 8)
+        })
+        root.addView(filtros)
         val contenido = LinearLayout(this).apply { orientation = LinearLayout.VERTICAL }
         root.addView(contenido)
         setContentView(scroll)
@@ -44,17 +57,31 @@ class CoincidenciasActivity : AppCompatActivity() {
             })
             SincronizacionRemota.refrescarObjetos {
                 if (!isFinishing && !isDestroyed) {
-                    viewModel.buscar(reporte)
-                    actualizar.isEnabled = true
+                    SincronizacionCasos.refrescarCasos {
+                        if (!isFinishing && !isDestroyed) {
+                            viewModel.buscar(reporte)
+                            actualizar.isEnabled = true
+                        }
+                    }
                 }
             }
         }
         actualizar.setOnClickListener { buscarActualizado() }
         buscarActualizado()
-        viewModel.coincidencias.observe(this) { lista ->
+        var listaActual = emptyList<ObjetoEncontrado>()
+        fun mostrarCoincidencias() {
+            val texto = filtroObjeto.text.toString().trim()
+            val lugar = filtroLugar.text.toString().trim()
+            val lista = listaActual.filter { objeto ->
+                (texto.isBlank() || listOf(objeto.codigoCustodia, objeto.categoria, objeto.descripcion)
+                    .any { it.contains(texto, ignoreCase = true) }) &&
+                    (lugar.isBlank() || objeto.lugarHallazgo.orEmpty().contains(lugar, ignoreCase = true))
+            }
             contenido.removeAllViews()
             if (lista.isEmpty()) {
-                contenido.addView(emptyState("No hay coincidencias por ahora. Comprueba que el SAE haya confirmado la recepción y que la descripción y el lugar coincidan. El reporte queda en seguimiento."))
+                contenido.addView(emptyState(if (listaActual.isEmpty())
+                    "No hay coincidencias por ahora. Comprueba que el SAE haya confirmado la recepción y que la descripción y el lugar coincidan. El reporte queda en seguimiento."
+                    else "No hay sugerencias con esos filtros. Borra los filtros para ver todas las coincidencias."))
             } else lista.forEach { objeto ->
                 val card = AppUi.card(this, 12)
                 val head = LinearLayout(this).apply { orientation = LinearLayout.HORIZONTAL; gravity = android.view.Gravity.CENTER_VERTICAL }
@@ -64,7 +91,7 @@ class CoincidenciasActivity : AppCompatActivity() {
                 card.addView(TextView(this).apply { text = objeto.descripcion; textSize = 13f; setTextColor(AppUi.INK); setPadding(0, AppUi.dp(this@CoincidenciasActivity, 8), 0, 0) })
                 card.addView(TextView(this).apply { text = "Código ${objeto.codigoCustodia}\nLugar: ${objeto.lugarHallazgo}\nEstado: ${objeto.estado}"; textSize = 12f; setTextColor(AppUi.MUTED); setPadding(0, AppUi.dp(this@CoincidenciasActivity, 5), 0, 0) })
                 card.addView(AppUi.secondary(this, "Solicitar verificación al SAE").apply {
-                    if (viewModel.tieneSolicitud(reporte.id, objeto.id)) {
+                    if (viewModel.tieneSolicitud(reporte, objeto.id)) {
                         text = "Verificación solicitada"
                         isEnabled = false
                     }
@@ -72,7 +99,7 @@ class CoincidenciasActivity : AppCompatActivity() {
                         isEnabled = false
                         val mensaje = viewModel.solicitarVerificacion(reporte, objeto.id)
                         android.widget.Toast.makeText(this@CoincidenciasActivity, mensaje, android.widget.Toast.LENGTH_LONG).show()
-                        if (viewModel.tieneSolicitud(reporte.id, objeto.id)) {
+                        if (viewModel.tieneSolicitud(reporte, objeto.id)) {
                             text = "Verificación solicitada"
                         } else {
                             isEnabled = true
@@ -81,6 +108,17 @@ class CoincidenciasActivity : AppCompatActivity() {
                 }, LinearLayout.LayoutParams(-1, -2).apply { topMargin = AppUi.dp(this@CoincidenciasActivity, 12) })
                 contenido.addView(card)
             }
+        }
+        val escucharFiltros = object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) = Unit
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) = mostrarCoincidencias()
+            override fun afterTextChanged(s: Editable?) = Unit
+        }
+        filtroObjeto.addTextChangedListener(escucharFiltros)
+        filtroLugar.addTextChangedListener(escucharFiltros)
+        viewModel.coincidencias.observe(this) { lista ->
+            listaActual = lista
+            mostrarCoincidencias()
         }
     }
 

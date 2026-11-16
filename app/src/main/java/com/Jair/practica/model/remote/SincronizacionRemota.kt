@@ -28,12 +28,23 @@ object SincronizacionRemota {
                 val existente = objeto.codigoCustodia.takeIf { it.isNotBlank() }
                     ?.let { codigo -> SupabaseClient.api.buscarObjetoPorCodigo("eq.$codigo").execute().body()?.firstOrNull() }
                     ?: SupabaseClient.api.buscarObjetoPorId("eq.$idRemoto").execute().body()?.firstOrNull()
+                val ubicacionRemota = objeto.ubicacionId?.let { ubicacion ->
+                    if (runCatching { UUID.fromString(ubicacion) }.isSuccess) ubicacion
+                    else {
+                        val codigo = AlmacenLocal.instancia.ubicaciones.firstOrNull { it.id == ubicacion }?.codigo
+                        codigo?.let { clave ->
+                            SupabaseClient.api.consultarUbicaciones().execute().body()
+                                ?.firstOrNull { it.codigo == clave }?.id
+                        }
+                    }
+                } ?: existente?.ubicacion_id
                 val datos = ObjetoEncontradoRemoto(
                         id = idRemoto,
                         codigo_custodia = objeto.codigoCustodia.takeIf { it.isNotBlank() },
                         categoria = objeto.categoria,
                         descripcion = objeto.descripcion,
                         lugar_hallazgo = objeto.lugarHallazgo,
+                        ubicacion_id = ubicacionRemota,
                         estado = when (objeto.estado.name) {
                             "BAJO_CUSTODIA" -> "BAJO_CUSTODIA"
                             "ENTREGADO" -> "ENTREGADO"
@@ -84,6 +95,7 @@ object SincronizacionRemota {
                             registradoPor = remoto.registrado_por,
                             lugarHallazgo = remoto.lugar_hallazgo,
                             fechaHallazgo = remoto.fecha_hallazgo,
+                            ubicacionId = remoto.ubicacion_id ?: actual?.ubicacionId,
                             estado = if (actual?.estado == EstadoObjeto.ENTREGADO ||
                                 (actual?.estado == EstadoObjeto.BAJO_CUSTODIA && estado == EstadoObjeto.HALLAZGO_REPORTADO))
                                 actual.estado else estado

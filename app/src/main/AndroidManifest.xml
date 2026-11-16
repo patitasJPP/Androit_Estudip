@@ -35,6 +35,7 @@
         <activity
             android:name=".view.custodia.InventarioActivity"
             android:exported="false" />
+        <activity android:name=".view.custodia.GestionInventarioActivity" android:exported="false" />
 
         <activity
             android:name=".view.custodia.ProtocoloEntregaActivity"

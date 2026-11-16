@@ -1246,7 +1246,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="10dp"
-                            android:text="Conformidad y Firmas Digitales"
+                            android:text="Conformidad del receptor y responsable SAE"
                             android:textColor="#1C1B1F"
                             android:textSize="17sp" />
                     </LinearLayout>

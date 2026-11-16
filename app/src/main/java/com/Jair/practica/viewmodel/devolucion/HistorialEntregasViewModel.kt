@@ -39,6 +39,7 @@ data class HistorialEntregasUiState(
     val errorGeneral: String? = null,
     val items: List<EntregaHistorial> = emptyList(),
     val texto: String = "",
+    val filtroReceptor: String = "",
     val estadoFiltro: EstadoEntrega? = null,
     val filtroCategoria: String? = null,
     val fechaInicio: String = "",
@@ -58,6 +59,7 @@ class HistorialEntregasViewModel(
 
     private val _state = MutableLiveData<HistorialEntregasUiState>(HistorialEntregasUiState())
     val state: LiveData<HistorialEntregasUiState> = _state
+    private var todosLosItems: List<EntregaHistorial> = emptyList()
 
     fun cargar(actorRol: LoginRole) {
         val estadoActual = _state.value
@@ -68,6 +70,7 @@ class HistorialEntregasViewModel(
             errorGeneral = null,
             items = emptyList(),
             texto = "",
+            filtroReceptor = "",
             estadoFiltro = null,
             filtroCategoria = null,
             fechaInicio = "",
@@ -95,6 +98,7 @@ class HistorialEntregasViewModel(
             )
         }
 
+        todosLosItems = items
         _state.value = _state.value?.copy(
             cargando = false,
             items = items,
@@ -108,7 +112,7 @@ class HistorialEntregasViewModel(
     }
 
     fun onFiltroReceptorChange(receptor: String) {
-        _state.value = _state.value?.copy(texto = receptor.trim())
+        _state.value = _state.value?.copy(filtroReceptor = receptor.trim())
         aplicarFiltros()
     }
 
@@ -137,6 +141,7 @@ class HistorialEntregasViewModel(
     fun limpiarFiltros() {
         _state.value = _state.value?.copy(
             texto = "",
+            filtroReceptor = "",
             estadoFiltro = null,
             filtroCategoria = null,
             fechaInicio = "",
@@ -166,7 +171,7 @@ class HistorialEntregasViewModel(
             !estadoActual.fechaFin.isNullOrBlank() &&
             estadoActual.fechaInicio > estadoActual.fechaFin
 
-        val items = estadoActual.items.filter { item ->
+        val items = todosLosItems.filter { item ->
             val entrega = item.entrega
             val texto = estadoActual.texto.trim().lowercase()
             val coincidencias = mutableListOf<String>()
@@ -177,6 +182,9 @@ class HistorialEntregasViewModel(
             item.persona?.identificador?.let { coincidencias.add(it) }
 
             val cumpleTexto = texto.isEmpty() || coincidencias.any { it.lowercase().contains(texto) }
+            val receptor = estadoActual.filtroReceptor.trim()
+            val cumpleReceptor = receptor.isBlank() || listOf(item.persona?.nombre.orEmpty(),
+                item.persona?.identificador.orEmpty()).any { it.contains(receptor, ignoreCase = true) }
             val cumpleEstado = estadoActual.estadoFiltro == null || entrega.estado == estadoActual.estadoFiltro
             val cumpleCategoria = estadoActual.filtroCategoria.isNullOrBlank() ||
                 item.objeto?.categoria?.contains(estadoActual.filtroCategoria!!, ignoreCase = true) == true
@@ -189,7 +197,7 @@ class HistorialEntregasViewModel(
                 }
             }
 
-            cumpleTexto && cumpleEstado && cumpleCategoria && cumpleFechas
+            cumpleTexto && cumpleReceptor && cumpleEstado && cumpleCategoria && cumpleFechas
         }
 
         _state.value = estadoActual.copy(

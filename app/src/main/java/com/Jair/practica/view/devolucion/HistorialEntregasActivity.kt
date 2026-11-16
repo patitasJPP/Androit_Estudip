@@ -114,8 +114,8 @@ class HistorialEntregasActivity : AppCompatActivity() {
             if (binding.etFiltroFechaFin.text.toString() != state.fechaFin) {
                 binding.etFiltroFechaFin.setText(state.fechaFin)
             }
-            if (binding.etFiltroReceptor.text.toString() != state.texto) {
-                binding.etFiltroReceptor.setText(state.texto)
+            if (binding.etFiltroReceptor.text.toString() != state.filtroReceptor) {
+                binding.etFiltroReceptor.setText(state.filtroReceptor)
             }
         }
     }

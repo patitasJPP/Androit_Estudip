@@ -9,6 +9,7 @@ import com.Jair.practica.model.entity.ObjetoEncontrado
 import com.Jair.practica.model.entity.ReportePerdida
 import com.Jair.practica.model.entity.PersonaAtendida
 import com.Jair.practica.model.entity.Reclamacion
+import com.Jair.practica.model.entity.EstadoReclamacion
 import com.Jair.practica.model.local.AlmacenLocal
 import com.Jair.practica.model.local.LocalPersonaAtendidaRepository
 import com.Jair.practica.model.local.LocalReclamacionRepository
@@ -58,10 +59,18 @@ class ReportePerdidaViewModel : ViewModel() {
     }
 
     /** Una sugerencia no es una reclamación: esta operación exige elegir un objeto concreto. */
-    fun tieneSolicitud(reporteId: String, objetoId: String): Boolean =
-        AlmacenLocal.instancia.reclamaciones.any {
-            it.reportePerdidaId == reporteId && it.objetoEncontradoId == objetoId
+    fun tieneSolicitud(reporte: ReportePerdida, objetoId: String): Boolean {
+        val contacto = reporte.contacto?.trim()?.lowercase(Locale.ROOT)
+        val store = AlmacenLocal.instancia
+        return store.reclamaciones.any { reclamacion ->
+            if (reclamacion.objetoEncontradoId != objetoId ||
+                reclamacion.estado == EstadoReclamacion.RECHAZADA) return@any false
+            if (reclamacion.reportePerdidaId == reporte.id) return@any true
+            if (contacto.isNullOrBlank()) return@any false
+            store.reportesPerdida.firstOrNull { it.id == reclamacion.reportePerdidaId }
+                ?.contacto?.trim()?.lowercase(Locale.ROOT) == contacto
         }
+    }
 
     fun solicitarVerificacion(reporte: ReportePerdida, objetoId: String): String {
         val objeto = objetos.list().firstOrNull { it.id == objetoId }
@@ -72,8 +81,8 @@ class ReportePerdidaViewModel : ViewModel() {
         if (_coincidencias.value.orEmpty().none { it.id == objetoId }) {
             return "Actualiza la búsqueda antes de solicitar la verificación."
         }
-        if (tieneSolicitud(reporte.id, objetoId)) {
-            return "Este objeto ya tiene una solicitud de verificación para el reporte."
+        if (tieneSolicitud(reporte, objetoId)) {
+            return "Este contacto ya tiene una solicitud de verificación para el objeto."
         }
 
         val personaId = "per-${reporte.id}"

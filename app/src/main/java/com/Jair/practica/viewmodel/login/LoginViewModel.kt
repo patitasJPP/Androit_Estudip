@@ -21,6 +21,14 @@ class LoginViewModel(private val authRepository: AuthRepository) : ViewModel() {
     private val executor = Executors.newSingleThreadExecutor()
 
     fun signIn(role: LoginRole, username: String, password: String) {
+        if (!android.util.Patterns.EMAIL_ADDRESS.matcher(username.trim()).matches()) {
+            _uiState.value = LoginUiState.InvalidCredentials("Escribe un correo válido y comprueba tus credenciales.")
+            return
+        }
+        if (password.isBlank()) {
+            _uiState.value = LoginUiState.InvalidCredentials("Escribe tu contraseña para continuar.")
+            return
+        }
         _uiState.value = LoginUiState.Loading
         executor.execute {
             val authenticated = authRepository.authenticate(role, username, password)
